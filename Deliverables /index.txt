@@ -1,1 +1,1 @@
-Creazione cartella "Deliverables" in cui verranno i documenti del progetto "OctoPlus"
+Creazione cartella "Deliverables" in cui verranno caricati i documenti del progetto "OctoPlus"
