@@ -1,0 +1,81 @@
+.container_products {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+body {  
+  background-image: url(../images/sfondoutente.png);
+  background-attachment:fixed;
+  background-size: 100% 100%;
+}
+
+.purchase-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.purchase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.purchase-info {
+  flex-grow: 1;
+}
+
+.purchase-info h3 {
+  margin: 0;
+}
+
+.purchase-price p {
+  margin: 0;
+}
+.links {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.redirect {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #CECECD;
+  color: black;
+  text-decoration: none;
+  background-color: #d9dcd6;
+  margin: 10px;
+}
+
+.redirect:hover {
+color: #bc2c1a;
+  background-color: #d9dcd6;
+   text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .purchase {
+    flex-wrap: wrap;
+  }
+  
+  .purchase-info {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .purchase-price {
+    width: 100%;
+    text-align: right;
+  }
+}

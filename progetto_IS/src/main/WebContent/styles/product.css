@@ -1,0 +1,183 @@
+body{
+	background-color: #fff;
+}
+
+.flex-box{
+	display: flex;
+	width: 1000px;
+	margin: auto;	
+}
+
+.left{
+	width: 50%;	
+	padding-top: 10%; 
+}
+
+.right{
+	position: relative;
+}
+
+.img{
+  cursor: pointer;
+}
+
+.img img{	
+	transition: all 0.3 ease;
+	width: 	450px;
+}
+
+.right .url a{
+	color:  #BC2C1A;
+}
+
+.right .url a:hover{
+	text-decoration: none;
+}
+
+.url{
+	font-size: 20px;
+	font-weight: 400;
+	color: #BC2C1A;
+}
+
+.pname{
+	font-size: 26px;
+	padding-left: 20px;
+	font-weight: 600;
+	margin-top: 50px;
+}
+
+.price{
+	font-size: 20px;
+	font-weight: 500;
+	margin: 20px 0;
+}
+
+.size{
+	display: flex;
+	align-items: center;
+	margin: 20px 0;
+}
+
+#description{
+	justify-content: left;
+    align-items: left;
+}
+
+#stats{
+	justify-content: right;
+    align-items: right;
+}
+
+.psize p{
+	font-size: 18px;
+	font-weight: 600;	
+}
+
+.psize{
+	width: 70px;
+	height: 30px;
+	border: 1px solid #BC2C1A;
+	color: #000;
+	text-align: center;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.psize.active{
+	border-width: 1.5px;
+	color: #ff5e00;
+	font-weight: 500;
+}
+
+.quantity{
+	display: flex;
+}
+
+.quantity p{
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.quantity input{
+	width: 40px;
+	font-size: 17px;
+	font-weight: 500;
+	text-align: center;
+	margin-left: 15px;
+}
+
+.btn-box{
+	display: flex;
+	margin-top: 20px 0; 
+	font-size: 18px;
+	padding: 8px 25px;
+	border: none;
+	outline: none;
+	border-radius: 6px;
+	cursor: pointer;
+	text-decoration:none;
+}
+
+.cart-btn{
+	background-color: #D9DCD6;
+	margin-right: 20px;
+	text-decoration:none;
+}
+
+.buy-btn{
+	background-color: #D9DCD6;
+	margin-right: 20px;
+}
+
+.modify-btn{
+	background-color: #D9DCD6;
+	margin-right: 20px;
+}
+
+.cart-btn:hover{
+	background-color: #BC2C1A;
+}
+
+.buy-btn:hover{
+	background-color: #BC2C1A;
+}
+
+.modify-btn:hover{
+	background-color:red;
+}
+
+.btn-box,
+.cart-btn,
+.buy-btn,
+.modify-btn {
+    text-decoration: none !important;
+}
+@media (max-width: 768px) {
+  .flex-box {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .left, .right {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .img img {
+    width: 300px;
+  }
+  
+  .right {
+    padding-top: 20px;
+  }
+  
+  .btn-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .btn-box a {
+    margin-bottom: 10px;
+  }
+}

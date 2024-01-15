@@ -1,0 +1,106 @@
+.a{
+	text-decoration:none;
+}
+.footer {
+    background-color: #24262b;
+    padding: 70px 0;
+}
+
+.footer .container {
+    max-width: 1170px;
+    margin: auto;
+}
+
+.footer .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer .footer-col {
+    width: 25%;
+    padding: 0 15px;
+}
+
+.footer .footer-col h4 {
+    font-size: 18px;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 35px;
+    font-weight: 500;
+    position: relative;
+}
+
+.footer .footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    background-color: #4763c0;
+    height: 2px;
+    box-sizing: border-box;
+    width: 50px;
+}
+
+.footer .footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer .footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s ease;  /* Rimuovi la transizione su padding */
+    display: flex;
+    align-items: center;
+}
+
+.footer .footer-col ul li a:hover {
+    color: #4763c0;  /* Cambia il colore al passaggio del mouse */
+}
+
+.footer .footer-col .social-links {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.footer .footer-col .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: color 0.5s ease, background-color 0.5s ease;  /* Aggiungi transizione al colore di testo e sfondo */
+}
+
+.footer .footer-col .social-links a:hover {
+    color: #4763c0;  /* Cambia il colore delle icone al passaggio del mouse */
+    background-color: #ffffff;  /* Cambia il colore di sfondo al passaggio del mouse */
+
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .footer .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 574px) {
+    .footer .footer-col {
+        width: 100%;
+    }
+}

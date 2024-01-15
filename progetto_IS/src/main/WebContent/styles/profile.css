@@ -1,0 +1,125 @@
+.container_orders {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  	border: 1px solid #ccc;
+  	border-radius: 4px;
+  	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  	background-color: #D9DCD6;
+}
+
+.title{
+	color: #BC2C1A;
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+body {  
+  background-image: url(../images/sfondoutente.png);
+  background-attachment:fixed;
+  background-size: 100% 100%;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid#ddd;
+}
+
+h1 {
+	font-size: 28px;
+	font-weight: bold;
+	color: #BC2C1A;
+	text-align: left;
+}
+h1.title{
+	
+	font-size: 34px;
+	font-weight: bold;
+	color: #16425B;
+	text-align: center;
+}
+a.no-border-link {
+	display: inline-block;
+	padding: 5px 8px;
+	margin-right: 10px;
+	background-color: transparent;
+	color: #FFFFFF;
+	text-decoration: none;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+a.no-border-link:hover {
+	
+	color: #BC2C1A;
+	text-decoration: none;
+}
+.logout p {
+    text-align: right;
+}
+
+.logout a {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.torna p {
+	text-align: left;
+}
+
+.torna a {
+	font-size: 24px;
+    font-weight: bold;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.password-change a {
+  
+    font-weight: bold;
+}
+.password-change p {
+    text-align: right;
+}
+
+@media (max-width: 900px) {
+    h1 {
+        font-size: 24px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    table {
+        font-size: 14px;
+        display: block;
+		overflow-x: auto;
+    }
+}

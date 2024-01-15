@@ -1,0 +1,150 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.5;
+	background: linear-gradient(217deg, rgba(26, 82, 118, .8),
+		rgba(26, 82, 118, 0) 70.71%),
+		linear-gradient(127deg, rgba(19, 126, 166, .8), rgba(19, 126, 166, 0)
+		70.71%), linear-gradient(336deg, rgba(2, 27, 70, .8),
+		rgba(2, 27, 70, 0) 70.71%);
+	color: #333;
+}
+
+.container {
+	margin: 0 auto;
+	padding: 20px;
+}
+
+header {
+	text-align: center;
+	padding: 20px 0;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+h1 {
+	font-size: 28px;
+	margin-bottom: 10px;
+}
+
+.title {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+table {
+	max-width: 100%;
+	width: 100%;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border-collapse: collapse;
+}
+
+table td, table th {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+table th {
+	background-color: #f9f9f9;
+}
+
+tfoot td:first-child {
+	text-align: right;
+}
+
+.checkout {
+	text-align: right;
+	margin-bottom: 20px;
+}
+
+.checkout button {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.checkout button:hover {
+	padding: 10px 20px;
+	background-color: #0052ac;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.container td, .container th {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+table th.d-none, table td.d-none {
+	display: table-cell;
+}
+
+table td.totProd {
+	display: table-cell;
+}
+
+table th.d-temp {
+	display: table-cell;
+}
+
+img.front {
+	width: 25%;
+	height: auto;
+	max-width: 150px;
+}
+
+@media ( min-width : 900px) {
+	table th.d-temp {
+		display: none;
+	}
+	
+	tbody .front{
+		width: 170px;
+	}
+}
+
+@media ( max-width : 900px) {
+	
+	table {
+		overflow-x: auto;
+	}
+	
+	tbody .front{
+		width: 70px;
+	}
+	
+	/* Nascondi le colonne meno importanti su schermi più piccoli */
+	table th.d-none, table td.d-none {
+		display: none;
+	}
+	thead.d-none {
+		display: none;
+	}
+	table td.totProd {
+		display: none;
+	}
+	table td, table th {
+		padding: 5px;
+	}
+	.container {
+		margin: 0 auto;
+		padding: 3px;
+	}
+}
