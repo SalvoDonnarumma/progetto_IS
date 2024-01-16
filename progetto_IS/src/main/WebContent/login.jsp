@@ -49,9 +49,6 @@ function disattivaErrore(){
     <a href="registrazione.jsp"> <b> Registrami </b></a>
 
     <br>
-    Sei un admin?
-    <a href="logingestori.jsp"> <b> Entra come admin </b></a>
-    
   </form> 
 </div>
  <jsp:include page="footer.jsp" flush="true"/>

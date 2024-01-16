@@ -15,28 +15,38 @@ import javax.sql.DataSource;
 
 import gestioneadmin.AdminDaoDataSource;
 import gestioneadmin.IAdminDao;
+import gestioneutenti.IUserDao;
+import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
 
 /**
  * Servlet implementation class AdminControl
  */
-@WebServlet("/CambioPasswordAdmin")
+@WebServlet("/cambioPasswordAdmin")
 public class CambioPasswordAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		IAdminDao adminDao = null;
+		IUserDao userDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 		adminDao = new AdminDaoDataSource(ds);
+		userDao = new UserDaoDataSource(ds);
 		
 		try {
 			String oldPass = request.getParameter("currentPassword");
 			String newPass = request.getParameter("newPassword");
 			String confPass = request.getParameter("confirmPassword");
-			Utente bean = (Utente) request.getSession().getAttribute("logged");
-					
+			String email = request.getParameter("email");
+			System.out.println("Email: "+email);
+			System.out.println("Pass1: "+newPass);
+			System.out.println("Pass2: "+confPass);
+			System.out.println("CurrentPass: "+oldPass);
+			Utente bean = new Utente();
+			bean.setEmail(email);
+			
 			List<String> errors = new ArrayList<>();
-		    RequestDispatcher dispatcherChangePassPage = request.getRequestDispatcher("changepass.jsp");
+		    RequestDispatcher dispatcherChangePassPage = request.getRequestDispatcher("admin/changepassadmin.jsp");
 
 		    if( !newPass.equals(confPass) ) {
 				errors.add("La password nuova e la password di conferma non corrispondono!");
@@ -45,8 +55,8 @@ public class CambioPasswordAdmin extends HttpServlet {
 				return;
 			}
 					
-		    Utente old = new Utente();
-		    old.setPassword(oldPass);
+		    Utente old = userDao.doRetrieveByEmail(bean);
+		    bean.setPassword(oldPass);
 			if( !adminDao.validateOldPassword(bean, old)) {
 				errors.add("La vecchia password inserita non &egrave; valida!");
 				request.setAttribute("errors", errors);
@@ -59,8 +69,8 @@ public class CambioPasswordAdmin extends HttpServlet {
 				return;
 			}
 					
-			bean.setPassword(confPass);
-			adminDao.changePassAdmin(bean);			
+			old.setPassword(confPass);
+			adminDao.changePassAdmin(old);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

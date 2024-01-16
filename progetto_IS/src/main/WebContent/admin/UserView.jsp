@@ -68,7 +68,7 @@
 			<td><a onClick="confirmAlert();" href="CancellaAdmin?email=<%=bean.getEmail()%>" class="edit-link"> &nbsp;Cancella&nbsp;utente&nbsp;&nbsp;&nbsp; </a><br>
 			<br>
 			<% if( bean.getRuolo().contains("Gestore") ) {%>
-		 		<a href="admin/changepassadmin.jsp" class="edit-link"> Cambia password </a>
+		 		<a href="admin/changepassadmin.jsp?email=<%=bean.getEmail()%>" class="edit-link"> Cambia password </a>
 				<br>
 				</td>
 		</tr>

@@ -392,12 +392,14 @@ public class ProductDaoDataSource implements IProductDao {
 				stmt.executeUpdate();
 				con.commit();
 			} catch (IOException e) {
+				 
 			}
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
 			} finally {
 				if (con != null)
 					DriverManagerConnectionPool.releaseConnection(con);
@@ -432,6 +434,7 @@ public class ProductDaoDataSource implements IProductDao {
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
 			} finally {
 				if (connection != null) 
 					DriverManagerConnectionPool.releaseConnection(connection);

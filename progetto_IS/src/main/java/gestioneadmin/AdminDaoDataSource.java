@@ -122,7 +122,7 @@ public class AdminDaoDataSource implements IAdminDao {
 	}
 
 	@Override
-	public boolean validateOldPassword(Utente old, Utente new_pass) throws SQLException {
+	public boolean validateOldPassword(Utente new_pass, Utente old) throws SQLException {
 		String hashedpassToBeMatch = this.toHash(new_pass.getPassword());
 		if( hashedpassToBeMatch == null || hashedpassToBeMatch.equals("null"))
 			return false;

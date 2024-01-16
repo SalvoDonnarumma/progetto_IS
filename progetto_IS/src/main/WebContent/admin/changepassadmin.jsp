@@ -1,3 +1,8 @@
+<% String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
+	if( (isSomeoneLogged == null) || isSomeoneLogged.equals("Utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti")  ){
+		response.sendRedirect(request.getContextPath()+"/login.jsp");	
+		return;
+	}%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%
@@ -52,11 +57,15 @@
   <div class="container">
     <h1 class="title">Cambio password</h1>
     <!-- la servlet si chiama UserControl ma è mappata con /AdminControl -->
-    <form action="cambioPassword" method="post">
+    <form action="<%=request.getContextPath()%>/cambioPasswordAdmin" method="post">
       <label>Email</label>
-      <input type="email" name="email" required onkeyup="disattivaErrore();"
+      <input type="email" name="email" required onkeyup="disattivaErrore();" value="<%=request.getParameter("email")%>"
         	onchange="validateFormElem(this, document.getElementById('errorEmail'), emailErrorMessage)" id="email">
       <span id="errorEmail" class="error-text"></span>
+      
+      <label for="oldPassword">Vecchia password</label>
+      <input name="currentPassword" onChange="checkPassLength()"  id="newpassword" type="password" required pattern=".{12,}">
+      <span style="color:red;" id="errorPass"></span>
       
       <label for="newPassword">Nuova password</label>
       <input name="newPassword" onChange="checkPassLength()"  id="newpassword" type="password" required pattern=".{12,}">
