@@ -3,7 +3,7 @@ let contextPath = '/' + pathArray[1];
 let url = contextPath + "/StoreServlet";
 let response_i;
 
-function dynamicStore(url, page = 1, itemsPerPage = 10) {
+function dynamicStore(url, page = 1, itemsPerPage = 15) {
     $.ajax({
         url: url,
         type: 'GET',
