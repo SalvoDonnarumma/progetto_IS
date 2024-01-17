@@ -48,7 +48,7 @@ public class FiltroCategoriaProdotti extends HttpServlet {
 			out.write(json.toJson(categorie));
 			connection.close();
 		} catch (SQLException | IOException e) {
-			/* commento per riempire il blocco*/
+			e.printStackTrace();
 		}
 	}
 }

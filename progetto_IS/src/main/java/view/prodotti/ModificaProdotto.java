@@ -27,21 +27,6 @@ public class ModificaProdotto extends HttpServlet {
 		IProductDao productDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 		productDao = new ProductDaoDataSource(ds);
-		String action = request.getParameter("action");	
-		if(action.equals("read")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			request.removeAttribute("product");
-			Prodotto p = new Prodotto();
-			p.setCode(id);
-			try {
-				request.setAttribute("product", productDao.doRetrieveByKey(p));
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			RequestDispatcher dispatcher = null;	
-			dispatcher = getServletContext().getRequestDispatcher("/admin/modifyproduct.jsp");		
-			dispatcher.forward(request, response);
-		} else if(action.equals("modify")) {
 		try {					
 					String categoria = request.getParameter("categoria");
 					String nome = request.getParameter("nome");
@@ -74,7 +59,6 @@ public class ModificaProdotto extends HttpServlet {
 					dispatcher.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
 		}
 	}
 	 

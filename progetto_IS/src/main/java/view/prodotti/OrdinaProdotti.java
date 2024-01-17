@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import gestioneprodotti.ProductDaoDataSource;
 /**
  * Servlet implementation class ProductControl
  */
+@WebServlet("/OrdinaProdotti")
 public class OrdinaProdotti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,24 +26,15 @@ public class OrdinaProdotti extends HttpServlet {
 		productDao = new ProductDaoDataSource(ds);
 		
 		String sort = request.getParameter("sort");
-			try {
-				if (sort == null) {
-					request.removeAttribute("products");
-					request.setAttribute("products", productDao.doRetrieveAll(sort));
-				} else if (sort.equals("categoria")) {
-					request.removeAttribute("products");
-					request.setAttribute("products", productDao.sortByCategoria(sort));
-				} else if (sort.equals("nome")) {
-					request.removeAttribute("products");
-					request.setAttribute("products", productDao.sortByName(sort));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		RequestDispatcher dispatcher = null;
-		
-		dispatcher = getServletContext().getRequestDispatcher("/admin/ProductView.jsp");		
+		try {
+			request.removeAttribute("products");
+			request.setAttribute("products", productDao.doRetrieveAll(sort));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		RequestDispatcher dispatcher = null;		
+		dispatcher = getServletContext().getRequestDispatcher("/admin/ProductView.jsp");			
 		dispatcher.forward(request, response);
 	}
 	 

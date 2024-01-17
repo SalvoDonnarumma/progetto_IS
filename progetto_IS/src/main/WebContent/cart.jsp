@@ -1,8 +1,7 @@
+<% 	String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
+%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
- <%
- 	Collection<?> products = (Collection<?>) request.getSession().getAttribute("products");
-%>
 <!DOCTYPE html>
 <html lang="it">
 <%@ page import="java.util.*,gestioneordini.Carrello,gestioneprodotti.ProductDaoDataSource"%>
@@ -23,6 +22,12 @@
 	});	
 </script>    
 <jsp:include page="header.jsp" flush="true"/>
+<style>
+        .avviso {
+            text-align: right;
+            text-size: 30px;
+        }
+    </style>
 </head>
 <body>
 	<br>
@@ -46,8 +51,14 @@
       </tbody>
     </table>         
 
+	<% if( (isSomeoneLogged != null) && (isSomeoneLogged.equals("Gestore Utenti") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti"))  ){
+	%>	
+		<div class="avviso"> <b> Non è possibile per un gestore effettuare acquisti nel carrello! </b> </div> 
+	<% 
+	} else { %>
     <div class="checkout" id="checkout">
     </div>
+    <% } %>
   </div>
 
   <jsp:include page="footer.jsp" flush="true"/>

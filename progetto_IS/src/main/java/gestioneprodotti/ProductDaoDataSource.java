@@ -301,16 +301,19 @@ public class ProductDaoDataSource implements IProductDao {
 
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME;
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY ?";
+		if (order != null && order.equals("categoria")) {
+			selectSQL += " ORDER BY categoria";
+		} else if( order != null && order.equals("nome")) {
+			selectSQL += " ORDER BY nome";
 		}
+		
+		
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			if (order != null && !order.equals("")) {
-				preparedStatement.setString(1, order);
-			}
+			
+			System.out.println(preparedStatement);
 						
 			ResultSet rs = preparedStatement.executeQuery();
 

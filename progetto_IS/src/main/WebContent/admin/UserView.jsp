@@ -42,12 +42,12 @@
 	
 	<caption >Tabella utenti</caption>
 		<tr>
-			<th> Email <a href="AdminControl?fromStore=false&sort=email" class="no-border-link">Sort</a></th>
+			<th> Email <a href="OrdinaUtenti?&sort=email" class="no-border-link">Ordina</a></th>
 			<th> Nome</th>
-			<th> Cognome <a href="AdminControl?fromStore=false&sort=cognome" class="no-border-link">Sort</a></th>
+			<th> Cognome <a href="OrdinaUtenti?sort=cognome" class="no-border-link">Ordina</a></th>
 			<th> Numero telefono </th>
 			<th> Ruolo </th>
-			<th> Action </th>
+			<th> Azioni </th>
 		</tr>
 		<%
 		if (users != null && users.size() != 0) {

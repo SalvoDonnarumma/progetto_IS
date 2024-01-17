@@ -10,7 +10,7 @@
 	Collection<?> products = (Collection<?>) request.getAttribute("products");
 	request.getSession().setAttribute("fromStore", Boolean.FALSE);
 	if(products == null) {
-		response.sendRedirect(request.getContextPath()+"/product?fromStore=false");	
+		response.sendRedirect(request.getContextPath()+"/product");	
 		return;
 	}
 	Prodotto product = (Prodotto) request.getAttribute("product");
@@ -40,14 +40,14 @@
 	<caption>Tabella prodotti</caption>
 		<tr>
 			<th>IdProdotto</th>
-			<th>Categoria<a href="product?fromStore=false&sort=categoria" class="no-border-link">Ordina</a></th>
-			<th>Nome <a href="product?fromStore=false&sort=nome" class="no-border-link">Ordina</a></th>
+			<th>Categoria<a href="OrdinaProdotti?sort=categoria" class="no-border-link">Ordina</a></th>
+			<th>Nome <a href="OrdinaProdotti?sort=nome" class="no-border-link">Ordina</a></th>
 			<th>Prezzo</th>
 			<th>Descrizione</th>
 			<th>Foto</th>
 			<th>Statistiche</th>
 			<th>Taglie Disponibili</th>
-			<th>Action</th>
+			<th>Azioni</th>
 		</tr>
 		<%
 		if (products != null && products.size() != 0) {
@@ -67,7 +67,7 @@
 			<td>
 				<a id="link" href="cancellaProdotto?fromStore=false&action=delete&id=<%=bean.getCode()%>" onClick="confirmDelete();" class="delete-link">Cancella</a>
 					<br>	<br>
-				<a href="modificaProdotto?action=read&id=<%=bean.getCode()%>" class="edit-link">Modifica</a>
+				<a href="OttieniDettagliProdotto?to=modify&id=<%=bean.getCode()%>" class="edit-link">Modifica</a>
 					<br>
 		</td>
 		</tr>
