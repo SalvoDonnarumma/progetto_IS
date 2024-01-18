@@ -107,13 +107,13 @@
 	          <div class="col-50">
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
-	            <input type="text" id="firstname" name="firstname" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Jonathan Joestar" 
 	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
 	           
     			
 	            <label for="adr"><i class="fa fa-address-card-o"></i> Indirizzo </label>
-	            <input type="text" id="adr" name="indirizzo" placeholder="Via XXXXXX, YYY" required pattern="^Via .+, \d+$"
+	            <input type="text" id="indirizzo" name="indirizzo" placeholder="Via XXXXXX, YYY" required pattern="^Via .+, \d+$"
 	            onchange="validateFormElem(this, document.getElementById('errorAdr'), formatErrorMessage)" >
 	            <span id="errorAdr" class="error-text"></span>
 	            
@@ -125,7 +125,7 @@
 	            <div class="row">
 	              <div class="col-50">
 	                <label for="state">Stato</label>
-	                <input type="text" id="state" name="state" placeholder="JJ" required pattern="^[A-Za-z]+$"
+	                <input type="text" id="stato" name="stato" placeholder="JJ" required pattern="^[A-Za-z]+$"
 	           		 onkeyup="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
 			 		<span id="errorState"> </span>
 	              </div>
@@ -183,7 +183,7 @@
 	          <div class="col-50">
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
-	            <input type="text" id="firstname" name="firstname" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="firstname" name="nome_utente" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
 	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
     			
@@ -200,7 +200,7 @@
 	            <div class="row">
 	              <div class="col-50">
 	                <label for="state">Stato</label>
-	                <input type="text" id="state" name="state" placeholder="JJ" required pattern="^[A-Za-z]+$"
+	                <input type="text" id="state" name="stato" placeholder="JJ" required pattern="^[A-Za-z]+$"
 	           		 onkeyup="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
 			 		<span id="errorState"> </span>
 	              </div>
