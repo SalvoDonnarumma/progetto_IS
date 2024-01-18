@@ -1,7 +1,6 @@
 package view.admin;
 
-import java.io.IOException;  
-
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
 import gestioneadmin.AdminDaoDataSource;
 import gestioneadmin.IAdminDao;
 import gestioneutenti.IUserDao;
@@ -20,16 +20,29 @@ import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
 
 /**
- * Servlet implementation class AdminControl
+ * Servlet implementation class CreaNuovoAdminValidator
  */
-@WebServlet("/CreaNuovoAdmin")
-public class CreaNuovoAdmin extends HttpServlet {
+@WebServlet("/CreaNuovoAdminValidator")
+public class CreaNuovoAdminValidator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CreaNuovoAdminValidator() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IAdminDao adminDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 		adminDao = new AdminDaoDataSource(ds);
+		IUserDao userDao = new UserDaoDataSource(ds);
+		
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -44,18 +57,34 @@ public class CreaNuovoAdmin extends HttpServlet {
 		bean.setTelefono(telefono);
 		bean.setRuolo(ruolo);
 					
+		Boolean result = false;
+		List<String> errors = new ArrayList<>();
 		try {
-			adminDao.doSaveAdmin(bean);			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			List<String> emails = userDao.getAllEmails();
+			for( String emaildb : emails) 
+			if(emaildb.equals(email))
+					result = true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 			        
+		if( result ) {
+			errors.add("L'email che hai inserito non è disponibile!");
+			request.setAttribute("errors", errors);
+			RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher("/admin/insertAmm.jsp");
+			dispatcherToLoginPage.forward(request, response);
+			return;
+		}			
 			
 		RequestDispatcher dispatcher = null;		
-        dispatcher = getServletContext().getRequestDispatcher("/admin/UserView.jsp");
+        dispatcher = getServletContext().getRequestDispatcher("/CreaNuovoAdmin");
 		dispatcher.forward(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

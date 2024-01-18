@@ -53,7 +53,57 @@ public class CreaOrdine extends HttpServlet {
 		String indirizzo = request.getParameter("indirizzo");
 		String dateTime = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
 		String dateConsegna = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
-		if (action.equalsIgnoreCase("purchaseOne")) {					
+		if (action.equalsIgnoreCase("purchaseOne")) {	
+			String nome = request.getParameter("nome");
+			String numero_carta = request.getParameter("numero_carta");
+			String mese_scadenza = request.getParameter("mese_scadenza");
+			String anno_scadenza = request.getParameter("anno_scadenza");
+			String cvv = request.getParameter("cvv");
+			RequestDispatcher dispatcher = null;
+			dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp?fromCart=false&qnt="+request.getParameter("qnt")+"&sz="+request.getParameter("sz"));
+			
+			if(nome == null)
+				return;
+			if(numero_carta != null) {
+				if(!CartValidator.isValidFormat(numero_carta)) {
+					System.out.println("Numero di carta non è valido");
+					dispatcher.forward(request, response);
+				}
+			}else {
+				System.out.println("Campo numero carta vuoto");
+				dispatcher.forward(request, response);
+			}
+			
+			if(mese_scadenza != null) {
+				if(!CartValidator.isValidMonth(mese_scadenza)) {
+					System.out.println("Mese di scadenza non valido");
+					dispatcher.forward(request, response);
+				}
+			}else {
+				System.out.println("Mese scadenza vuoto");
+				dispatcher.forward(request, response);
+			}
+			
+			if(anno_scadenza != null) {
+				if(!CartValidator.isYearNotExpired(anno_scadenza)) {
+					System.out.println("Campo anno scadenza non valido");
+					dispatcher.forward(request, response);
+				}
+			} else {
+				System.out.println("Campo anno scadenza vuoto");
+				dispatcher.forward(request, response);
+			}
+			
+			if(cvv != null) {
+				if(!CartValidator.isValidCVV(cvv)) {
+					System.out.println("Campo anno scadenza vuoto");
+					dispatcher.forward(request, response);
+				}
+			} else {
+				System.out.println("Campo cvv vuoto");
+				dispatcher.forward(request, response);
+			}
+					System.out.println("Carta Valida");
 					int quantity = Integer.parseInt(request.getParameter("qnt"));
 					String size = request.getParameter("sz");
 					int id = Integer.parseInt(request.getParameter("id"));
@@ -109,10 +159,62 @@ public class CreaOrdine extends HttpServlet {
 					
 					/* svuoto il carrello */
 					Carrello newcart = new Carrello();
+					request.getSession().setAttribute("da_acquistare", null);
 					request.getSession().removeAttribute("cart");
 					request.getSession().setAttribute("cart", newcart);
 					errors.clear();
 				} else if( action.equalsIgnoreCase("purchaseAll")) { 
+					String nome = request.getParameter("nome");
+					String numero_carta = request.getParameter("numero_carta");
+					String mese_scadenza = request.getParameter("mese_scadenza");
+					String anno_scadenza = request.getParameter("anno_scadenza");
+					String cvv = request.getParameter("cvv");
+					RequestDispatcher dispatcher = null;
+					dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");
+					
+					if(nome == null)
+						return;
+					if(numero_carta != null) {
+						if(!CartValidator.isValidFormat(numero_carta)) {
+							System.out.println("Numero di carta non è valido");
+							dispatcher.forward(request, response);
+						}
+					}else {
+						System.out.println("Campo numero carta vuoto");
+						dispatcher.forward(request, response);
+					}
+					
+					if(mese_scadenza != null) {
+						if(!CartValidator.isValidMonth(mese_scadenza)) {
+							System.out.println("Mese di scadenza non valido");
+							dispatcher.forward(request, response);
+						}
+					}else {
+						System.out.println("Mese scadenza vuoto");
+						dispatcher.forward(request, response);
+					}
+					
+					if(anno_scadenza != null) {
+						if(!CartValidator.isYearNotExpired(anno_scadenza)) {
+							System.out.println("Campo anno scadenza non valido");
+							dispatcher.forward(request, response);
+						}
+					} else {
+						System.out.println("Campo anno scadenza vuoto");
+						dispatcher.forward(request, response);
+					}
+					
+					if(cvv != null) {
+						if(!CartValidator.isValidCVV(cvv)) {
+							System.out.println("Campo anno scadenza vuoto");
+							dispatcher.forward(request, response);
+						}
+					} else {
+						System.out.println("Campo cvv vuoto");
+						dispatcher.forward(request, response);
+					}
+					
+					System.out.println("Torno in CreaOrdine");
 					Carrello cart = (Carrello) request.getSession().getAttribute("cart");
 					
 					/* prendo le taglie dei singoli prodotti messi nel carrello */

@@ -94,7 +94,7 @@
 				<%	
 					if( isAdmin == null || isAdmin.equalsIgnoreCase("Utente")){ %>
 						<a href="cart.jsp?id=<%=bean.getCode()%>" class="cart-btn"> Aggiungi al Carrello </a>
-						<a id="link" onClick="addValuesToLink();" href="AcquistaProdotto?action=read&fromStore=get2&id=<%=bean.getCode()%>" class="buy-btn"> Compra adesso </a>
+						<a id="link" onClick="addValuesToLink();" href="AcquistaProdotto?id=<%=bean.getCode()%>" class="buy-btn"> Compra adesso </a>
 				<%	} else if( isAdmin.equals("Gestore Prodotti")){ %>
 						<a href="OttieniDettagliProdotto?to=modify&id=<%=bean.getCode()%>" class="modify-btn" onClick="functionAlert()"> Modifica prodotto</a>
 				<%	}	%>

@@ -37,7 +37,7 @@ public class AcquistaProdotto extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		request.removeAttribute("products");
+		request.getSession().setAttribute("products", null);
 		
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 		IProductDao productDao = new ProductDaoDataSource(ds);;
@@ -52,7 +52,7 @@ public class AcquistaProdotto extends HttpServlet {
 		 //inserisco solo un prodotto nella lista
 		/* in questo modo nella pagina di acquisto (anche se singolo) si lavora sempre con 
 		 * un lista, mi permette di avere un acquisto omogoneo di uno o più prodotti*/
-		request.setAttribute("products", products);
+		request.getSession().setAttribute("products", products);
 		RequestDispatcher dispatcher = null;
 		dispatcher = getServletContext().getRequestDispatcher("/purchase.jsp");
 		dispatcher.forward(request, response);

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <%
-Collection <?> products = (Collection<?>) request.getAttribute("products");
+	Collection <?> products = (Collection<?>) request.getSession().getAttribute("products");
 	Prodotto bean = null;
 	String size = null;
 	Integer quantity = null;
-	List<String>sizes = new ArrayList<>();
-	List<Integer>qnts = new ArrayList<>();
+	List<String>sizes = (List<String>) request.getSession().getAttribute("sizes");
+	List<Integer>qnts = (List<Integer>) request.getSession().getAttribute("qnts");
  	Utente user = (Utente) request.getSession().getAttribute("logged");
  	String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
 	if( (isSomeoneLogged == null) || isSomeoneLogged.equals("Utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Utenti")  ){
@@ -51,9 +51,6 @@ Collection <?> products = (Collection<?>) request.getAttribute("products");
 	    	if (products != null && products.size() != 0) {
 	    		Iterator<?> it = products.iterator();
 	    		while (it.hasNext()) {
-	    			sizes.add((request.getParameter("sz"+i))); /*mi servirà nella servlet per verificare se 
-	    			l'acquisto di ogni prodotto nel carrello è possbile effettuarlo opppure no*/
-	    			qnts.add(Integer.parseInt(request.getParameter("qnt"+i)));
 	    			bean = (Prodotto) it.next();
 	    %>
 			<div class="box1">		
@@ -62,7 +59,7 @@ Collection <?> products = (Collection<?>) request.getAttribute("products");
 		 			<img src="./getPicture?id=<%=bean.getCode()%>" onerror="this.src='./images/nophoto.png'" alt="immagine prodotto">
 		 			</a>
 		 			<h4> Categoria: <%=bean.getCategoria()%> </h4>
-		 			<h4> Taglia: <%=request.getParameter("sz"+i)%> Quantita': <%=request.getParameter("qnt"+i)%> </h4>
+		 			<h4> Taglia: <%= sizes.get(i) %> Quantita': <%= qnts.get(i) %> </h4>
 			</div>
 	  <%
 	  i++;	}	
@@ -150,21 +147,21 @@ Collection <?> products = (Collection<?>) request.getAttribute("products");
 	              <i class="fa fa-cc-discover" style="color:orange;"></i>
 	            </div>
 	            <label for="cname">Nome sulla carta</label>
-	            <input type="text" id="cname" name="cardname" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
 	            onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorNameC"> </span>
 	            <label for="ccnum">Numero di carta di credito</label>
-	            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required
+	            <input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
 	            pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
 			 	<span id="errorNumberC"> </span>
 	            <label for="expmonth">Mese di scadenza</label>
-	            <input type="text" id="expmonth" name="expmonth" placeholder="Settembre"  required
+	            <input type="text" id="expmonth" name="mese_scadenza" placeholder="Settembre"  required
 	            pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorMonthC"> </span>
 	            <div class="row">
 	              <div class="col-50">
 	                <label for="expyear">Anno di scadenza</label>
-	                <input type="text" id="expyear" name="expyear" placeholder="2018" required pattern="\d{4}"
+	                <input type="text" id="expyear" name="anno_scadenza" placeholder="2018" required pattern="\d{4}"
 	                onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
 			 		<span id="errorEXPC"> </span>
 	              </div>
@@ -226,21 +223,21 @@ Collection <?> products = (Collection<?>) request.getAttribute("products");
 	              <i class="fa fa-cc-discover" style="color:orange;"></i>
 	            </div>
 	            <label for="cname">Nome sulla carta</label>
-	            <input type="text" id="cname" name="cardname" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
 	            onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorNameC"> </span>
 	            <label for="ccnum">Numero di carta di credito</label>
-	            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required
+	            <input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
 	            pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
 			 	<span id="errorNumberC"> </span>
 	            <label for="expmonth">Mese di scadenza</label>
-	            <input type="text" id="expmonth" name="expmonth" placeholder="Settembre"  required
+	            <input type="text" id="expmonth" name="mese_scadenza" placeholder="Settembre"  required
 	            pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorMonthC"> </span>
 	            <div class="row">
 	              <div class="col-50">
 	                <label for="expyear">Anno di scadenza</label>
-	                <input type="text" id="expyear" name="expyear" placeholder="2018" required pattern="\d{4}"
+	                <input type="text" id="expyear" name="anno_scadenza" placeholder="2018" required pattern="\d{4}"
 	                onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
 			 		<span id="errorEXPC"> </span>
 	              </div>

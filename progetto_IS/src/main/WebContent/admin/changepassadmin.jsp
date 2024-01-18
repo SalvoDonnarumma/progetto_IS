@@ -57,7 +57,7 @@
   <div class="container">
     <h1 class="title">Cambio password</h1>
     <!-- la servlet si chiama UserControl ma è mappata con /AdminControl -->
-    <form action="<%=request.getContextPath()%>/cambioPasswordAdmin" method="post">
+    <form action="<%=request.getContextPath()%>/CambioPasswordValidator" method="post">
       <label>Email</label>
       <input type="email" name="email" required onkeyup="disattivaErrore();" value="<%=request.getParameter("email")%>"
         	onchange="validateFormElem(this, document.getElementById('errorEmail'), emailErrorMessage)" id="email">
