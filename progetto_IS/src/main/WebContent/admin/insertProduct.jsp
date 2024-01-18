@@ -200,8 +200,8 @@ input[type="submit"]:hover, input[type="reset"]:hover {
   </div>
   
   <div class="form-group_">
-  <label for="price">Price:</label><br> 
-		<input name="price" style="width:20%;" type="number" min="0" value="0" step="any" required><br>
+  <label for="price">Prezzo:</label><br> 
+		<input name="price" style="width:20%;"  min="0" value="0" step="any" required><br>
   </div>
   
   <div class="form-group">

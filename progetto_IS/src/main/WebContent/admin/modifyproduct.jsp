@@ -99,7 +99,7 @@ function addValuesToLink(){
 				<h4>
 					<label>
 						Prezzo: 
-						<input style="width:8%;" name="price" type="number" min="0" step="any" value=<%=bean.getPrice()%>  required>&euro;
+						<input style="width:8%;" name="price" type="number"  min="0" step="any" value=<%=bean.getPrice()%>  required>&euro;
 					</label>
 				</h4>
 				

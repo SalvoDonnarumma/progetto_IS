@@ -107,7 +107,7 @@
 	          <div class="col-50">
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
-	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Jonathan Joestar" 
+	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
 	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
 	           
