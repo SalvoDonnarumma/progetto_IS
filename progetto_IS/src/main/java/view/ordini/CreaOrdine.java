@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneordini.Carrello;
+import gestionecarrello.Carrello;
 import gestioneordini.IOrderDao;
 import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;

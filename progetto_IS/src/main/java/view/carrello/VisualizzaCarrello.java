@@ -1,4 +1,4 @@
-package view.ordini;
+package view.carrello;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import com.google.gson.Gson;
 
-import gestioneordini.Carrello;
+import gestionecarrello.Carrello;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.ProductDaoDataSource;
 

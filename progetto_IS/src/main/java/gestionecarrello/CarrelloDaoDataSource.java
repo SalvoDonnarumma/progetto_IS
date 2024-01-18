@@ -1,4 +1,4 @@
-package gestioneordini;
+package gestionecarrello;
 
 import java.sql.Connection;  
 import java.sql.PreparedStatement;

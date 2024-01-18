@@ -1,7 +1,7 @@
-package view.prodotti;
-import com.google.gson.*;  
+package view.carrello;
+import com.google.gson.*;
 
-import gestioneordini.Carrello;
+import gestionecarrello.Carrello;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;

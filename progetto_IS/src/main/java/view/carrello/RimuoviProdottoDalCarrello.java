@@ -1,4 +1,4 @@
-package view.prodotti;
+package view.carrello;
 
 import java.io.IOException;  
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import gestioneordini.Carrello;
+import gestionecarrello.Carrello;
 import gestioneprodotti.Prodotto;
 
 

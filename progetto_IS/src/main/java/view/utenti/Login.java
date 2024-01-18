@@ -13,9 +13,9 @@ import javax.sql.DataSource;
 
 import gestioneadmin.AdminDaoDataSource;
 import gestioneadmin.IAdminDao;
-import gestioneordini.Carrello;
-import gestioneordini.CarrelloDaoDataSource;
-import gestioneordini.ICarrelloDao;
+import gestionecarrello.Carrello;
+import gestionecarrello.CarrelloDaoDataSource;
+import gestionecarrello.ICarrelloDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;

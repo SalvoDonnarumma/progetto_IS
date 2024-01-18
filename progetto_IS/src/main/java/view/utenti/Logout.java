@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneordini.Carrello;
-import gestioneordini.CarrelloDaoDataSource;
-import gestioneordini.ICarrelloDao;
+import gestionecarrello.Carrello;
+import gestionecarrello.CarrelloDaoDataSource;
+import gestionecarrello.ICarrelloDao;
 import gestioneutenti.Utente;
 
 /**
