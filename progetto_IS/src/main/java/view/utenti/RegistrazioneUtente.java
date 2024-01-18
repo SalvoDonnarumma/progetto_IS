@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
+import gestioneutenti.UtenteRegistrazioneValidator;
 
 
 /**
@@ -37,10 +38,25 @@ public class RegistrazioneUtente extends HttpServlet {
 		String confpassword = request.getParameter("conf_password");
 		String telefono = request.getParameter("phone");
 		
+		RequestDispatcher dispatcherToErrorPage = request.getRequestDispatcher("/errorpageregistrazione.jsp");
+		
 		List<String> errors = new ArrayList<>();
 		/* controllo se le due password combaciano, in caso contrario blocco la registrazione 
 		 * e segnalo all'utente tramite un alert (presente nel .js della registrazione)*/
 		String registrazione = "registrazione.jsp";
+		
+		if( !UtenteRegistrazioneValidator.isValidEmail(username) )
+			dispatcherToErrorPage.forward(request, response);
+		
+		if( !UtenteRegistrazioneValidator.isValidNome(name) )
+			dispatcherToErrorPage.forward(request, response);
+		
+		if( !UtenteRegistrazioneValidator.isValidNome(surname) )
+			dispatcherToErrorPage.forward(request, response);
+		
+		if( !UtenteRegistrazioneValidator.isValidTelefono(telefono) )
+			dispatcherToErrorPage.forward(request, response);
+		
         if ( !password.equals(confpassword) ) {  //controllo se password e conferma password sono uguali
         	request.setAttribute("errors", errors);
         	RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher(registrazione);

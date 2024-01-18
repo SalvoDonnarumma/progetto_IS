@@ -22,7 +22,7 @@ import gestioneutenti.Utente;
 /**
  * Servlet implementation class CambioPasswordValidator
  */
-@WebServlet("/CambioPasswordValidator")
+@WebServlet("/CambioPasswordAdminValidator")
 public class CambioPasswordValidator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
