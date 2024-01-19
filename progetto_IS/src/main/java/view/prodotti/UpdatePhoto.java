@@ -1,6 +1,9 @@
 package view.prodotti;
 
-import java.io.IOException; 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -10,8 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.sql.DataSource;
 
+import gestioneprodotti.IPhotoDao;
+import gestioneprodotti.IProductDao;
 import gestioneprodotti.PhotoDaoDataSource;
+import gestioneprodotti.Prodotto;
 
 /**
  * Servlet implementation class UpdatePhoto
@@ -39,21 +46,55 @@ maxRequestSize = 1024 * 1024 * 50) // 50MB
     	protected void doPost(HttpServletRequest request, HttpServletResponse response)
     			throws ServletException, IOException {
 
+    		IPhotoDao photoDao = null;
+    		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+    		photoDao = new PhotoDaoDataSource(ds);
+    		
     		String id = request.getParameter("id");
-
-    		for (Part part : request.getParts()) {
+    		System.out.println("id: "+id);
+    		String imagePath = null;
+			String tempPath = null;
+			for (Part part : request.getParts()) {
     			String fileName = part.getSubmittedFileName();
+    			tempPath = "C:/Users/Salvatore/git/progettoIS/progetto_IS/src/main/WebContent/img_products"+ File.separator + fileName;
+    			//tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+    			imagePath = "./img_products/" + fileName;
     			if (fileName != null && !fileName.equals("")) {
-    				try {
-						PhotoDaoDataSource photoDaoDataSource = new PhotoDaoDataSource();
-						photoDaoDataSource.updatePhoto(id, part.getInputStream());
-    				} catch (SQLException sqlException) {
-    					sqlException.printStackTrace();
-    				}
+    				uploadFile(part.getInputStream(), tempPath);
     			}
     		}
-
+			
+			System.out.println("image path: "+imagePath);
+			Prodotto modify = new Prodotto();
+			modify.setCode(Integer.parseInt(id));
+			modify.setImagePath(imagePath);
+			
+			try {
+				photoDao.updatePhoto(modify);
+				System.out.println("Inserimento avvenuto");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
     		response.sendRedirect("admin/ProductView.jsp");
+    	}
+    	
+    	private boolean uploadFile(InputStream is, String path) {
+    		boolean test = false;
+    		System.out.println("Path: "+path);
+    		try(FileOutputStream fops = new FileOutputStream(path);){
+    			byte[] byt = new byte[is.available()];
+    			is.read(byt);
+    	
+    			fops.write(byt);
+    			fops.flush();
+
+    			test = true;
+
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+
+    		return test;
     	}
 
     }

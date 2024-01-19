@@ -34,7 +34,7 @@ function addValuesToLink(){
 	     	<div class="box1">
 	     	<h3 style="color: grey;">Vecchio Prodotto:</h3> <br>
 	     	
-	     	<img src="./getPicture?id=<%=bean.getCode()%>" alt="Immagine del prodotto" onerror="this.src='./images/nophoto.png'" style="width:30%">
+	     	<img src="<%=bean.getImagePath()%>" alt="Immagine del prodotto" onerror="this.src='./images/nophoto.png'" style="width:30%">
 	     	
 			<p class="name">Nome: <%=bean.getNome()%> </p> 
 			
@@ -63,7 +63,7 @@ function addValuesToLink(){
 		  <div class="col-75"> 
 	    	<div class="container">
 	    	<h2> Modifiche al prodotto: </h2> <br>
-	      	<form action="modificaProdotto?id=<%=bean.getCode()%>" method="post" onClick="addValuesToLink();">
+	      	<form action="modificaProdotto?id=<%=bean.getCode()%>" method="post" onClick="addValuesToLink();" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="insert"> 
 				<h4>
 					<label> Nome prodotto: 
@@ -123,6 +123,9 @@ function addValuesToLink(){
 						<%= bean.getStats() %>
 						</textarea><br>
 					</label>
+					
+               	 	<label for="upload-input">File: </label>
+                	<input type="file" class="input_container" name="file" id="upload-input">
 				</h4>
 				<br>
 				<br>

@@ -2,24 +2,26 @@ package gestioneprodotti;
 
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
 
 import view.sito.*;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class PhotoDaoDataSource {
-	public synchronized static byte[] load(String id) throws SQLException {
+public class PhotoDaoDataSource implements IPhotoDao {
+	
+	private DataSource ds = null;
 
+	public PhotoDaoDataSource(DataSource ds) {
+		this.ds = ds;
+	}
+	
+	public synchronized static byte[] load(String id) throws SQLException {
 		Connection connection = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
 		byte[] bt = null;
-
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			String sql = "SELECT photo FROM prodotto WHERE idProdotto = ?";
@@ -49,30 +51,24 @@ public class PhotoDaoDataSource {
 		return bt;
 	}
 	
-	public synchronized void updatePhoto(String idA, InputStream photo) 
-			throws SQLException {
-		Connection con = null;
-		PreparedStatement stmt = null;
+	public void updatePhoto(Prodotto modify) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String update = "UPDATE prodotto SET image=? WHERE idProdotto=?";	
+		
 		try {
-			con = 	DriverManagerConnectionPool.getConnection();
-			stmt = con.prepareStatement("UPDATE prodotto SET photo = ? WHERE idProdotto = ?");
-			try {
-				stmt.setBinaryStream(1, photo, photo.available());
-				stmt.setString(2, idA);	
-				stmt.executeUpdate();
-				con.commit();
-			} catch (IOException e) {
-				/*commento per riempire il try-catch*/
-			}
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(update);
+			preparedStatement.setString(1, modify.getImagePath());
+			preparedStatement.setInt(2, modify.getCode());
+			preparedStatement.executeUpdate();
 		} finally {
 			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException sqlException) {
-				/*commento per riempire il try-catch*/
+				if (preparedStatement != null)
+					preparedStatement.close();
 			} finally {
-				if (con != null)
-					DriverManagerConnectionPool.releaseConnection(con);
+				if (connection != null)
+					connection.close();
 			}
 		}
 	}
