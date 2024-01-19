@@ -21,7 +21,7 @@ function dynamicStore(url, page = 1, itemsPerPage = 15) {
             contenutoHTML += "<div class=\"box1\">";
 			contenutoHTML += "</a> <h3 class=\"pname\">"+bean.name+"</h3>";
 			contenutoHTML += "<a href=\"OttieniDettagliProdotto?id="+bean.code+"\">";
- 			contenutoHTML += "<img src='./getPicture?id="+bean.code+"\" onerror=\"this.src='images/nophoto.png'\">";
+ 			contenutoHTML += "<img src="+bean.imagePath+"\ onerror=\"this.src='images/nophoto.png'\">";
  			contenutoHTML += "</a><h5>Categoria:</h5><h4 class=\"categoria\">"+bean.categoria+"</h4>";
  			contenutoHTML += "<h5>Costo:<h3 class=\"prezzo\">"+bean.price.toFixed(2)+"</h3>&euro;</h5>";
  			if( bean.taglie.quantitaM==0 && bean.taglie.quantitaL==0 && bean.taglie.quantitaXL==0 && bean.taglie.quantitaXXL==0)

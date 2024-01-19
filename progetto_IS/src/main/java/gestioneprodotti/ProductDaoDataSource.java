@@ -279,9 +279,6 @@ public class ProductDaoDataSource implements IProductDao {
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, code);
 			result = preparedStatement.executeUpdate();
-			preparedStatement = connection.prepareStatement(deleteSQL2);
-			preparedStatement.setInt(1, code);
-			preparedStatement.executeUpdate();
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -291,7 +288,25 @@ public class ProductDaoDataSource implements IProductDao {
 					connection.close();
 			}
 		}
+		
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(deleteSQL2);
+			preparedStatement.setInt(1, code);
+			result = preparedStatement.executeUpdate();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		
 		return (result != 0);
+		
+		
 	}
 
 	

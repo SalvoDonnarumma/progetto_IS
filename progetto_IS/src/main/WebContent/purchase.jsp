@@ -56,7 +56,8 @@
 			<div class="box1">		
 			     	<h3><%=bean.getNome()%></h3>
 		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode()%>&">
-		 			<img src="./getPicture?id=<%=bean.getCode()%>" onerror="this.src='./images/nophoto.png'" alt="immagine prodotto">
+		 			<img src="<%=bean.getImagePath()%>" onerror="this.src='images/nophoto.png" alt="Immagine prodotto">
+		 			
 		 			</a>
 		 			<h4> Categoria: <%=bean.getCategoria()%> </h4>
 		 			<h4> Taglia: <%= sizes.get(i) %> Quantita': <%= qnts.get(i) %> </h4>

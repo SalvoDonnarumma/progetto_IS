@@ -18,7 +18,7 @@ function dynamicCart(url){
 		} else {
 				for(const bean of response){
 				  	contenutoHTML += "<tr>";
-				  	contenutoHTML += "<td><img class=\"front\"  src='./getPicture?id="+bean.code+"\" onerror=\"this.src='img/nophoto.png'\">";
+				  	contenutoHTML += "<td> <img class=\"front\" src="+bean.imagePath+"\ onerror=\"this.src='images/nophoto.png'\">";
 		          	contenutoHTML += "<br>"+ bean.name+"</td>";
 		          	contenutoHTML += "<td  class=\"d-none\">"+ bean.categoria +"</td>";
 		          	contenutoHTML += "<td> <input type=number min=1 max=\"10\" class=quantita onchange=totaleParziale() value=\"1\"> </td>";

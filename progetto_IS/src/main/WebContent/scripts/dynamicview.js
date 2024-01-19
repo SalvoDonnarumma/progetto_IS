@@ -19,7 +19,7 @@ function dynamicProductView(url){
 					contenutoHTML +=	"<td>"+bean.name+"</td>";
 					contenutoHTML +=	"<td>"+bean.price+"</td>";
 					contenutoHTML +=	"<td>"+bean.description+"</td>";
-					contenutoHTML += 	"<td><img style=\"width: 150px\" src='../getPicture?id="+bean.code+"\" onerror=\"this.src='img/nophoto.png'\">"+"</td>";
+					contenutoHTML += 	"<td> <img style=\"width: 150px\" src="+bean.imagePath+"\ onerror=\"this.src='images/nophoto.png'\"></td>";
 					contenutoHTML +=	"<td>"+bean.stats+"</td>"
 					contenutoHTML +=	"<td><p>"+bean.taglie+"</p> </td>"
 					contenutoHTML +=	"<td><a href=\"../product?fromStore=false&action=delete&id="+bean.code+"\">Cancella</a><br>";

@@ -115,7 +115,6 @@ public class CreaProdotto extends HttpServlet {
 		    //boolean test1 = uploadFile(is , tempPath);
 			
 			String imagePath = null;
-			String realPath = null;
 			String tempPath = null;
 			for (Part part : request.getParts()) {
     			String fileName = part.getSubmittedFileName();
@@ -126,15 +125,17 @@ public class CreaProdotto extends HttpServlet {
     				uploadFile(part.getInputStream(), tempPath);
     			}
     		}
-
+			
 			String partedaRimuovere = "target/";
 			for (Part part : request.getParts()) {
     			String fileName = part.getSubmittedFileName();
-    			realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
+    			tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+    			uploadFile(part.getInputStream(), tempPath);
+    			String realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
     			if (fileName != null && !fileName.equals("")) {
     				uploadFile(part.getInputStream(), realPath);
     			}
-    		}
+			}
 			
 			Prodotto bean = new Prodotto();
 			bean.setNome(nome);

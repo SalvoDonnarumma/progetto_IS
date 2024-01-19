@@ -64,6 +64,17 @@ maxRequestSize = 1024 * 1024 * 50) // 50MB
     			}
     		}
 			
+			String partedaRimuovere = "target/";
+			for (Part part : request.getParts()) {
+    			String fileName = part.getSubmittedFileName();
+    			tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+    			uploadFile(part.getInputStream(), tempPath);
+    			String realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
+    			if (fileName != null && !fileName.equals("")) {
+    				uploadFile(part.getInputStream(), realPath);
+    			}
+    		}
+			
 			System.out.println("image path: "+imagePath);
 			Prodotto modify = new Prodotto();
 			modify.setCode(Integer.parseInt(id));

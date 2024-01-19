@@ -105,7 +105,6 @@ public class ModificaProdotto extends HttpServlet {
 					} 
 					
 					String imagePath = null;
-					String realPath = null;
 					String tempPath = null;
 					for (Part part : request.getParts()) {
 		    			String fileName = part.getSubmittedFileName();
@@ -116,6 +115,17 @@ public class ModificaProdotto extends HttpServlet {
 		    				uploadFile(part.getInputStream(), tempPath);
 		    			}
 		    		}
+					
+					String partedaRimuovere = "target/";
+					for (Part part : request.getParts()) {
+		    			String fileName = part.getSubmittedFileName();
+		    			tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+		    			uploadFile(part.getInputStream(), tempPath);
+		    			String realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
+		    			if (fileName != null && !fileName.equals("")) {
+		    				uploadFile(part.getInputStream(), realPath);
+		    			}
+					}
 					
 					IPhotoDao photoDao = null;
 		    		photoDao = new PhotoDaoDataSource(ds);

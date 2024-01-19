@@ -42,7 +42,7 @@
 	<div class="flex-box">
 		<div class="left">
 			<div class="img">
-				<img src="./getPicture?id=<%=bean.getCode()%>" onerror="this.src='./images/nophoto.png'" alt="Immagine prodotto">
+				<img src="<%=bean.getImagePath()%>" onerror="this.src='images/nophoto.png" alt="Immagine prodotto">
 			</div>
 		</div>
 		<div class="right">

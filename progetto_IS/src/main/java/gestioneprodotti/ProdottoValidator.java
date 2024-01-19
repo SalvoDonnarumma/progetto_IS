@@ -2,7 +2,7 @@ package gestioneprodotti;
 
 public class ProdottoValidator {
 	public static boolean isValidCategoria(String input) {
-        String[] options = {"Erogatori", "Coltelli", "Guanti", "Maschere", "Mute", "Pinne", "Torche"};
+        String[] options = {"Erogatori", "Coltelli", "Guanti", "Maschere", "Mute", "Pinne", "Torce"};
         for (String option : options) {
             if (option.equalsIgnoreCase(input)) {
                 return true;
