@@ -61,7 +61,7 @@
 			<td><%=bean.getNome()%></td>
 			<td><%=bean.getPrice()%></td>
 			<td><%=bean.getDescrizione()%></td>
-			<td> <img src="./getPicture?id=<%=bean.getCode()%>" onerror="this.src='./images/nophoto.png'" alt="Immagine del prodotto" style="width:100px;height:100px"> </td>
+			<td> <img src="<%=bean.getImagePath()%>" alt="Immagine del prodotto" style="width:100px;height:100px"> </td>
 			<td><%=bean.getStats()%></td>
 			<td><p> <%=bean.getTaglie()%> </p> </td>
 			<td>

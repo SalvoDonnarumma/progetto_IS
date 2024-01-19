@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import gestioneprodotti.PhotoDaoDataSource;
 
 @WebServlet("/getPicture")
+@MultipartConfig(
+fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+maxFileSize = 1024 * 1024 * 10, // 10MB
+maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class GetPictureServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

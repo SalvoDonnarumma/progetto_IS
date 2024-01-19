@@ -1,5 +1,8 @@
 package view.prodotti;
-import java.io.IOException;   
+import java.io.File; 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -8,18 +11,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import gestioneprodotti.IProductDao;
+import gestioneprodotti.PhotoDaoDataSource;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProdottoValidator;
 import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
+import javax.servlet.annotation.MultipartConfig;
 
 /**
  * Servlet implementation class ProductControl
  */
 @WebServlet("/creaProdotto")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+maxFileSize = 1024 * 1024 * 10, // 10MB
+maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class CreaProdotto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +41,10 @@ public class CreaProdotto extends HttpServlet {
 			String nome = request.getParameter("nome");
 			String descrizione = request.getParameter("descrizione");
 			String price = request.getParameter("price");
+			System.out.println("Categoria: "+categoria);
+			System.out.println("price: "+price);
+			System.out.println("nome: "+nome);
+			System.out.println("des: "+descrizione);
 			
 			RequestDispatcher dispatcher = null;
 			dispatcher = getServletContext().getRequestDispatcher("/admin/errorpagemodifyproduct.jsp");
@@ -93,12 +106,43 @@ public class CreaProdotto extends HttpServlet {
 				}	 
 			}
 			String stats = request.getParameter("stats");
+			
+			//Salva l'immagine nella directory finale
+			//Part imagePart = request.getPart();
+			//String fileName =  imagePart.getSubmittedFileName();
+			
+			//InputStream is = imagePart.getInputStream();
+		    //boolean test1 = uploadFile(is , tempPath);
+			
+			String imagePath = null;
+			String realPath = null;
+			String tempPath = null;
+			for (Part part : request.getParts()) {
+    			String fileName = part.getSubmittedFileName();
+    			tempPath = "C:/Users/Salvatore/git/progettoIS/progetto_IS/src/main/WebContent/img_products"+ File.separator + fileName;
+    			//tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+    			imagePath = "./img_products/" + fileName;
+    			if (fileName != null && !fileName.equals("")) {
+    				uploadFile(part.getInputStream(), tempPath);
+    			}
+    		}
+
+			String partedaRimuovere = "target/";
+			for (Part part : request.getParts()) {
+    			String fileName = part.getSubmittedFileName();
+    			realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
+    			if (fileName != null && !fileName.equals("")) {
+    				uploadFile(part.getInputStream(), realPath);
+    			}
+    		}
+			
 			Prodotto bean = new Prodotto();
 			bean.setNome(nome);
 			bean.setDescrizione(descrizione);
 			bean.setCategoria(categoria);
 			bean.setStats(stats);
 			bean.setPrice(Double.parseDouble(price));
+			bean.setImagePath(imagePath);
 			productDao.doSave(bean);
 			Taglie sizes = new Taglie();			
 			int code = productDao.doRetrieveByName(bean);
@@ -118,9 +162,32 @@ public class CreaProdotto extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	 
+	
+	private boolean uploadFile(InputStream is, String path) {
+		boolean test = false;
+		System.out.println("Path: "+path);
+		try(FileOutputStream fops = new FileOutputStream(path);){
+			byte[] byt = new byte[is.available()];
+			is.read(byt);
+	
+			fops.write(byt);
+			fops.flush();
+
+			test = true;
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return test;
+	}
+	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
+	public static final String DIRECTORY = "/Users/Salvatore/git/progettoIS/progetto_IS/src/main/WebContent/img_products"
+			+ "";
 }

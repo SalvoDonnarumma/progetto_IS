@@ -12,6 +12,7 @@ public class Prodotto implements Serializable {
 	Double price;
 	String stats;
 	Taglie taglie;
+	String imagePath;
 
 	public Prodotto() {
 		code = -1;
@@ -82,8 +83,16 @@ public class Prodotto implements Serializable {
 		return taglie;
 	}
 
-
 	public void setTaglie(Taglie taglie) {
 		this.taglie = taglie;
 	}
+	
+	public String getImagePath() {
+		return this.imagePath;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 }
+
