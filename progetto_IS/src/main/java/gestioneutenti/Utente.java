@@ -2,6 +2,8 @@ package gestioneutenti;
 
 import java.io.Serializable;
 
+import gestionecarta.Carta;
+
 public class Utente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,6 +15,7 @@ public class Utente implements Serializable {
 	String cognome;
 	String telefono;
 	String ruolo;
+	Carta carta;
 
 	public Utente() {
 		id=0;
@@ -22,6 +25,7 @@ public class Utente implements Serializable {
 		cognome="";
 		telefono="";
 		ruolo="";
+		carta = null;
 	}
 
 	public String getEmail() {
@@ -78,6 +82,15 @@ public class Utente implements Serializable {
 	
 	public String getRuolo() {
 		return this.ruolo;
+	}
+
+	
+	public Carta getCarta() {
+		return carta;
+	}
+
+	public void setCarta(Carta carta) {
+		this.carta = carta;
 	}
 
 	@Override

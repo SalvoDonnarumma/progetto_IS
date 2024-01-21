@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-
+<%@ page import="gestioneutenti.Utente"%>
 <html lang="it">
 <head>
 <meta charset="ISO-8859-1">
@@ -136,8 +136,7 @@
 				<li class="item"><a href="<%=request.getContextPath()%>/store.jsp"><i class='bx bx-home-heart icon'></i></a>	</li>
 				<li class="item"><a href="<%=request.getContextPath()%>/cart.jsp"><i class='bx bx-cart icon'></i></a> </li>	
 				<%
-			} else if( isAdmin.equals("Gestore Ordini") ){ //sezione admin
-					
+			} else if( isAdmin.equals("Gestore Ordini") ){ //sezione admin		
 					if( path.contains("/store.jsp") ) { %>																																		
 <%						}	
 				%>	

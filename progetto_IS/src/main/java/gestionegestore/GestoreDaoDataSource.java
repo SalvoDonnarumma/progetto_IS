@@ -1,4 +1,4 @@
-package gestioneadmin;
+package gestionegestore;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -14,16 +14,16 @@ import javax.sql.DataSource;
 
 import gestioneutenti.Utente;
 
-public class AdminDaoDataSource implements IAdminDao {
+public class GestoreDaoDataSource implements IGestoreDao {
 
 	private DataSource ds = null;
 
-	public AdminDaoDataSource(DataSource ds) {
+	public GestoreDaoDataSource(DataSource ds) {
 		this.ds = ds;
 	}
 	
 	@Override
-	public void doSaveAdmin(Utente admin) throws SQLException {
+	public void doSaveGestore(Utente admin) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
@@ -69,13 +69,12 @@ public class AdminDaoDataSource implements IAdminDao {
     }
 	
 	@Override
-	public void doDeleteAdmin(Utente admin) throws SQLException {
+	public void doDeleteGestore(Utente admin) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		String insertSQL = "DELETE FROM Utente WHERE email = ?";
 		
-		admin.setPassword(toHash(admin.getPassword()));
 		try {
 			connection = ds.getConnection();
 			
@@ -95,7 +94,7 @@ public class AdminDaoDataSource implements IAdminDao {
 	}
 
 	@Override
-	public boolean changePassAdmin(Utente new_user) throws SQLException {
+	public boolean changePassGestore(Utente new_user) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
@@ -204,7 +203,7 @@ public class AdminDaoDataSource implements IAdminDao {
 	}
 
 	@Override
-	public Utente loginAdmin(Utente user) throws SQLException {
+	public Utente loginGestore(Utente user) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 

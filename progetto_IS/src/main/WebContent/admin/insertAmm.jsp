@@ -1,5 +1,5 @@
 <%	String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
-	if( (isSomeoneLogged == null) || isSomeoneLogged.equals("Utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti")  ){
+	if( (isSomeoneLogged == null) || isSomeoneLogged.equalsIgnoreCase("utente")|| isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti")  ){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");	
 		return;
 	}%>
@@ -10,7 +10,7 @@
 <html lang="it">
 <%@ page contentType="text/html; charset=UTF-8" import="java.util.*"%>
 	<head>
-	<title> Inserimento nuovo admin </title>
+	<title> Inserimento nuovo Gestore </title>
 <style>
 	a {
 	color: blue;
@@ -224,7 +224,7 @@ function disattivaErrore(){
 <jsp:include page="../header.jsp" flush="true"/>
 </head>
 <body>
-	<h2 class="form-title">Inserisci Amministratore</h2>
+	<h2 class="form-title">Inserisci Gestore</h2>
 	
 	<form action="<%=request.getContextPath()%>/CreaNuovoAdmin" method="post">
 		<input type="hidden" name="action" value="insert"> 

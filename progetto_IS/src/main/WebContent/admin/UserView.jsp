@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
-	if( (isSomeoneLogged == null) || isSomeoneLogged.equals("Utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti")  ){
+	if( (isSomeoneLogged == null) || isSomeoneLogged.equalsIgnoreCase("utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Prodotti")  ){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");	
 		return;
 	}

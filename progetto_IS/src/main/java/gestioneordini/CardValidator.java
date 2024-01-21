@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CartValidator {
+public class CardValidator {
 	public static boolean isValidFormat(String input) {
         String regex = "\\d{4}-\\d{4}-\\d{4}-\\d{4}";
         Pattern pattern = Pattern.compile(regex);
@@ -41,5 +41,22 @@ public class CartValidator {
             }
         }
         return true;
+    }
+    
+    public static String convertiNumeroInMese(String numeroMese) {
+        int numero = Integer.parseInt(numeroMese);
+
+        if (numero < 1 || numero > 12) {
+            return "Numero mese non valido";
+        }
+
+        // Array con i nomi dei mesi
+        String[] nomiMesi = {
+                "Gennaio", "Febbraio", "Marzo", "Aprile",
+                "Maggio", "Giugno", "Luglio", "Agosto",
+                "Settembre", "Ottobre", "Novembre", "Dicembre"
+        };
+
+        return nomiMesi[numero - 1];
     }
 }

@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,23 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
 
 /**
- * Servlet implementation class CreaNuovoAdminValidator
+ * Servlet implementation class CreaNuovoGestoreValidator
  */
 @WebServlet("/CreaNuovoAdminValidator")
-public class CreaNuovoAdminValidator extends HttpServlet {
+public class CreaNuovoGestoreValidator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreaNuovoAdminValidator() {
+    public CreaNuovoGestoreValidator() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,9 +38,9 @@ public class CreaNuovoAdminValidator extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IAdminDao adminDao = null;
+		IGestoreDao gestoreDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		adminDao = new AdminDaoDataSource(ds);
+		gestoreDao = new GestoreDaoDataSource(ds);
 		IUserDao userDao = new UserDaoDataSource(ds);
 		
 		
@@ -76,7 +76,7 @@ public class CreaNuovoAdminValidator extends HttpServlet {
 		}			
 			
 		RequestDispatcher dispatcher = null;		
-        dispatcher = getServletContext().getRequestDispatcher("/CreaNuovoAdmin");
+        dispatcher = getServletContext().getRequestDispatcher("/CreaNuovoGestore");
 		dispatcher.forward(request, response);
 	}
 

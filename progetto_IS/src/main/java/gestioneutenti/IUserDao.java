@@ -14,7 +14,7 @@ public interface IUserDao {
 	
 	public Utente login(Utente user) throws SQLException;
 	
-	public  Boolean comparePass(String oldPassHash, String passToBeMatch);
+	public  Boolean validateOldPassword(String oldPassHash, String passToBeMatch);
 
 	boolean changePass(String pass, Utente user) throws SQLException;
 		

@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;   
 import java.sql.SQLException;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -23,14 +23,14 @@ import gestioneutenti.Utente;
  * Servlet implementation class AdminControl
  */
 @WebServlet("/cambioPasswordAdmin")
-public class CambioPasswordAdmin extends HttpServlet {
+public class CambioPasswordGestore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		IAdminDao adminDao = null;
+		IGestoreDao gestoreDao = null;
 		IUserDao userDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		adminDao = new AdminDaoDataSource(ds);
+		gestoreDao = new GestoreDaoDataSource(ds);
 		userDao = new UserDaoDataSource(ds);
 		
 		try {
@@ -40,14 +40,13 @@ public class CambioPasswordAdmin extends HttpServlet {
 			bean.setEmail(email);			
 		    Utente old = userDao.doRetrieveByEmail(bean);		
 			old.setPassword(confPass);
-			adminDao.changePassAdmin(old);			
+			gestoreDao.changePassGestore(old);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		RequestDispatcher dispatcher = null;	
 		dispatcher = getServletContext().getRequestDispatcher("/admin/UserView.jsp");
-
 		dispatcher.forward(request, response);
 	}
 

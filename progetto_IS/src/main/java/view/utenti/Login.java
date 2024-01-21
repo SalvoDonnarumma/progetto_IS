@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
 import gestionecarrello.Carrello;
 import gestionecarrello.CarrelloDaoDataSource;
 import gestionecarrello.ICarrelloDao;
+import gestionecarta.Carta;
+import gestionecarta.CartaDaoDataSource;
+import gestionecarta.ICartaDaoData;
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -26,11 +29,11 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 	
 			IUserDao userDao = null;	
-			IAdminDao adminDao = null;
+			IGestoreDao gestoreDao = null;
 			ICarrelloDao carrelloDao = null;
 			DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 			userDao = new UserDaoDataSource(ds);
-			adminDao = new AdminDaoDataSource(ds);
+			gestoreDao = new GestoreDaoDataSource(ds);
 			carrelloDao = new CarrelloDaoDataSource(ds);
 			
 			String username = request.getParameter("email");
@@ -58,7 +61,7 @@ public class Login extends HttpServlet {
 				if(jspName.equals("loginutenti"))
 					match=userDao.login(match);
 				else if(jspName.equals("loginadmin"))
-					match=adminDao.loginAdmin(match);
+					match=gestoreDao.loginGestore(match);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -70,6 +73,15 @@ public class Login extends HttpServlet {
 				return;
 			} 
 					
+			ICartaDaoData cartaDao = null;
+			cartaDao = new CartaDaoDataSource(ds);	
+			try {
+				Carta carta = cartaDao.recuperaCarta(match);
+				match.setCarta(carta);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
 			String result = match.getRuolo();
 			if( result.equals("Gestore Ordini")) { //sono state usate credenziali di admin
 				request.getSession().setAttribute("isAdmin", "Gestore Ordini"); //inserisco il token nella sessione

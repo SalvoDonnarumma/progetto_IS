@@ -1,4 +1,4 @@
-package view.admin;
+package view.carta;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,40 +10,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import gestioneadmin.AdminDaoDataSource;
+
+import gestionecarta.CartaDaoDataSource;
+import gestionecarta.ICartaDaoData;
+import gestioneutenti.Utente;
 
 /**
- * Servlet implementation class OttieniElencoUtenti
+ * Servlet implementation class eliminaCarta
  */
-@WebServlet("/OttieniElencoUtenti")
-public class OttieniElencoUtenti extends HttpServlet {
+@WebServlet("/eliminaCarta")
+public class eliminaCarta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OttieniElencoUtenti() {
+    public eliminaCarta() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ICartaDaoData cartaDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		AdminDaoDataSource adminDao = new AdminDaoDataSource(ds);
+		cartaDao = new CartaDaoDataSource(ds);
 		
-		String sort = request.getParameter("sort");
+		System.out.println("Esecuzione della servlet eliminaCarta");
+		
+		Utente logged = (Utente) request.getSession().getAttribute("logged");
 		try {
-			request.removeAttribute("users");
-			request.setAttribute("users", adminDao.doRetrieveUtentiSorted(sort));
-		
+			cartaDao.cancellaCarta(logged.getCarta());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		RequestDispatcher dispatcher = null;
-		dispatcher = getServletContext().getRequestDispatcher("/admin/UserView.jsp");
+		
+		logged.setCarta(null);
+		request.getSession().removeAttribute("logged");
+		request.getSession().setAttribute("logged", logged);
+		RequestDispatcher dispatcher = null;	
+		dispatcher = getServletContext().getRequestDispatcher("/modifypaymentcard.jsp");
 		dispatcher.forward(request, response);
 	}
 

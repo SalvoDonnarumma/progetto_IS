@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;
 

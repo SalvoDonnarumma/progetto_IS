@@ -1,5 +1,5 @@
 <%  String isSomeoneLogged = (String) request.getSession().getAttribute("isAdmin");
-	if( (isSomeoneLogged == null) || isSomeoneLogged.equals("Utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Utenti")  ){
+	if( (isSomeoneLogged == null) || isSomeoneLogged.equalsIgnoreCase("utente") || isSomeoneLogged.equals("Gestore Ordini") || isSomeoneLogged.equals("Gestore Utenti")  ){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");	
 	return;
 	}

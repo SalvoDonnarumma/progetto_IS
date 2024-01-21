@@ -163,7 +163,7 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	@Override
-	public synchronized Collection<ProdottoOrdinato> doRetrieveById(String order, Ordine ordine) throws SQLException {
+	public synchronized Collection<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Collection<ProdottoOrdinato> singleorder = new LinkedList<>();
@@ -171,17 +171,10 @@ public class OrderDaoDataSource implements IOrderDao{
 		int code = ordine.getIdOrdine();
 		String selectSQL = "SELECT * FROM prodottoordinato WHERE idOrdine = ?" ;
 
-		if (order != null && !order.equals("")) {
-			selectSQL += "ORDER BY ?";
-		}
-
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, code);
-			if (order != null && !order.equals("")) {
-				preparedStatement.setString(2, order);
-			}
 			
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -208,7 +201,7 @@ public class OrderDaoDataSource implements IOrderDao{
 		return singleorder;
 	}
 	
-	public synchronized int doSaveAll(Ordine bean, Double ptot) throws SQLException {
+	public synchronized int doSaveAll(Ordine bean) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
@@ -221,7 +214,7 @@ public class OrderDaoDataSource implements IOrderDao{
 			preparedStatement.setString(2, bean.getData());
 			preparedStatement.setString(3, bean.getStato());
 			preparedStatement.setString(4, bean.getIndirizzo());
-			preparedStatement.setDouble(5, ptot);
+			preparedStatement.setDouble(5, bean.getPrezzototale());
 			
 			preparedStatement.executeUpdate();
 		} finally {

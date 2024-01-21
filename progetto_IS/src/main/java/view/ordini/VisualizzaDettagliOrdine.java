@@ -38,7 +38,7 @@ public class VisualizzaDettagliOrdine extends HttpServlet {
 		try {
 			Ordine o = new Ordine();
 			o.setIdOrdine(Integer.parseInt(idOrdine));
-			order = orderDao.doRetrieveById(null, o);
+			order = orderDao.doRetrieveById(o);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

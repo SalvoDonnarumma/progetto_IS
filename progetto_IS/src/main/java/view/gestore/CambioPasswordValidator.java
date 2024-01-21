@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -38,10 +38,10 @@ public class CambioPasswordValidator extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IAdminDao adminDao = null;
+		IGestoreDao gestoreDao = null;
 		IUserDao userDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		adminDao = new AdminDaoDataSource(ds);
+		gestoreDao = new GestoreDaoDataSource(ds);
 		userDao = new UserDaoDataSource(ds);
 		
 		try {
@@ -68,7 +68,7 @@ public class CambioPasswordValidator extends HttpServlet {
 					
 		    Utente old = userDao.doRetrieveByEmail(bean);
 		    bean.setPassword(oldPass);
-			if( !adminDao.validateOldPassword(bean, old)) {
+			if( !gestoreDao.validateOldPassword(bean, old)) {
 				errors.add("La vecchia password inserita non &egrave; valida!");
 				request.setAttribute("errors", errors);
 				dispatcherChangePassPage.forward(request, response);

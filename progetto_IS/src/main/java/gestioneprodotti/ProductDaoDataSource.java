@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
+
 import view.sito.*;
 
 public class ProductDaoDataSource implements IProductDao {
@@ -400,109 +401,5 @@ public class ProductDaoDataSource implements IProductDao {
 			}
 		}
 		return products;
-	}
-	
-
-	public synchronized void updatePhoto(String idA, InputStream photo) 
-			throws SQLException {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		try {
-			con = 	DriverManagerConnectionPool.getConnection();
-			stmt = con.prepareStatement("UPDATE prodotto SET photo = ? WHERE idProdotto = ?");
-			try {
-				stmt.setBinaryStream(1, photo, photo.available());
-				stmt.setString(2, idA);	
-				stmt.executeUpdate();
-				con.commit();
-			} catch (IOException e) {
-				 
-			}
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException sqlException) {
-				sqlException.printStackTrace();
-			} finally {
-				if (con != null)
-					DriverManagerConnectionPool.releaseConnection(con);
-			}
-		}
-	}
-	
-	public synchronized byte[] load(String id) throws SQLException {
-
-		Connection connection = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		byte[] bt = null;
-
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-			String sql = "SELECT photo FROM prodotto WHERE idProdotto = ?";
-			stmt = connection.prepareStatement(sql);
-			
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				bt = rs.getBytes("photo");
-			}
-
-		} catch (SQLException sqlException) {
-		} 
-		finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException sqlException) {
-				sqlException.printStackTrace();
-			} finally {
-				if (connection != null) 
-					DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
-		return bt;
-	}
-
-	@Override
-	public Collection<Prodotto> sortByName(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Collection<Prodotto> products = new LinkedList<>();
-
-		String selectSQL = "SELECT * FROM prodotto ORDER BY nome";
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				Prodotto bean = new Prodotto();
-				int code = rs.getInt("idProdotto");
-				bean.setCode(code);
-				bean.setCategoria(rs.getString("CATEGORIA"));
-				bean.setNome(rs.getString("NOME"));
-				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrice(rs.getDouble("PRICE"));
-				bean.setStats(rs.getString("STATS"));
-				Taglie taglie = this.getSizesByKey(bean);
-				bean.setTaglie(taglie);
-				products.add(bean);
-			}
-
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return products;
-	}
+	}	
 }

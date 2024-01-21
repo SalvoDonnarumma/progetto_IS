@@ -13,7 +13,7 @@
 		return;
 	}
 %>
-<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente"%>
+<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente, gestioneordini.CardValidator"%>
 <html lang="it">
 <head>
 <title> Acquisto-OctoPlus </title>
@@ -80,7 +80,7 @@
 			<div class="box1">		
 			     	<h3><%=bean.getNome()%></h3>
 		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode()%>&">
-		 			<img src="./getPicture?id=<%=bean.getCode()%>" onerror="this.src='./img/nophoto.png'" alt="immagine prodotto">
+		 			<img src="<%= bean.getImagePath() %>" onerror="this.src='./img/nophoto.png'" alt="immagine prodotto">
 		 			</a>
 		 			<h4> Categoria: <%=bean.getCategoria()%> </h4>
 		 			<h5> <span class="price"> Prezzo: <%=bean.getPrice()*Integer.parseInt(request.getParameter("qnt0"))%></span> </h5>
@@ -148,23 +148,55 @@
 	              <i class="fa fa-cc-discover" style="color:orange;"></i>
 	            </div>
 	            <label for="cname">Nome sulla carta</label>
-	            <input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
-			 	<span id="errorNameC"> </span>
-	            <label for="ccnum">Numero di carta di credito</label>
-	            <input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
-	            pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
-			 	<span id="errorNumberC"> </span>
+	            
+	      		<% if( user.getCarta() != null ) { %>
+	      			<input type="text" id="cname" name="nome" value="<%=user.getCarta().getProprietario() %>" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorNameC"> </span>
+	    		<% } else {%>
+	            	<input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorNameC"> </span>
+			 	<% } %>
+			 	
+			 	<label for="ccnum">Numero di carta di credito</label>
+			 	<% if( user.getCarta() != null ) { %>
+			 		 <input type="text" id="ccnum" name="numero_carta" value="<%=user.getCarta().getNumero_carta()%>" required
+	            	pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
+			 		<span id="errorNumberC"> </span>
+			 	<% } else { %>	        
+	            	<input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
+	            	pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
+			 		<span id="errorNumberC"> </span>
+			 	<% } %>
+			 	
+			 	
 	            <label for="expmonth">Mese di scadenza</label>
+	            <% if( user.getCarta() != null ) { 
+	            		String mese = CardValidator.convertiNumeroInMese(user.getCarta().getData_scadenza().substring(0, 2));
+	            %>
+	            	<input type="text" id="expmonth" name="mese_scadenza" value="<%= mese %>"  required
+	            	pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorMonthC"> </span>
+	            <% } else { %>
 	            <input type="text" id="expmonth" name="mese_scadenza" placeholder="Settembre"  required
 	            pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorMonthC"> </span>
+			 	<% } %>
 	            <div class="row">
 	              <div class="col-50">
-	                <label for="expyear">Anno di scadenza</label>
-	                <input type="text" id="expyear" name="anno_scadenza" placeholder="2018" required pattern="\d{4}"
-	                onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
-			 		<span id="errorEXPC"> </span>
+	              	<label for="expyear">Anno di scadenza</label>
+	              	<% if(user.getCarta() != null){
+	              		String anno = user.getCarta().getData_scadenza().substring(3, 7);
+		            %>
+	              		<input type="text" id="expyear" name="anno_scadenza" value="<%=anno%>" required pattern="\d{4}"
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+			 			<span id="errorEXPC"> </span>
+	              	<% } else { %>
+	                	<input type="text" id="expyear" name="anno_scadenza" placeholder="2024" required pattern="\d{4}"
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+			 			<span id="errorEXPC"> </span>
+			 		<% } %>
 	              </div>
 	              <div class="col-50">
 	                <label for="cvv">CVV</label>
@@ -173,6 +205,11 @@
 			 		<span id="errorCVV"> </span>
 	              </div>
 	            </div>
+	            <div class="checkbox-container">
+    				
+    				<label for="salvareDatiCarta" class="checkbox-label" >Salvare dati carta?</label>
+    				<input type="checkbox" id="salvareDatiCarta" name="salvaDati">
+				</div>
 	          </div>
 	        </div>
 	        
@@ -224,23 +261,55 @@
 	              <i class="fa fa-cc-discover" style="color:orange;"></i>
 	            </div>
 	            <label for="cname">Nome sulla carta</label>
-	            <input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
-			 	<span id="errorNameC"> </span>
-	            <label for="ccnum">Numero di carta di credito</label>
-	            <input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
-	            pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
-			 	<span id="errorNumberC"> </span>
+	            
+	      		<% if( user.getCarta() != null ) { %>
+	      			<input type="text" id="cname" name="nome" value="<%=user.getCarta().getProprietario() %>" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorNameC"> </span>
+	    		<% } else {%>
+	            	<input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorNameC"> </span>
+			 	<% } %>
+			 	
+			 	<label for="ccnum">Numero di carta di credito</label>
+			 	<% if( user.getCarta() != null ) { %>
+			 		 <input type="text" id="ccnum" name="numero_carta" value="<%=user.getCarta().getNumero_carta()%>" required
+	            	pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
+			 		<span id="errorNumberC"> </span>
+			 	<% } else { %>	        
+	            	<input type="text" id="ccnum" name="numero_carta" placeholder="1111-2222-3333-4444" required
+	            	pattern="\d{4}-\d{4}-\d{4}-\d{4}" onChange="validateFormElem(this, document.getElementById('errorNumberC'), formatErrorMessage)">
+			 		<span id="errorNumberC"> </span>
+			 	<% } %>
+			 	
+			 	
 	            <label for="expmonth">Mese di scadenza</label>
+	            <% if( user.getCarta() != null ) { 
+	            		String mese = CardValidator.convertiNumeroInMese(user.getCarta().getData_scadenza().substring(0, 2));
+	            %>
+	            	<input type="text" id="expmonth" name="mese_scadenza" value="<%= mese %>"  required
+	            	pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
+			 		<span id="errorMonthC"> </span>
+	            <% } else { %>
 	            <input type="text" id="expmonth" name="mese_scadenza" placeholder="Settembre"  required
 	            pattern="[A-Za-z]+" onChange="validateFormElem(this, document.getElementById('errorMonthC'), nameOrLastnameErrorMessage)">
 			 	<span id="errorMonthC"> </span>
+			 	<% } %>
 	            <div class="row">
 	              <div class="col-50">
-	                <label for="expyear">Anno di scadenza</label>
-	                <input type="text" id="expyear" name="anno_scadenza" placeholder="2018" required pattern="\d{4}"
-	                onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
-			 		<span id="errorEXPC"> </span>
+	              	<label for="expyear">Anno di scadenza</label>
+	              	<% if(user.getCarta() != null){
+	              		String anno = user.getCarta().getData_scadenza().substring(3, 7);
+		            %>
+	              		<input type="text" id="expyear" name="anno_scadenza" value="<%=anno%>" required pattern="\d{4}"
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+			 			<span id="errorEXPC"> </span>
+	              	<% } else { %>
+	                	<input type="text" id="expyear" name="anno_scadenza" placeholder="2024" required pattern="\d{4}"
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+			 			<span id="errorEXPC"> </span>
+			 		<% } %>
 	              </div>
 	              <div class="col-50">
 	                <label for="cvv">CVV</label>
@@ -249,6 +318,10 @@
 			 		<span id="errorCVV"> </span>
 	              </div>
 	            </div>
+	            <div class="checkbox-container">
+    				<label for="salvareDatiCarta" class="checkbox-label">Salva dati pagamento</label>
+    				<input type="checkbox" id="salvareDatiCarta" name="salvaDati">
+				</div>
 	          </div>
 	        </div>
 	        <input onClick="purchaseAlert();" type="submit" value="Continue to checkout" class="btn">

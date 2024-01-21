@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import gestionecarrello.Carrello;
-import gestioneordini.CartValidator;
+import gestionecarta.Carta;
+import gestionecarta.CartaDaoDataSource;
+import gestionecarta.ICartaDaoData;
+import gestioneordini.CardValidator;
 import gestioneordini.IOrderDao;
 import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
@@ -61,6 +64,8 @@ public class CreaOrdine extends HttpServlet {
 		String mese_scadenza = request.getParameter("mese_scadenza");
 		String anno_scadenza = request.getParameter("anno_scadenza");
 		String cvv = request.getParameter("cvv");
+		
+		String salvaDati = request.getParameter("salvaDati");
 		RequestDispatcher dispatcher = null;
 		dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp?fromCart=false&qnt="+request.getParameter("qnt")+"&sz="+request.getParameter("sz"));
 		if(nome_carta == null) {
@@ -68,7 +73,7 @@ public class CreaOrdine extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		if(numero_carta != null) {
-			if(!CartValidator.isValidFormat(numero_carta)) {
+			if(!CardValidator.isValidFormat(numero_carta)) {
 				System.out.println("Numero di carta non è valido");
 				dispatcher.forward(request, response);
 			}
@@ -78,7 +83,7 @@ public class CreaOrdine extends HttpServlet {
 		}
 		
 		if(mese_scadenza != null) {
-			if(!CartValidator.isValidMonth(mese_scadenza)) {
+			if(!CardValidator.isValidMonth(mese_scadenza)) {
 				System.out.println("Mese di scadenza non valido");
 				dispatcher.forward(request, response);
 			}
@@ -88,7 +93,7 @@ public class CreaOrdine extends HttpServlet {
 		}
 		
 		if(anno_scadenza != null) {
-			if(!CartValidator.isYearNotExpired(anno_scadenza)) {
+			if(!CardValidator.isYearNotExpired(anno_scadenza)) {
 				System.out.println("Campo anno scadenza non valido");
 				dispatcher.forward(request, response);
 			}
@@ -98,7 +103,7 @@ public class CreaOrdine extends HttpServlet {
 		}
 		
 		if(cvv != null) {
-			if(!CartValidator.isValidCVV(cvv)) {
+			if(!CardValidator.isValidCVV(cvv)) {
 				System.out.println("Campo anno scadenza vuoto");
 				dispatcher.forward(request, response);
 			}
@@ -225,6 +230,24 @@ public class CreaOrdine extends HttpServlet {
 					request.getSession().setAttribute("da_acquistare", null);
 					request.getSession().removeAttribute("cart");
 					request.getSession().setAttribute("cart", newcart);
+					if( salvaDati != null && salvaDati.equals("on")) { //Devo salvare la carta
+						ICartaDaoData cardDao = new CartaDaoDataSource(ds);
+						Carta carta = new Carta();
+						carta.setIdCarta(bean.getId());
+						String mm = convertiMeseInNumero(mese_scadenza); 
+						carta.setData_scadenza(mm+"/"+anno_scadenza);
+						carta.setNumero_carta(numero_carta);
+						carta.setProprietario(nome_carta);
+						try {
+							cardDao.salvaCarta(carta);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+						request.getSession().removeAttribute("logged");
+						request.getSession().setAttribute("logged", bean);
+						bean.setCarta(carta);
+					}
 					errors.clear();
 				} else if( action.equalsIgnoreCase("purchaseAll")) { 
 					Carrello cart = (Carrello) request.getSession().getAttribute("cart");
@@ -312,8 +335,8 @@ public class CreaOrdine extends HttpServlet {
 					
 					Double ptot = Double.parseDouble(request.getParameter("tot"));
 					try {
-						/*Salvo l'ordine col prezzo totale*/
-						orderDao.doSaveAll(order, ptot);
+						order.setPrezzototale(ptot);
+						orderDao.doSaveAll(order);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -322,6 +345,25 @@ public class CreaOrdine extends HttpServlet {
 					Carrello newcart = new Carrello();
 					request.getSession().removeAttribute("cart");
 					request.getSession().setAttribute("cart", newcart);
+					
+					if( salvaDati != null && salvaDati.equals("on")) { //Devo salvare la carta
+						ICartaDaoData cardDao = new CartaDaoDataSource(ds);
+						Carta carta = new Carta();
+						carta.setIdCarta(bean.getId());
+						String mm = convertiMeseInNumero(mese_scadenza); 
+						carta.setData_scadenza(mm+"/"+anno_scadenza);
+						carta.setNumero_carta(numero_carta);
+						carta.setProprietario(nome_carta);
+						try {
+							cardDao.salvaCarta(carta);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+						request.getSession().removeAttribute("logged");
+						request.getSession().setAttribute("logged", bean);
+						bean.setCarta(carta);
+					}
 				}
 							
 		String fromStore = request.getParameter("fromStore");
@@ -341,4 +383,19 @@ public class CreaOrdine extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private static String convertiMeseInNumero(String nomeMese) {
+        String[] nomiMesi = {
+                "Gennaio", "Febbraio", "Marzo", "Aprile",
+                "Maggio", "Giugno", "Luglio", "Agosto",
+                "Settembre", "Ottobre", "Novembre", "Dicembre"
+        };
+
+        for (int i = 0; i < nomiMesi.length; i++) {
+            if (nomiMesi[i].equalsIgnoreCase(nomeMese)) {
+                return (i + 1 < 10) ? "0" + (i + 1) : String.valueOf(i + 1);
+            }
+        }
+
+        return "Mese non valido";
+    }
 }

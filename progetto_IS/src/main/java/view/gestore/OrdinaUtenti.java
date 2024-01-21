@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
+import gestionegestore.GestoreDaoDataSource;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 
@@ -35,7 +35,7 @@ public class OrdinaUtenti extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		AdminDaoDataSource adminDao = new AdminDaoDataSource(ds);
+		GestoreDaoDataSource adminDao = new GestoreDaoDataSource(ds);
 		
 		String sort = request.getParameter("sort");
 		try {

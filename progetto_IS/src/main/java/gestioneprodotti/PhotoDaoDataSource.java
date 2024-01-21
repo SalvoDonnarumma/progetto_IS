@@ -17,40 +17,6 @@ public class PhotoDaoDataSource implements IPhotoDao {
 		this.ds = ds;
 	}
 	
-	public synchronized static byte[] load(String id) throws SQLException {
-		Connection connection = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		byte[] bt = null;
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-			String sql = "SELECT photo FROM prodotto WHERE idProdotto = ?";
-			stmt = connection.prepareStatement(sql);
-			
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				bt = rs.getBytes("photo");
-			}
-
-		} catch (SQLException sqlException) {
-			/*commento per riempire il try-catch*/
-		} 
-			finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException sqlException) {
-				/*commento per riempire il try-catch*/
-			} finally {
-				if (connection != null) 
-					DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
-		return bt;
-	}
-	
 	public void updatePhoto(Prodotto modify) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

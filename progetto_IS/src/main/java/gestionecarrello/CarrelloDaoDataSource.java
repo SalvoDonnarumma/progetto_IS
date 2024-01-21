@@ -1,6 +1,6 @@
 package gestionecarrello;
 
-import java.sql.Connection;  
+import java.sql.Connection;   
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -148,5 +148,4 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 		}
 		return carrello;
 	}
-
 }

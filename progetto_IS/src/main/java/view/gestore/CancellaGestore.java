@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;    
 import java.sql.SQLException;
@@ -10,27 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.Utente;
 
 /**
  * Servlet implementation class AdminControl
  */
 @WebServlet("/CancellaAdmin")
-public class CancellaAdmin extends HttpServlet {
+public class CancellaGestore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		IAdminDao adminDao = null;
+		IGestoreDao gestoreDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		adminDao = new AdminDaoDataSource(ds);
+		gestoreDao = new GestoreDaoDataSource(ds);
 
 		Utente admin = new Utente();
 		try {
 			String email = request.getParameter("email");
 			admin.setEmail(email);
-			adminDao.doDeleteAdmin(admin);				
+			gestoreDao.doDeleteGestore(admin);				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

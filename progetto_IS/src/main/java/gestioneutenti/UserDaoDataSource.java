@@ -10,8 +10,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import gestioneutenti.Utente;
 import javax.sql.DataSource;
+
+import gestionecarta.Carta;
+import gestionecarta.CartaDaoDataSource;
+import gestionecarta.ICartaDaoData;
 
 public class UserDaoDataSource implements IUserDao {
 
@@ -144,8 +147,7 @@ public class UserDaoDataSource implements IUserDao {
         return hashString;
     }
 	
-	@SuppressWarnings("null")
-	public synchronized Boolean comparePass(String oldPassHash, String passToBeMatch) {
+	public synchronized Boolean validateOldPassword(String oldPassHash, String passToBeMatch) {
 		String hashedpassToBeMatch = this.toHash(passToBeMatch);
 		if( hashedpassToBeMatch == null || hashedpassToBeMatch.equals("null"))
 			return false;
@@ -164,7 +166,7 @@ public class UserDaoDataSource implements IUserDao {
 		String hashPassword = toHash(password);
 		String emailToBeMatch = null;
 		String hashPasswordToBeMatch = null;
-
+		ICartaDaoData cardDao = new CartaDaoDataSource(ds);
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQLUser);
@@ -182,6 +184,8 @@ public class UserDaoDataSource implements IUserDao {
 						user.setTelefono(rs.getString("telefono"));
 						user.setNome(rs.getString("nome"));
 						user.setRuolo(rs.getString("ruolo"));
+						Carta carta = cardDao.recuperaCarta(user);
+						user.setCarta(carta);
 					return user;
 				}
 			}

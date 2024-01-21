@@ -71,7 +71,7 @@ public class CambioPassword extends HttpServlet {
 		    }
 		    
 		    if(!no_email) {
-		    	if( !userDao.comparePass(bean.getPassword(), oldPass) ) {
+		    	if( !userDao.validateOldPassword(bean.getPassword(), oldPass) ) {
 		    		errors.add("La vecchia password inserita non &egrave; valida!");
 		    		request.setAttribute("errors", errors);
 		    		dispatcherChangePassPage.forward(request, response);

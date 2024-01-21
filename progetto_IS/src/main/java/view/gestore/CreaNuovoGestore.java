@@ -1,4 +1,4 @@
-package view.admin;
+package view.gestore;
 
 import java.io.IOException;  
 
@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import gestioneadmin.AdminDaoDataSource;
-import gestioneadmin.IAdminDao;
+
+import gestionegestore.GestoreDaoDataSource;
+import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -23,13 +24,13 @@ import gestioneutenti.Utente;
  * Servlet implementation class AdminControl
  */
 @WebServlet("/CreaNuovoAdmin")
-public class CreaNuovoAdmin extends HttpServlet {
+public class CreaNuovoGestore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		IAdminDao adminDao = null;
+		IGestoreDao gestoreDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		adminDao = new AdminDaoDataSource(ds);
+		gestoreDao = new GestoreDaoDataSource(ds);
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -45,7 +46,7 @@ public class CreaNuovoAdmin extends HttpServlet {
 		bean.setRuolo(ruolo);
 					
 		try {
-			adminDao.doSaveAdmin(bean);			
+			gestoreDao.doSaveGestore(bean);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

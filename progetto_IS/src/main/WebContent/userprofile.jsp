@@ -37,6 +37,7 @@
                 <li><strong>Email:</strong> <%=bean.getEmail() %> 
                 <div class="password-change"> 
             		<p> <a href="./changepass.jsp" class="no-border-link">Cambia password</a></p>
+            		<p> <a href="./modifypaymentcard.jsp" class="no-border-link">Modifica dati carta di pagamento</a></p>
        			 </div>
        			</li>
                 <li><strong>Numero di telefono:</strong> <%=bean.getTelefono() %></li>
