@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Utente idutente="1" email="salvatoredonnarumma@gmail.com" nome="Salvatore" cognome="Donnarumma" password="d0a845a8304784446b1a261ba3b59e27" telefono="320-1234567" ruolo="utente"/>
+    <Utente idutente="2" email="orlandotomeo@gmail.com" nome="Orlando" cognome="Tomeo" password="d0a845a8304784446b1a261ba3b59e27" telefono="351-1234567" ruolo="utente"/>
+    <Utente idutente="3" email="jojoland@gmail.com" nome="Giorno" cognome="Giovanna" password="eb8f3efd475be656ee6310caa64c45367c2035fcc021643dfbb3eda6a5222b9301a6f54779e86fce2541002927f0881d2072ddee74b8bc040f1e9a82075b2ad6" telefono="333-1234567" ruolo="utente"/>
+</dataset>

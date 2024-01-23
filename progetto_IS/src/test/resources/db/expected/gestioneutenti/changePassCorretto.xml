@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Utente idutente="1" email="salvatoredonnarumma@gmail.com" nome="Salvatore" cognome="Donnarumma" password="d0a845a8304784446b1a261ba3b59e27" telefono="320-1234567" ruolo="utente"/>
+    <Utente idutente="2" email="orlandotomeo@gmail.com" nome="Orlando" cognome="Tomeo" password="298cd57e95d9d57e68e480e07ecebb9a699021db15736c72ad122fcf89ccf0e5f0151bc24576c49e50efb556e25248ab101e735e2123640d2c7bbe14ee2afa84" telefono="351-1234567" ruolo="utente"/>
+</dataset>

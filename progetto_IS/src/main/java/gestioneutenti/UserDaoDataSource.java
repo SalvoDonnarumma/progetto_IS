@@ -58,7 +58,7 @@ public class UserDaoDataSource implements IUserDao {
 		
 		if(user.getId() == null)
 			throw new CheckException("Id non valido!");
-		if(user.getEmail() == null || user.getEmail() == "")
+		if(user.getEmail() == null || user.getEmail() == "" || !UtenteRegistrazioneValidator.isValidEmail(user.getEmail()))
 			throw new CheckException("Id non valido!");
 		if(user.getPassword() == null || user.getPassword() == "")
 			throw new CheckException("Id non valido!");
@@ -100,7 +100,7 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	@Override
-	public synchronized ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException {
+	public synchronized ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -110,6 +110,8 @@ public class UserDaoDataSource implements IUserDao {
 
 		if (order != null && !order.equals("")) {
 			selectSQL += "ORDER BY ?";
+			if( !order.equals("nome") && !order.equals("email"))
+				throw new CheckException("Ordinamento non valido");
 		}
 
 		try {
@@ -223,6 +225,16 @@ public class UserDaoDataSource implements IUserDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
+		if( user == null )
+			throw new CheckException("cambio pass non valido");
+		
+		if( user.getEmail() == null || user.getEmail().equals(""))
+			throw new CheckException("cambio pass non valido");
+		
+		if( pass == null || pass.equals("") )
+			throw new CheckException("cambio pass non valido");
+		
+		
 		Integer idUtente = user.getId();
 		String deleteSQL = "UPDATE utente SET password = ? WHERE idUtente = ?";
 		if(pass == null || pass == "")
@@ -296,7 +308,7 @@ public class UserDaoDataSource implements IUserDao {
 		PreparedStatement preparedStatement = null;
 
 		Utente bean = new Utente();
-		if(user.getEmail() == null)
+		if(user.getEmail() == null || user.getEmail().equals(""))
 			throw new CheckException("Email non valida!");
 		String selectSQL = "SELECT * FROM utente WHERE email= ?" ;
 		String idUtente = user.getEmail();	

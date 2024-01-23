@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `utente` (
   `cognome` VARCHAR(45) NULL,
   `telefono` VARCHAR(11) NULL,
   `ruolo` VARCHAR(45) NULL,
-  PRIMARY KEY (`idutente`)
+  PRIMARY KEY (`email`)
 );
 
 -- Table `storageprogetto`.`carta`
