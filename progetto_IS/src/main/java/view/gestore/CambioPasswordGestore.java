@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionegestore.GestoreDaoDataSource;
 import gestionegestore.IGestoreDao;
 import gestioneutenti.IUserDao;
@@ -41,7 +42,7 @@ public class CambioPasswordGestore extends HttpServlet {
 		    Utente old = userDao.doRetrieveByEmail(bean);		
 			old.setPassword(confPass);
 			gestoreDao.changePassGestore(old);			
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

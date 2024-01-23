@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
@@ -50,10 +51,25 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	@Override
-	public synchronized String doSaveUser(Utente user) throws SQLException {
+	public synchronized String doSaveUser(Utente user) throws SQLException, CheckException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if(user.getId() == null)
+			throw new CheckException("Id non valido!");
+		if(user.getEmail() == null || user.getEmail() == "")
+			throw new CheckException("Id non valido!");
+		if(user.getPassword() == null || user.getPassword() == "")
+			throw new CheckException("Id non valido!");
+		if(user.getNome()== null || user.getNome() == "")
+			throw new CheckException("Id non valido!");
+		if(user.getCognome() == null || user.getCognome() == "")
+			throw new CheckException("Id non valido!");
+		if(user.getTelefono() == null || user.getTelefono() == "")
+			throw new CheckException("Id non valido!");
+		if(user.getRuolo() == null || user.getRuolo() == "")
+			throw new CheckException("Id non valido!");
 		
 		String insertSQL = "INSERT INTO utente (email, password, nome, cognome, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
 		
@@ -84,11 +100,11 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	@Override
-	public synchronized Collection<Utente> doRetrieveAllUsers(String order) throws SQLException {
+	public synchronized ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<Utente> users = new LinkedList<>();
+		ArrayList<Utente> users = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM utente" ;
 
@@ -167,6 +183,7 @@ public class UserDaoDataSource implements IUserDao {
 		String emailToBeMatch = null;
 		String hashPasswordToBeMatch = null;
 		ICartaDaoData cardDao = new CartaDaoDataSource(ds);
+		
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQLUser);
@@ -202,12 +219,14 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	@Override
-	public boolean changePass(String pass, Utente user) throws SQLException {
+	public boolean changePass(String pass, Utente user) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		Integer idUtente = user.getId();
 		String deleteSQL = "UPDATE utente SET password = ? WHERE idUtente = ?";
+		if(pass == null || pass == "")
+			throw new CheckException("Password non valida!");
 		int result = 0;
 		try {
 			connection = ds.getConnection();
@@ -230,12 +249,14 @@ public class UserDaoDataSource implements IUserDao {
 	
 
 	@Override
-	public Utente doRetrieveByKey(Utente user) throws SQLException {
+	public Utente doRetrieveByKey(Utente user) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Utente bean = new Utente();
 
+		if(user.getId() == null)
+			throw new CheckException("Id non valido!");
 		String selectSQL = "SELECT * FROM utente WHERE idUtente = ?" ;
 		int idUtente = user.getId();	
 
@@ -270,12 +291,13 @@ public class UserDaoDataSource implements IUserDao {
 	}
 
 	@Override
-	public Utente doRetrieveByEmail(Utente user) throws SQLException {
+	public Utente doRetrieveByEmail(Utente user) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Utente bean = new Utente();
-
+		if(user.getEmail() == null)
+			throw new CheckException("Email non valida!");
 		String selectSQL = "SELECT * FROM utente WHERE email= ?" ;
 		String idUtente = user.getEmail();	
 

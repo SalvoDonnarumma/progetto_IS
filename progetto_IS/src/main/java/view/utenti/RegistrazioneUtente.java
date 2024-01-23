@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -101,7 +102,7 @@ public class RegistrazioneUtente extends HttpServlet {
 			user.setRuolo("Utente");
 			userDao.doSaveUser(user);
 			idUtente = userDao.getLastCode();
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

@@ -21,6 +21,12 @@
         </configuration>
       </plugin>
     </plugins>
+    <testResources>
+        <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+        </testResource>
+    </testResources>
   </build>
   <dependencies>
     <dependency>
@@ -46,5 +52,26 @@
 		<version>4.9.0</version>
 		<scope>test</scope>
 	</dependency>
+	<dependency>
+    	<groupId>org.dbunit</groupId>
+    	<artifactId>dbunit</artifactId>
+    <version>2.7.0</version>
+	</dependency>
+	<dependency>
+    	<groupId>com.h2database</groupId>
+    	<artifactId>h2</artifactId>
+    	<version>1.4.200</version> 
+	</dependency>
+	<dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>1.7.32</version> <!-- Sostituisci con l'ultima versione disponibile -->
+	</dependency>
+	<dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-classic</artifactId>
+    	<version>1.2.6</version> <!-- Sostituisci con l'ultima versione disponibile -->
+	</dependency>
+	
 </dependencies>
 </project>

@@ -1,6 +1,7 @@
 package gestioneutenti;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import gestionecarta.Carta;
 
@@ -27,6 +28,22 @@ public class Utente implements Serializable {
 		ruolo="";
 		carta = null;
 	}
+	
+	
+
+	public Utente(Integer id, String email, String password, String nome, String cognome, String telefono, String ruolo,
+			Carta carta) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.ruolo = ruolo;
+		this.carta = carta;
+	}
+
 
 	public String getEmail() {
 		return email;
@@ -99,4 +116,16 @@ public class Utente implements Serializable {
 				+ cognome + ", telefono=" + telefono + ", ruolo=" + ruolo + "]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+	    Utente other = (Utente) obj;
+	    return Objects.equals(id, other.id) &&
+	           Objects.equals(email, other.email) &&
+	           Objects.equals(nome, other.nome) &&
+	           Objects.equals(cognome, other.cognome) &&
+	           Objects.equals(telefono, other.telefono) &&
+	           Objects.equals(ruolo, other.ruolo);
+	}
 }

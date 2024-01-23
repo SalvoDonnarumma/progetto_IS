@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
@@ -60,7 +61,11 @@ public class CambioPassword extends HttpServlet {
 		    	no_email = true;
 		    	Utente id = new Utente();
 		    	id.setEmail(email);
-		    	bean = userDao.doRetrieveByEmail(id);
+		    	try {
+		    		bean = userDao.doRetrieveByEmail(id);
+		    	} catch( CheckException e) {
+		    		e.printStackTrace();
+		    	}
 		    	System.out.println("Bean: "+bean);
 		    	if(bean == null) { //l'email inserita non esiste
 		    		errors.add("L'email inserita non esiste!");
@@ -85,7 +90,7 @@ public class CambioPassword extends HttpServlet {
 			}
 					
 			userDao.changePass(confPass, bean);			
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		
