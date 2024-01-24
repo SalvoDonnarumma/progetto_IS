@@ -12,6 +12,14 @@ public class Carta {
 		numero_carta = null;
 		data_scadenza = null;
 	}
+	
+	public Carta(int idCarta, String proprietario, String numero_carta, String data_scadenza) {
+		super();
+		this.idCarta = idCarta;
+		this.proprietario = proprietario;
+		this.numero_carta = numero_carta;
+		this.data_scadenza = data_scadenza;
+	}
 
 	public int getIdCarta() {
 		return idCarta;

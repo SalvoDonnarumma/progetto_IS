@@ -160,7 +160,7 @@ class IUserDaoTest {
 		expected.setRuolo("utente");
 		
 		Utente actual = new Utente();
-		actual.setId(1);;
+		actual.setId(1);
 		try {
 			actual = userDaoData.doRetrieveByKey(actual);
 			System.out.println("Utente ottenuto:"+actual);
@@ -285,16 +285,6 @@ class IUserDaoTest {
         Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 	}
 		
-	@ParameterizedTest
-    @MethodSource("doSaveTestProvider")
-    @DisplayName("TCU1_1_4 doSaveTestNonSalva")
-    public void doSaveTestNonSalva(Integer id, String email, String password, String nome, String cognome, String telefono, String ruolo) {
-    	assertThrows(CheckException.class, () -> {
-    		Utente utente = new Utente(id, email, password, nome, cognome, telefono, ruolo, null);
-			userDaoData.doSaveUser(utente);
-    	});
-    }
-    
 	@Test
 	@DisplayName("doSaveTestNonSalvaEmailPresente")
 	public void doSaveTestNonSalvaEmail() {
@@ -304,6 +294,16 @@ class IUserDaoTest {
 			userDaoData.doSaveUser(utente);
     	});
 	}
+	
+	@ParameterizedTest
+    @MethodSource("doSaveTestProvider")
+    @DisplayName("TCU1_1_4 doSaveTestNonSalva")
+    public void doSaveTestNonSalva(Integer id, String email, String password, String nome, String cognome, String telefono, String ruolo) {
+    	assertThrows(CheckException.class, () -> {
+    		Utente utente = new Utente(id, email, password, nome, cognome, telefono, ruolo, null);
+			userDaoData.doSaveUser(utente);
+    	});
+    }
 	
     private static Stream<Arguments> doSaveTestProvider(){
     	return Stream.of(

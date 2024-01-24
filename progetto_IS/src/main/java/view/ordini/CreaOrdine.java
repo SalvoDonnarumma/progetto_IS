@@ -1,12 +1,10 @@
 package view.ordini;
 
-import java.io.IOException;  
+import java.io.IOException;   
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -17,11 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarrello.Carrello;
+import gestionecarta.CardValidator;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
-import gestioneordini.CardValidator;
 import gestioneordini.IOrderDao;
 import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
@@ -240,7 +239,7 @@ public class CreaOrdine extends HttpServlet {
 						carta.setProprietario(nome_carta);
 						try {
 							cardDao.salvaCarta(carta);
-						} catch (SQLException e) {
+						} catch (SQLException | CheckException e) {
 							e.printStackTrace();
 						}
 						
@@ -356,7 +355,7 @@ public class CreaOrdine extends HttpServlet {
 						carta.setProprietario(nome_carta);
 						try {
 							cardDao.salvaCarta(carta);
-						} catch (SQLException e) {
+						} catch (SQLException | CheckException e) {
 							e.printStackTrace();
 						}
 						

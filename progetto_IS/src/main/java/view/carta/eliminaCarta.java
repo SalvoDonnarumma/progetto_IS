@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
 import gestioneutenti.Utente;
@@ -43,7 +44,7 @@ public class eliminaCarta extends HttpServlet {
 		Utente logged = (Utente) request.getSession().getAttribute("logged");
 		try {
 			cartaDao.cancellaCarta(logged.getCarta());
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

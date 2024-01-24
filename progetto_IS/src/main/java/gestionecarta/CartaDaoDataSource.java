@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarrello.Carrello;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
@@ -24,10 +25,28 @@ public class CartaDaoDataSource implements ICartaDaoData{
 	}
 	
 	@Override
-	public boolean salvaCarta(Carta carta) throws SQLException {
+	public boolean salvaCarta(Carta carta) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertSQL = "INSERT INTO carta (idcarta, proprietario, numero_carta, data_scadenza) VALUES (?,?,?,?)";
+		
+		if(carta == null || carta.getIdCarta()==0)
+			throw new CheckException("carta non valida");
+		
+		if(carta.getProprietario() == null || carta.getProprietario().equals(""))
+			throw new CheckException("carta non valida");
+		
+		if(carta.getData_scadenza() == null || carta.getData_scadenza().equals(""))
+			throw new CheckException("carta non valida");
+		
+		String mm = carta.getData_scadenza().substring(0, 2);
+		String aa = carta.getData_scadenza().substring(3, 6);
+		if( CardValidator.isValidMonth(CardValidator.convertiNumeroInMese(mm)))
+			throw new CheckException("carta non valida");
+		
+		if(carta.getNumero_carta() == null || carta.getNumero_carta().equals("") || CardValidator.isValidFormat(carta.getNumero_carta()))
+			throw new CheckException("carta non valida");
+		
 		
 		if(cartaEsistente(carta)) {
 			cancellaCarta(carta);
@@ -129,9 +148,12 @@ public class CartaDaoDataSource implements ICartaDaoData{
 	}
 
 	@Override
-	public boolean cancellaCarta(Carta carta) throws SQLException {
+	public boolean cancellaCarta(Carta carta) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		if(carta == null || carta.getIdCarta()==0)
+			throw new CheckException("carta non valida");
+		
 		String selectSQL = "DELETE from carta WHERE idcarta = ?";
 		try {
 			connection = ds.getConnection();

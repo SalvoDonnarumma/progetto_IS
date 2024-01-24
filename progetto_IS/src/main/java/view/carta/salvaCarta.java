@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+import gestionecarta.CardValidator;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
-import gestioneordini.CardValidator;
 import gestioneutenti.Utente;
 
 /**
@@ -103,7 +104,7 @@ public class salvaCarta extends HttpServlet {
 		carta.setProprietario(proprietario);
 		try {
 			cartaDao.salvaCarta(carta);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

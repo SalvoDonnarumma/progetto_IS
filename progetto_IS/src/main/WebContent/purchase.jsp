@@ -13,7 +13,7 @@
 		return;
 	}
 %>
-<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente, gestioneordini.CardValidator"%>
+<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente,gestionecarta.CardValidator"%>
 <html lang="it">
 <head>
 <title> Acquisto-OctoPlus </title>
