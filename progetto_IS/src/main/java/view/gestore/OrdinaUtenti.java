@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestionegestore.GestoreDaoDataSource;
-import gestioneutenti.IUserDao;
-import gestioneutenti.UserDaoDataSource;
+import storagelayer.GestoreDaoDataSource;
+import storagelayer.IUserDao;
+import storagelayer.UserDaoDataSource;
 
 /**
  * Servlet implementation class OrdinaUtenti

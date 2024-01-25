@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 import com.google.gson.Gson;
 
 import gestionecarrello.Carrello;
-import gestioneprodotti.IProductDao;
-import gestioneprodotti.ProductDaoDataSource;
+import storagelayer.IProductDao;
+import storagelayer.ProductDaoDataSource;
 
 /**
  * Servlet implementation class VisualizzaCarrello

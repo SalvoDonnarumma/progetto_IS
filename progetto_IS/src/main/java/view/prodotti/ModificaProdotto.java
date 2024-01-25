@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
-import gestioneprodotti.IPhotoDao;
-import gestioneprodotti.IProductDao;
-import gestioneprodotti.PhotoDaoDataSource;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProdottoValidator;
-import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
+import storagelayer.IPhotoDao;
+import storagelayer.IProductDao;
+import storagelayer.PhotoDaoDataSource;
+import storagelayer.ProductDaoDataSource;
 
 /**
  * Servlet implementation class ProductControl

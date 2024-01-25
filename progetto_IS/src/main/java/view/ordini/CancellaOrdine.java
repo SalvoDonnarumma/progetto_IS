@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestioneordini.IOrderDao;
-import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
+import storagelayer.IOrderDao;
+import storagelayer.OrderDaoDataSource;
 import view.ordini.*;
 
 @WebServlet("/RemoveOrderServlet")

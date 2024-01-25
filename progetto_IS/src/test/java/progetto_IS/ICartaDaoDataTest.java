@@ -31,8 +31,8 @@ import org.mockito.Mockito;
 
 import checking.CheckException;
 import gestionecarta.Carta;
-import gestionecarta.CartaDaoDataSource;
 import gestioneutenti.Utente;
+import storagelayer.CartaDaoDataSource;
 
 class ICartaDaoDataTest {
     private static IDatabaseTester tester;
@@ -93,11 +93,11 @@ class ICartaDaoDataTest {
     
     @Test
 	@DisplayName("TCU1_2_1 salvaCartaTestCorretto")
-	public void salvaCartaTest() throws CheckException, DataSetException, DatabaseUnitException{
+	public void salvaCartaTestCorretto() throws CheckException, DataSetException, DatabaseUnitException{
 		ITable expectedTable = new FlatXmlDataSetBuilder()
                 .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/salvaCartaCorretto.xml"))
                 .getTable(table);
-    	Carta carta = new Carta(2, "Tomeo Orlando", "1111-2222-3333-4444", "05/2027");
+    	Carta carta = new Carta(3, "Giorno Giovanna", "1111-2222-3333-4444", "05/2029");
     	try {
 			cartaDaoData.salvaCarta(carta);
 		} catch (SQLException e) {
@@ -115,7 +115,30 @@ class ICartaDaoDataTest {
 	}
     
     @Test
-    @DisplayName("TCU1_2_2 salvaCartaTestNull")
+	@DisplayName("TCU1_2_1 salvaCartaTestPresente")
+	public void salvaCartaTestPresente() throws CheckException, DataSetException, DatabaseUnitException{
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/salvaCartaCorretto.xml"))
+                .getTable(table);
+    	Carta carta = new Carta(2, "Giorno Giovanna", "1111-2222-3333-4444", "05/2029");
+    	try {
+			cartaDaoData.salvaCarta(carta);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable(table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @Test
+    @DisplayName("TCU1_2_1 salvaCartaTestNull")
 	public void salvaCartaNull() throws CheckException {
 		assertThrows(CheckException.class, ()->{ Boolean flag = cartaDaoData.salvaCarta(null);});
 	}
@@ -151,8 +174,80 @@ class ICartaDaoDataTest {
     			);
     }
     
-    public void cancellaCarta() {
+    @Test
+	@DisplayName("TCU1_2_2 cancellaCartaTestCorretto")
+	public void cancellaCartaCorrettoTest() throws CheckException, DataSetException, DatabaseUnitException{
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/cancellaCartaCorretto.xml"))
+                .getTable(table);
+    	Carta carta = new Carta();
+    	carta.setIdCarta(2);
+    	try {
+			cartaDaoData.cancellaCarta(carta);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable(table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @Test
+	@DisplayName("TCU1_2_2 cancellaCartaTestNull")
+	public void cancellaCartaTestNull() throws CheckException, DataSetException, DatabaseUnitException{
+    	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(null);});
+	}
+    
+    @Test
+	@DisplayName("TCU1_2_2 cancellaCartaTestVuoto")
+	public void cancellaCartaTestVuoto() throws CheckException{
+    	Carta carta = new Carta();
+    	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(carta);});
+	}
+    
+    @Test
+    @DisplayName("TCU1_2_3 recuperaCartaTestCorretto")
+    public void recuperaCartaTestCorretto() {
+    	Carta expected = new Carta(1, "Donnarumma Salvatore","1111-2222-3333-4444","03/2028");
     	
+    	Utente utente = new Utente(1, "","","","","","", null);
+    	Carta actual = null;
+    	try {
+			actual = cartaDaoData.recuperaCarta(utente);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	assertEquals(expected, actual);
     }
     	
+    @Test
+	@DisplayName("TCU1_2_3 recuperaCartaTestNull")
+	public void recuperaCartaTestNull() throws CheckException{
+    	assertThrows(CheckException.class, ()->{ cartaDaoData.recuperaCarta(null);});
+	}
+    
+    @Test
+	@DisplayName("TCU1_2_3 recuperaCartaTestVuoto")
+	public void recuperaCartaTestVuoto() throws CheckException{
+    	assertThrows(CheckException.class, ()->{ cartaDaoData.recuperaCarta(new Utente());});
+	}
+    
+    @Test
+    @DisplayName("TCU1_2_3 recuperaCartaTestNonPresente")
+    public void recuperaCartaTestNonPresente() throws CheckException {
+    	Utente utente = new Utente(3, "","","","","","", null);
+    	Carta actual = null;
+    	try {
+			actual = cartaDaoData.recuperaCarta(utente);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	assertEquals(null, actual);
+    }
 }

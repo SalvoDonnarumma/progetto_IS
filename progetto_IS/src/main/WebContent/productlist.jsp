@@ -8,7 +8,7 @@
  %>
 <!DOCTYPE html>
 <html lang="it">
-<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente"%>
+<%@ page import="java.util.*,gestioneprodotti.Prodotto,storagelayer.ProductDaoDataSource,gestioneutenti.Utente"%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

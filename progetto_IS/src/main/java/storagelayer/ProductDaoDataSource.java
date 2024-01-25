@@ -1,6 +1,6 @@
-package gestioneprodotti;
+package storagelayer;
 
-import java.io.IOException;   
+import java.io.IOException;    
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -12,7 +12,8 @@ import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
-import view.sito.*;
+import gestioneprodotti.Prodotto;
+import gestioneprodotti.Taglie;
 
 public class ProductDaoDataSource implements IProductDao {
 	

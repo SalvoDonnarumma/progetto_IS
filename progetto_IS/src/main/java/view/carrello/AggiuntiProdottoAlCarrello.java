@@ -2,9 +2,9 @@ package view.carrello;
 import com.google.gson.*;
 
 import gestionecarrello.Carrello;
-import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
+import storagelayer.IProductDao;
+import storagelayer.ProductDaoDataSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;

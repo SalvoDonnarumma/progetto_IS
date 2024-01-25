@@ -19,17 +19,17 @@ import checking.CheckException;
 import gestionecarrello.Carrello;
 import gestionecarta.CardValidator;
 import gestionecarta.Carta;
-import gestionecarta.CartaDaoDataSource;
-import gestionecarta.ICartaDaoData;
-import gestioneordini.IOrderDao;
-import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
 import gestioneordini.ProdottoOrdinato;
 import gestioneordini.UtenteCheckoutValidator;
-import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
 import gestioneutenti.Utente;
+import storagelayer.CartaDaoDataSource;
+import storagelayer.ICartaDaoData;
+import storagelayer.IOrderDao;
+import storagelayer.IProductDao;
+import storagelayer.OrderDaoDataSource;
+import storagelayer.ProductDaoDataSource;
 
 /**
  * Servlet implementation class OrderControl

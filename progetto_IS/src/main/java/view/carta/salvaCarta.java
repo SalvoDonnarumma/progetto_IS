@@ -16,9 +16,9 @@ import javax.sql.DataSource;
 import checking.CheckException;
 import gestionecarta.CardValidator;
 import gestionecarta.Carta;
-import gestionecarta.CartaDaoDataSource;
-import gestionecarta.ICartaDaoData;
 import gestioneutenti.Utente;
+import storagelayer.CartaDaoDataSource;
+import storagelayer.ICartaDaoData;
 
 /**
  * Servlet implementation class salvaCarta

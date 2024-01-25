@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import checking.CheckException;
-import gestionecarta.CartaDaoDataSource;
-import gestionecarta.ICartaDaoData;
 import gestioneutenti.Utente;
+import storagelayer.CartaDaoDataSource;
+import storagelayer.ICartaDaoData;
 
 /**
  * Servlet implementation class eliminaCarta

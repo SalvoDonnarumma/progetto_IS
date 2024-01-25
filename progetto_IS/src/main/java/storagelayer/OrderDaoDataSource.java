@@ -1,6 +1,6 @@
-package gestioneordini;
+package storagelayer;
 
-import java.sql.Connection;   
+import java.sql.Connection;    
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
 
+import gestioneordini.Ordine;
+import gestioneordini.ProdottoOrdinato;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
 import gestioneutenti.Utente;
 

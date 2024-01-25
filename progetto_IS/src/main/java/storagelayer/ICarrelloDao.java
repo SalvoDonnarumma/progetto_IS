@@ -1,7 +1,8 @@
-package gestionecarrello;
+package storagelayer;
 
 import java.sql.SQLException;
 
+import gestionecarrello.Carrello;
 import gestioneutenti.Utente;
 
 public interface ICarrelloDao {

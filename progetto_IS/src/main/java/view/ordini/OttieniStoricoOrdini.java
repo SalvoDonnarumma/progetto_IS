@@ -15,9 +15,9 @@ import javax.sql.DataSource;
 
 import com.google.gson.Gson;
 
-import gestioneordini.IOrderDao;
-import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
+import storagelayer.IOrderDao;
+import storagelayer.OrderDaoDataSource;
 
 /**
  * Servlet implementation class OrderServlet

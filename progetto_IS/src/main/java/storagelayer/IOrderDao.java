@@ -1,9 +1,11 @@
-package gestioneordini;
+package storagelayer;
 
 import java.sql.SQLException; 
 
 import java.util.Collection;
 
+import gestioneordini.Ordine;
+import gestioneordini.ProdottoOrdinato;
 import gestioneprodotti.Prodotto;
 import gestioneutenti.Utente;
 

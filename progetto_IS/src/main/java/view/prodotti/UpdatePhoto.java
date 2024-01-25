@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
-import gestioneprodotti.IPhotoDao;
-import gestioneprodotti.IProductDao;
-import gestioneprodotti.PhotoDaoDataSource;
 import gestioneprodotti.Prodotto;
+import storagelayer.IPhotoDao;
+import storagelayer.IProductDao;
+import storagelayer.PhotoDaoDataSource;
 
 /**
  * Servlet implementation class UpdatePhoto

@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import gestionecarrello.Carrello;
-import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
+import storagelayer.IProductDao;
+import storagelayer.ProductDaoDataSource;
 
 /**
  * Servlet implementation class AcquistaProdotti

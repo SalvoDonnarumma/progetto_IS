@@ -1,7 +1,10 @@
-package gestioneprodotti;
+package storagelayer;
 
 import java.sql.SQLException;   
 import java.util.Collection;
+
+import gestioneprodotti.Prodotto;
+import gestioneprodotti.Taglie;
 
 public interface IProductDao {
 	

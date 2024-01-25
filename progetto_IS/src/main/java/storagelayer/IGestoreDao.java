@@ -1,4 +1,4 @@
-package gestionegestore;
+package storagelayer;
 
 import java.sql.SQLException;
 import java.util.Collection;

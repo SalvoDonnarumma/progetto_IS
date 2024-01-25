@@ -1,9 +1,10 @@
-package gestioneprodotti;
+package storagelayer;
 
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import gestioneprodotti.Prodotto;
 import view.sito.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

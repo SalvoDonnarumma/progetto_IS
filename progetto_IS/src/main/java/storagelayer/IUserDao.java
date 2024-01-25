@@ -1,10 +1,11 @@
-package gestioneutenti;
+package storagelayer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import checking.CheckException;
+import gestioneutenti.Utente;
 
 public interface IUserDao {
 

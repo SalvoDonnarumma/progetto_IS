@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import gestionecarrello.Carrello;
-import gestionecarrello.CarrelloDaoDataSource;
-import gestionecarrello.ICarrelloDao;
 import gestioneutenti.Utente;
+import storagelayer.CarrelloDaoDataSource;
+import storagelayer.ICarrelloDao;
 
 /**
  * Servlet implementation class Logout

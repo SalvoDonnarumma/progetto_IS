@@ -58,5 +58,16 @@ public class Carta {
 		return "Carta [idCarta=" + idCarta + ", proprietario=" + proprietario + ", numero_carta=" + numero_carta
 				+ ", data_scadenza=" + data_scadenza + "]";
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (o == null || getClass() != o.getClass()) return false;
+	    Carta carta = (Carta) o;
+	    return idCarta == carta.idCarta &&
+	            proprietario.equals(carta.proprietario) &&
+	            numero_carta.equals(carta.numero_carta) &&
+	            data_scadenza.equals(carta.data_scadenza);
+	}
 
 }

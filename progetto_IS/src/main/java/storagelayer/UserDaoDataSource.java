@@ -1,4 +1,4 @@
-package gestioneutenti;
+package storagelayer;
 
 import java.nio.charset.StandardCharsets;   
 import java.sql.Connection;
@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 
 import checking.CheckException;
 import gestionecarta.Carta;
-import gestionecarta.CartaDaoDataSource;
-import gestionecarta.ICartaDaoData;
+import gestioneutenti.Utente;
+import gestioneutenti.UtenteRegistrazioneValidator;
 
 public class UserDaoDataSource implements IUserDao {
 
@@ -208,6 +208,9 @@ public class UserDaoDataSource implements IUserDao {
 					return user;
 				}
 			}
+		} catch (CheckException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				if (preparedStatement != null)

@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import gestionegestore.GestoreDaoDataSource;
-import gestionegestore.IGestoreDao;
 import gestioneutenti.Utente;
+import storagelayer.GestoreDaoDataSource;
+import storagelayer.IGestoreDao;
 
 /**
  * Servlet implementation class AdminControl

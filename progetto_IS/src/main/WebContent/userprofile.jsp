@@ -10,7 +10,7 @@
  %>
 <!DOCTYPE html>
 <html lang="it">
-<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente"%>
+<%@ page import="java.util.*,gestioneprodotti.Prodotto,storagelayer.ProductDaoDataSource,gestioneutenti.Utente"%>
 <head>
     <title>Pagina Utente</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/profile.css">

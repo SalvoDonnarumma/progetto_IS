@@ -1,4 +1,4 @@
-package gestionegestore;
+package storagelayer;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;

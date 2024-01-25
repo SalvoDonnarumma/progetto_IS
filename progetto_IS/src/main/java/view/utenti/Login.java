@@ -11,17 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarrello.Carrello;
-import gestionecarrello.CarrelloDaoDataSource;
-import gestionecarrello.ICarrelloDao;
 import gestionecarta.Carta;
-import gestionecarta.CartaDaoDataSource;
-import gestionecarta.ICartaDaoData;
-import gestionegestore.GestoreDaoDataSource;
-import gestionegestore.IGestoreDao;
-import gestioneutenti.IUserDao;
-import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
+import storagelayer.CarrelloDaoDataSource;
+import storagelayer.CartaDaoDataSource;
+import storagelayer.GestoreDaoDataSource;
+import storagelayer.ICarrelloDao;
+import storagelayer.ICartaDaoData;
+import storagelayer.IGestoreDao;
+import storagelayer.IUserDao;
+import storagelayer.UserDaoDataSource;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -78,7 +79,7 @@ public class Login extends HttpServlet {
 			try {
 				Carta carta = cartaDao.recuperaCarta(match);
 				match.setCarta(carta);
-			} catch (SQLException e1) {
+			} catch (SQLException | CheckException e1) {
 				e1.printStackTrace();
 			}
 			

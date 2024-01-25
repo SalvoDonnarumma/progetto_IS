@@ -2,4 +2,5 @@
 <dataset>
   <Carta idcarta="1" proprietario="Donnarumma Salvatore" numero_carta="1111-2222-3333-4444" data_scadenza="03/2028"/>
   <Carta idcarta="2" proprietario="Tomeo Orlando" numero_carta="1111-2222-3333-4444" data_scadenza="05/2027"/>
+  <Carta idcarta="3" proprietario="Giorno Giovanna" numero_carta="1111-2222-3333-4444" data_scadenza="05/2029"/>
 </dataset>

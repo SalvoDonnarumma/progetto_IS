@@ -1,4 +1,4 @@
-package gestionecarta;
+package storagelayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,9 @@ import javax.sql.DataSource;
 
 import checking.CheckException;
 import gestionecarrello.Carrello;
-import gestioneprodotti.IProductDao;
+import gestionecarta.CardValidator;
+import gestionecarta.Carta;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
 import gestioneutenti.Utente;
 
 public class CartaDaoDataSource implements ICartaDaoData{
@@ -40,11 +40,12 @@ public class CartaDaoDataSource implements ICartaDaoData{
 			throw new CheckException("carta non valida");
 		
 		String mm = carta.getData_scadenza().substring(0, 2);
-		String aa = carta.getData_scadenza().substring(3, 6);
-		if( CardValidator.isValidMonth(CardValidator.convertiNumeroInMese(mm)))
+		String aa = carta.getData_scadenza().substring(3, 7);
+		if( !CardValidator.isValidMonth(CardValidator.convertiNumeroInMese(mm)))
 			throw new CheckException("carta non valida");
-		
-		if(carta.getNumero_carta() == null || carta.getNumero_carta().equals("") || CardValidator.isValidFormat(carta.getNumero_carta()))
+		if( !CardValidator.isYearNotExpired(aa))
+			throw new CheckException("carta non valida");
+		if(carta.getNumero_carta() == null || carta.getNumero_carta().equals("") || !CardValidator.isValidFormat(carta.getNumero_carta()))
 			throw new CheckException("carta non valida");
 		
 		
@@ -109,11 +110,15 @@ public class CartaDaoDataSource implements ICartaDaoData{
 	}
 
 	@Override
-	public Carta recuperaCarta(Utente utente) throws SQLException {
+	public Carta recuperaCarta(Utente utente) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		String selectSQL = "SELECT * from carta WHERE idcarta = ?";
+		
+	
+		if(utente == null || utente.getId() == 0)
+			throw new CheckException("carta non valida");
 		
 		Carta recuperata = new Carta();
 		try {

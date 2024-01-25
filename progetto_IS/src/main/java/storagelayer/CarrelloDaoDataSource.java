@@ -1,4 +1,4 @@
-package gestionecarrello;
+package storagelayer;
 
 import java.sql.Connection;   
 import java.sql.PreparedStatement;
@@ -9,9 +9,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import gestioneprodotti.IProductDao;
+import gestionecarrello.Carrello;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.ProductDaoDataSource;
 import gestioneutenti.Utente;
 
 public class CarrelloDaoDataSource implements ICarrelloDao{
