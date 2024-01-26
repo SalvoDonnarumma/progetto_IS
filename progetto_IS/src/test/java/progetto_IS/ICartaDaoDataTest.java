@@ -31,8 +31,8 @@ import org.mockito.Mockito;
 
 import checking.CheckException;
 import gestionecarta.Carta;
+import gestionecarta.CartaDaoDataSource;
 import gestioneutenti.Utente;
-import storagelayer.CartaDaoDataSource;
 
 class ICartaDaoDataTest {
     private static IDatabaseTester tester;

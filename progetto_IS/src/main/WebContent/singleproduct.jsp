@@ -9,7 +9,7 @@
  %>
 <!DOCTYPE html>
 <html lang="it">
-<%@ page import="java.util.*,storagelayer.ProductDaoDataSource, gestioneprodotti.Taglie, gestioneprodotti.Prodotto"%>
+<%@ page import="java.util.*,gestioneprodotti.ProductDaoDataSource, gestioneprodotti.Taglie, gestioneprodotti.Prodotto"%>
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/product.css">
 <title>Visualizzazione prodotto</title>

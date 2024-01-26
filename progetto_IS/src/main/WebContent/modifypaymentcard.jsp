@@ -10,7 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<%@ page import="java.util.*,gestioneprodotti.Prodotto,storagelayer.ProductDaoDataSource,gestioneutenti.Utente, gestionecarta.Carta"%>
+<%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente, gestionecarta.Carta"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

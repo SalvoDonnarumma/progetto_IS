@@ -34,9 +34,9 @@ import org.mockito.Mockito;
 
 import checking.CheckException;
 import checking.DBException;
+import gestioneutenti.IUserDao;
+import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
-import storagelayer.IUserDao;
-import storagelayer.UserDaoDataSource;
 
 class IUserDaoTest {
     private static IDatabaseTester tester;
