@@ -10,7 +10,7 @@
 	Collection<?> products = (Collection<?>) request.getAttribute("products");
 	request.getSession().setAttribute("fromStore", Boolean.FALSE);
 	if(products == null) {
-		response.sendRedirect(request.getContextPath()+"/product");	
+		response.sendRedirect(request.getContextPath()+"/OrdinaProdotti");	
 		return;
 	}
 	Prodotto product = (Prodotto) request.getAttribute("product");

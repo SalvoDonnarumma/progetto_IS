@@ -370,6 +370,7 @@ public class OrderDaoDataSource implements IOrderDao{
 		        bean.setDescrizione(rs.getString("DESCRIZIONE"));
 		        bean.setPrice(rs.getDouble("PRICE"));
 		        bean.setStats(rs.getString("STATS"));
+		        bean.setImagePath(rs.getString("IMAGE"));
 		    }
 		} finally {
 			try {

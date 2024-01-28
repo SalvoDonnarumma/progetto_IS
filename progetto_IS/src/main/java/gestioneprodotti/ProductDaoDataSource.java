@@ -1,16 +1,16 @@
 package gestioneprodotti;
-
-import java.io.IOException;    
-
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
+
+import checking.CheckException;
+import checking.DBException;
 
 public class ProductDaoDataSource implements IProductDao {
 	
@@ -22,11 +22,32 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized void doSave(Prodotto product) throws SQLException {
+	public synchronized void doSave(Prodotto product) throws SQLException, CheckException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
+		if( product == null )
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getCategoria() == null || product.getCategoria().equals("") || !ProdottoValidator.isValidCategoria(product.getCategoria()))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getDescrizione() == null || product.getDescrizione().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getNome() == null || product.getNome().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getStats() == null || product.getStats().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getPrice() < 0 || !ProdottoValidator.isValidPrice(product.getPrice().toString()))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getTaglie() == null)
+			throw new CheckException("Prodotto non valido!");
+			
 		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
 				+ " (CATEGORIA, NOME, DESCRIZIONE, PRICE, STATS, IMAGE) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -198,9 +219,13 @@ public class ProductDaoDataSource implements IProductDao {
 	
 	
 	@Override
-	public synchronized Prodotto doRetrieveByKey(Prodotto product) throws SQLException {
+	public synchronized Prodotto doRetrieveByKey(Prodotto product) throws SQLException, CheckException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		if( product == null )
+			throw new CheckException("Prodotto non valido!");
+		if( product.getCode() < 0 )
+			throw new CheckException("Prodotto non valido!");
 		
 		Prodotto bean = new Prodotto();
 		
@@ -229,9 +254,6 @@ public class ProductDaoDataSource implements IProductDao {
 					connection.close();
 			}
 		}
-		
-		Taglie taglie = this.getSizesByKey(bean);
-		bean.setTaglie(taglie);
 		return bean;
 	}
 		
@@ -304,35 +326,27 @@ public class ProductDaoDataSource implements IProductDao {
 		}
 		
 		return (result != 0);
-		
-		
 	}
 
-	
-	
 	@Override
-	public synchronized Collection<Prodotto> doRetrieveAll(String order) throws SQLException {
+	public synchronized ArrayList<Prodotto> doRetrieveAll(String order) throws SQLException, CheckException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-
-		Collection<Prodotto> products = new LinkedList<>();
-
+		
+		ArrayList<Prodotto> products = new ArrayList<>();
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME;
 
 		if (order != null && order.equals("categoria")) {
 			selectSQL += " ORDER BY categoria";
 		} else if( order != null && order.equals("nome")) {
 			selectSQL += " ORDER BY nome";
-		}
+		} else if( order != null)
+			throw new CheckException("Ordinamento non valido!");
 		
-		
-
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			System.out.println(preparedStatement);
-						
+			System.out.println(preparedStatement);					
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -345,11 +359,8 @@ public class ProductDaoDataSource implements IProductDao {
 				bean.setPrice(rs.getDouble("PRICE"));
 				bean.setStats(rs.getString("STATS"));
 				bean.setImagePath(rs.getString("IMAGE"));
-				Taglie taglie = this.getSizesByKey(bean);
-				bean.setTaglie(taglie);
 				products.add(bean);
 			}
-
 		} finally {
 			try {
 				if (preparedStatement != null)

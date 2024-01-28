@@ -192,9 +192,10 @@ public class CreaOrdine extends HttpServlet {
 								if ( quantity > product.getTaglie().getQuantitaXXL()) 
 									errors.add(error);
 							}
-					RequestDispatcher dispatcherToProductPage = request.getRequestDispatcher("./product?action=read&fromStore=get&id="+product.getCode());
+					RequestDispatcher dispatcherToProductPage = request.getRequestDispatcher("./singleproduct.jsp?id="+product.getCode());
 					if (!errors.isEmpty()) {
 		            	request.setAttribute("errors", errors);
+		            	request.setAttribute("product", product);
 		            	dispatcherToProductPage.forward(request, response);
 		            	return;
 		            }
@@ -290,9 +291,10 @@ public class CreaOrdine extends HttpServlet {
 					
 					/*Se qualche prodotto non è disponibiile all'acquisto, rimando alla pagina di checkout con la visualizzazione
 					 * dell'errore relativo all'acquisto */
-					RequestDispatcher dispatcherToProductPage = request.getRequestDispatcher("./product?action=read&fromStore=get&id="+prodondb.getCode());
+					RequestDispatcher dispatcherToProductPage = request.getRequestDispatcher("./singleproduct.jsp?id="+prodondb.getCode());
 					if (!errors.isEmpty()) {
 		            	request.setAttribute("errors", errors);
+		            	request.setAttribute("product", prodondb);
 		            	dispatcherToProductPage.forward(request, response);
 		            	return;
 		            }

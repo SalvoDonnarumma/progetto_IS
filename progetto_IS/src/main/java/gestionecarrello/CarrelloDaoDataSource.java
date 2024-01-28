@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
@@ -108,7 +109,7 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	}
 	
 	@Override
-	public Carrello recuperaCarrello(Utente utente) throws SQLException {
+	public Carrello recuperaCarrello(Utente utente) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		IProductDao productDao = new ProductDaoDataSource(ds);
@@ -129,7 +130,10 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 		            Prodotto id = new Prodotto();
 		            id.setCode(idProdotto);
 		            
-		            prodotticarrello.add(productDao.doRetrieveByKey(id));
+		            
+		            Prodotto p = productDao.doRetrieveByKey(id);
+					p.setTaglie(productDao.getSizesByKey(p));
+					prodotticarrello.add(p);
 		        } while (resultset.next());
 			}
 		} finally {

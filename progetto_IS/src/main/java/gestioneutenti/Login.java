@@ -98,7 +98,7 @@ public class Login extends HttpServlet {
 					Carrello carrello = new Carrello();
 					try {
 						carrello = carrelloDao.recuperaCarrello(match);
-					} catch (SQLException e) {
+					} catch (SQLException | CheckException e) {
 						e.printStackTrace();
 					}
 					request.getSession().setAttribute("cart", carrello);

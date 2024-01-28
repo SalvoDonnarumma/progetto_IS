@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+import checking.DBException;
+
 /**
  * Servlet implementation class OttieniDettagliProdotto
  */
@@ -38,8 +41,11 @@ public class OttieniDettagliProdotto extends HttpServlet {
 		id_p.setCode(id);
 		request.removeAttribute("product");
 		try {
-			request.setAttribute("product", productDao.doRetrieveByKey(id_p));
-		} catch (SQLException e) {
+			Prodotto p = new Prodotto();
+			p = productDao.doRetrieveByKey(id_p);
+			p.setTaglie(productDao.getSizesByKey(p));
+			request.setAttribute("product", p);
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

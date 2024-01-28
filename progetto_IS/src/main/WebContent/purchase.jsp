@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <%
 	Collection <?> products = (Collection<?>) request.getSession().getAttribute("products");
 	Prodotto bean = null;
@@ -55,7 +55,7 @@
 	    %>
 			<div class="box1">		
 			     	<h3><%=bean.getNome()%></h3>
-		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode()%>&">
+		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode() %>">
 		 			<img src="<%=bean.getImagePath()%>" onerror="this.src='images/nophoto.png" alt="Immagine prodotto">
 		 			
 		 			</a>
@@ -119,7 +119,7 @@
 	            <span id="errorAdr" class="error-text"></span>
 	            
 	            <label for="city"><i class="fa fa-institution"></i> Citta' </label>
-	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="^[\\p{L}\\s]+$"
 	            onkeyup="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
 			 	<span id="errorCity"> </span>
 				
@@ -231,7 +231,7 @@
 	            <span id="errorAdr" class="error-text"></span>
 	            
 	            <label for="city"><i class="fa fa-institution"></i> Citta' </label>
-	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="^[\\p{L}\\s]+$"
 	            onkeyup="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
 			 	<span id="errorCity"> </span>
 				

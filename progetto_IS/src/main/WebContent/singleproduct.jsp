@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%
- Prodotto bean = (Prodotto) request.getAttribute("product");
-  	
+ 
+ 	Prodotto bean = (Prodotto) request.getAttribute("product");
    	Taglie sizes = (Taglie) bean.getTaglie();
    	String isAdmin = (String) request.getSession().getAttribute("isAdmin");
    	boolean nondisponibile = false;

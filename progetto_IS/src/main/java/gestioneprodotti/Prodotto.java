@@ -4,14 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 public class Prodotto implements Serializable {
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(categoria, code, descrizione, imagePath, name, price, stats, taglie);
-	}
-
 	private static final long serialVersionUID = 1L;
 	
-	int code;
+	Integer code;
 	String name;
 	String descrizione;
 	String categoria;
@@ -25,6 +20,9 @@ public class Prodotto implements Serializable {
 		name = "";
 		descrizione = "";
 		taglie = new Taglie();
+		price = null;
+		stats = null;
+		imagePath = null;
 	}
 	
 	public Prodotto(int code, String name, String descrizione, String categoria, Double price, String stats,
@@ -40,8 +38,6 @@ public class Prodotto implements Serializable {
 		this.imagePath = imagePath;
 	}
 
-
-
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
@@ -50,11 +46,11 @@ public class Prodotto implements Serializable {
 		return this.categoria;
 	}
 	
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
@@ -82,12 +78,14 @@ public class Prodotto implements Serializable {
 		this.price = price;
 	}
 
+	
+
+
 	@Override
 	public String toString() {
-		return "Prodotto [code=" + code + ", name=" + name + ", categoria=" + categoria
-				+ ", price=" + price + ", taglie=" + taglie + "]";
+		return "Prodotto [code=" + code + ", name=" + name + ", descrizione=" + descrizione + ", categoria=" + categoria
+				+ ", price=" + price + ", stats=" + stats + ", taglie=" + taglie + ", imagePath=" + imagePath + "]";
 	}
-
 
 	public String getStats() {
 		return stats;
@@ -116,18 +114,24 @@ public class Prodotto implements Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Prodotto other = (Prodotto) obj;
-		return Objects.equals(categoria, other.categoria) && code == other.code
-				&& Objects.equals(descrizione, other.descrizione) && Objects.equals(imagePath, other.imagePath)
-				&& Objects.equals(name, other.name) && Objects.equals(price, other.price)
-				&& Objects.equals(stats, other.stats) && Objects.equals(taglie, other.taglie);
-	}
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prodotto prodotto = (Prodotto) o;
+        return Objects.equals(code, prodotto.code) &&
+                Objects.equals(name, prodotto.name) &&
+                Objects.equals(descrizione, prodotto.descrizione) &&
+                Objects.equals(categoria, prodotto.categoria) &&
+                Objects.equals(price, prodotto.price) &&
+                Objects.equals(stats, prodotto.stats) &&
+                Objects.equals(taglie, prodotto.taglie) &&
+                Objects.equals(imagePath, prodotto.imagePath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, name, descrizione, categoria, price, stats, taglie, imagePath);
+    }
+
 }
 

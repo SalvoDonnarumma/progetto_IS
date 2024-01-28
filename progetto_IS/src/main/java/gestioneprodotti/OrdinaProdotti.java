@@ -1,6 +1,7 @@
 package gestioneprodotti;
 import java.io.IOException;   
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import checking.CheckException;
 /**
  * Servlet implementation class ProductControl
  */
@@ -25,8 +28,12 @@ public class OrdinaProdotti extends HttpServlet {
 		String sort = request.getParameter("sort");
 		try {
 			request.removeAttribute("products");
-			request.setAttribute("products", productDao.doRetrieveAll(sort));
-		} catch (SQLException e) {
+			ArrayList<Prodotto> products = productDao.doRetrieveAll(sort);
+			for(Prodotto p : products) {
+				p.setTaglie(productDao.getSizesByKey(p));
+			}
+			request.setAttribute("products", products);
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 

@@ -11,11 +11,12 @@ public class UtenteCheckoutValidator {
         return input.matches(regex);
     }
 	
-	 public static boolean isValidCitta(String input) {
-	        // \p{L} è utilizzata per rappresentare tutte le lettere di qualsiasi lingua, inclusi caratteri con accenti
-	        String regex = "^[\\p{L}]+$";
-	        return input.matches(regex);
-	 }
+	public static boolean isValidCitta(String input) {
+	    // \p{L} è utilizzata per rappresentare tutte le lettere di qualsiasi lingua, inclusi caratteri con accenti
+	    String regex = "^[\\p{L}\\s]+$";
+	    return input.matches(regex);
+	}
+
 	 
 	 public static boolean isValidStato(String input) {
 	        String regex = "^[A-Za-z]+$";

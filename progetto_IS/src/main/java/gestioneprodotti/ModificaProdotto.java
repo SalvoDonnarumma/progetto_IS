@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
+
+import checking.CheckException;
 
 /**
  * Servlet implementation class ProductControl
@@ -98,39 +101,54 @@ public class ModificaProdotto extends HttpServlet {
 					
 					String imagePath = null;
 					String tempPath = null;
-					for (Part part : request.getParts()) {
-		    			String fileName = part.getSubmittedFileName();
-		    			tempPath = "C:/Users/Salvatore/git/progettoIS/progetto_IS/src/main/WebContent/img_products"+ File.separator + fileName;
-		    			//tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
-		    			imagePath = "./img_products/" + fileName;
-		    			if (fileName != null && !fileName.equals("")) {
-		    				uploadFile(part.getInputStream(), tempPath);
-		    			}
-		    		}
+					Collection<Part> parts = request.getParts();
+					boolean fileupload = true;
 					
-					String partedaRimuovere = "target/";
-					for (Part part : request.getParts()) {
-		    			String fileName = part.getSubmittedFileName();
-		    			tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
-		    			uploadFile(part.getInputStream(), tempPath);
-		    			String realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
-		    			if (fileName != null && !fileName.equals("")) {
-		    				uploadFile(part.getInputStream(), realPath);
-		    			}
+					if (!parts.isEmpty()) {
+						for (Part part : parts) {
+							if(part.getSize()>0) {
+								String fileName = part.getSubmittedFileName();
+								tempPath = "C:/Users/Salvatore/git/progettoIS/progetto_IS/src/main/WebContent/img_products"+ File.separator + fileName;
+								//tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+								imagePath = "./img_products/" + fileName;
+								if (fileName != null && !fileName.equals("")) {
+									uploadFile(part.getInputStream(), tempPath);
+								}
+							} else {
+								System.out.println("File vuoto");
+								fileupload = false;
+							}
+						}
+						String partedaRimuovere = "target/";
+						if( fileupload ) {
+							for (Part part : parts) {
+								String fileName = part.getSubmittedFileName();
+								tempPath = getServletContext().getRealPath("/" +"img_products"+ File.separator + fileName);
+								uploadFile(part.getInputStream(), tempPath);
+								String realPath = tempPath.replace(partedaRimuovere , "src/main/WebContent/");
+								if (fileName != null && !fileName.equals("")) {
+									uploadFile(part.getInputStream(), realPath);
+								}
+							}
+						}
 					}
 					
 					IPhotoDao photoDao = null;
 		    		photoDao = new PhotoDaoDataSource(ds);
-					
-					String stats = request.getParameter("stats");
-					Prodotto bean = new Prodotto();
+		    		int code = Integer.parseInt(request.getParameter("id"));
+		    		String stats = request.getParameter("stats");
+		    		
+		    		Prodotto bean = new Prodotto();
+		    		bean.setCode(code);
+					bean = productDao.doRetrieveByKey(bean);
 					bean.setNome(nome);
 					bean.setDescrizione(descrizione);
 					bean.setCategoria(categoria);
 					bean.setStats(stats);
 					bean.setPrice(Double.parseDouble(price));
-					bean.setImagePath(imagePath);
-					int code = Integer.parseInt(request.getParameter("id"));
+					if( fileupload ) {
+						bean.setImagePath(imagePath);
+					}
 					bean.setCode(code);
 					productDao.doUpdate(code, bean);
 					
@@ -147,7 +165,7 @@ public class ModificaProdotto extends HttpServlet {
 					dispatcher = null;	
 					dispatcher = getServletContext().getRequestDispatcher("/admin/ProductView.jsp");	
 					dispatcher.forward(request, response);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 	}

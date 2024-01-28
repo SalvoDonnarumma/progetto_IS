@@ -1,17 +1,20 @@
 package gestioneprodotti;
 
-import java.sql.SQLException;   
-import java.util.Collection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import checking.CheckException;
+import checking.DBException;
 
 public interface IProductDao {
 	
-	public void doSave(Prodotto product) throws SQLException;
+	public void doSave(Prodotto product) throws SQLException, CheckException;
 
 	public boolean doDelete(Prodotto product) throws SQLException;
 
-	public Prodotto doRetrieveByKey(Prodotto product) throws SQLException;
+	public Prodotto doRetrieveByKey(Prodotto product) throws SQLException, CheckException;
 	
-	public Collection<Prodotto> doRetrieveAll(String order) throws SQLException;
+	public ArrayList<Prodotto> doRetrieveAll(String order) throws SQLException, CheckException;
 
 	Taglie getSizesByKey(Prodotto product) throws SQLException;
 

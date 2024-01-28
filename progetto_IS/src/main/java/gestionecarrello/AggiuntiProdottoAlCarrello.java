@@ -1,6 +1,7 @@
 package gestionecarrello;
 import com.google.gson.*;
 
+import checking.CheckException;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
@@ -39,7 +40,8 @@ public class AggiuntiProdottoAlCarrello extends HttpServlet {
 				try {
 					product.setCode(idi);
 					product = productDao.doRetrieveByKey(product);
-				} catch (SQLException e1) {
+					product.setTaglie(productDao.getSizesByKey(product));
+				} catch (SQLException | CheckException e1) {
 					e1.printStackTrace();
 				}
 

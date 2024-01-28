@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
@@ -45,8 +46,10 @@ public class AcquistaProdotto extends HttpServlet {
 		Prodotto p = new Prodotto();
 		p.setCode(id);
 		try {
+			p = productDao.doRetrieveByKey(p);
+			p.setTaglie(productDao.getSizesByKey(p));
 			products.add(productDao.doRetrieveByKey(p));
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		 //inserisco solo un prodotto nella lista
