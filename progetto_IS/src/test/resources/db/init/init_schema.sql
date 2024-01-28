@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `prodotto` (
   `nome` VARCHAR(45) NULL,
   `price` FLOAT NULL,
   `descrizione` TEXT NULL,
-  `photo` LONGBLOB NULL,
   `stats` TEXT NULL,
   `image` VARCHAR(255) NULL,
   PRIMARY KEY (`idProdotto`)

@@ -1,5 +1,6 @@
 package gestioneprodotti;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Taglie implements Serializable {
 	private static final long serialVersionUID = -146315416856526905L;
@@ -13,6 +14,17 @@ public class Taglie implements Serializable {
 		this.quantitaXXL = 0;
 	}
 	
+	public Taglie(int idProdotto, int quantitaM, int quantitaL, int quantitaXL, int quantitaXXL) {
+		super();
+		this.idProdotto = idProdotto;
+		this.quantitaM = quantitaM;
+		this.quantitaL = quantitaL;
+		this.quantitaXL = quantitaXL;
+		this.quantitaXXL = quantitaXXL;
+	}
+
+
+
 	int idProdotto;
 	int quantitaM; 
 	int quantitaL;
@@ -53,6 +65,23 @@ public class Taglie implements Serializable {
 	public String toString() {
 		return "taglia M=" + quantitaM + "  taglia L=" + quantitaL
 				+ " taglia XL=" + quantitaXL + " taglia XXL=" + quantitaXXL;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(idProdotto, quantitaL, quantitaM, quantitaXL, quantitaXXL);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taglie other = (Taglie) obj;
+		return idProdotto == other.idProdotto && quantitaL == other.quantitaL && quantitaM == other.quantitaM
+				&& quantitaXL == other.quantitaXL && quantitaXXL == other.quantitaXXL;
 	}
 	
 }

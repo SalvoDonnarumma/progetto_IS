@@ -1,7 +1,13 @@
 package gestioneprodotti;
 
 import java.io.Serializable;
+import java.util.Objects;
 public class Prodotto implements Serializable {
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoria, code, descrizione, imagePath, name, price, stats, taglie);
+	}
 
 	private static final long serialVersionUID = 1L;
 	
@@ -21,7 +27,21 @@ public class Prodotto implements Serializable {
 		taglie = new Taglie();
 	}
 	
-	
+	public Prodotto(int code, String name, String descrizione, String categoria, Double price, String stats,
+			Taglie taglie, String imagePath) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.descrizione = descrizione;
+		this.categoria = categoria;
+		this.price = price;
+		this.stats = stats;
+		this.taglie = taglie;
+		this.imagePath = imagePath;
+	}
+
+
+
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
@@ -93,6 +113,21 @@ public class Prodotto implements Serializable {
 	
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Prodotto other = (Prodotto) obj;
+		return Objects.equals(categoria, other.categoria) && code == other.code
+				&& Objects.equals(descrizione, other.descrizione) && Objects.equals(imagePath, other.imagePath)
+				&& Objects.equals(name, other.name) && Objects.equals(price, other.price)
+				&& Objects.equals(stats, other.stats) && Objects.equals(taglie, other.taglie);
 	}
 }
 
