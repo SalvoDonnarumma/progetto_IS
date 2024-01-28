@@ -338,7 +338,7 @@ public class IProductDaoDataTest {
                 .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestioneprodotti/salvaProdottoCorretto.xml"))
                 .getTable(table);
     	//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
-    	Prodotto prodotto = new Prodotto(4, "K2Uomo", "descrizioneModificata", "mute", 360.0, "stats", null, "imagep");
+    	Prodotto prodotto = new Prodotto(4, "K2Uomo", "descrizioneModificata", "mute", 360.0, "stats", new Taglie(), "imagep");
     	try {
             productDaoData.doUpdate(prodotto.getCode(), prodotto);
         } catch (SQLException e) {

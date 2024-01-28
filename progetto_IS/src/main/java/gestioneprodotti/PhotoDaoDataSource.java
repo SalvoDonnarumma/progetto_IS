@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import view.sito.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +18,17 @@ public class PhotoDaoDataSource implements IPhotoDao {
 		this.ds = ds;
 	}
 	
-	public void updatePhoto(Prodotto modify) throws SQLException {
+	public void updatePhoto(Prodotto modify) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String update = "UPDATE prodotto SET image=? WHERE idProdotto=?";	
+		
+		if( modify == null )
+			throw new CheckException("Path immagine non vadido...");
+		if( modify.getCode() == null || modify.getCode() < 0)
+			throw new CheckException("Codice prodotto non valido...");
+		if( modify.getImagePath() == null || modify.getImagePath().equals(""))
+			throw new CheckException("Path immagine non valido...");
 		
 		try {
 			connection = ds.getConnection();

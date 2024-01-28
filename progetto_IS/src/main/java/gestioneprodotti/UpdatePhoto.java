@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+
 /**
  * Servlet implementation class UpdatePhoto
  */
@@ -78,7 +80,7 @@ maxRequestSize = 1024 * 1024 * 50) // 50MB
 			try {
 				photoDao.updatePhoto(modify);
 				System.out.println("Inserimento avvenuto");
-			} catch (SQLException e) {
+			} catch (SQLException | CheckException e) {
 				e.printStackTrace();
 			}
     		response.sendRedirect("admin/ProductView.jsp");

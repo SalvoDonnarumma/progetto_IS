@@ -131,13 +131,13 @@ public class ProductDaoDataSource implements IProductDao {
 		if(code < 0)
 			throw new CheckException("Taglia non valida!");
 		
-		if(sizes.getQuantitaM() == null || sizes.getQuantitaM()<0 || sizes.getQuantitaM().toString().matches("\\d+"))
+		if(sizes.getQuantitaM() == null || sizes.getQuantitaM()<0 || !sizes.getQuantitaM().toString().matches("\\d+"))
 			throw new CheckException("Taglia non valida!");
-		if(sizes.getQuantitaL() == null || sizes.getQuantitaL()<0 || sizes.getQuantitaL().toString().matches("\\d+") )
+		if(sizes.getQuantitaL() == null || sizes.getQuantitaL()<0 || !sizes.getQuantitaL().toString().matches("\\d+") )
 			throw new CheckException("Taglia non valida!");
-		if(sizes.getQuantitaXL() == null || sizes.getQuantitaXL()<0 || sizes.getQuantitaXL().toString().matches("\\d+") )
+		if(sizes.getQuantitaXL() == null || sizes.getQuantitaXL()<0 || !sizes.getQuantitaXL().toString().matches("\\d+") )
 			throw new CheckException("Taglia non valida!");
-		if(sizes.getQuantitaXXL() == null || sizes.getQuantitaXXL()<0 || sizes.getQuantitaXXL().toString().matches("\\d+") )
+		if(sizes.getQuantitaXXL() == null || sizes.getQuantitaXXL()<0 || !sizes.getQuantitaXXL().toString().matches("\\d+") )
 			throw new CheckException("Taglia non valida!");
 		
 		String update = "UPDATE taglie SET tagliaM=?, tagliaL=?, tagliaXL=?, tagliaXXL=? WHERE idProdotto=?";

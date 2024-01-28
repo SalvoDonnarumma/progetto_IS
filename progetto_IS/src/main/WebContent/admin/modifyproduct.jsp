@@ -44,13 +44,13 @@ function addValuesToLink(){
 			
 			<p>Prezzo: <%=bean.getPrice()%> &euro; </p> <br>
 	
-			<p>Quantit&aacute; taglie M disponibili: <%=bean.getTaglie().getQuantitaM()%> </p><br>
+			<p>Quantit&aacute; taglie M disponibili: <%=bean.getTaglie().getQuantitaM() %> </p><br>
 	
-			<p>Quantit&aacute; taglie L disponibili: <%=bean.getTaglie().getQuantitaL()%></p><br>
+			<p>Quantit&aacute; taglie L disponibili: <%=bean.getTaglie().getQuantitaL() %></p><br>
 			
-			<p>Quantit&aacute; taglie XL disponibili: <%=bean.getTaglie().getQuantitaXL()%></p><br>
+			<p>Quantit&aacute; taglie XL disponibili: <%=bean.getTaglie().getQuantitaXL() %></p><br>
 			
-			<p>Quantit&aacute; taglie XLL disponibili:<%=bean.getTaglie().getQuantitaXXL()%></p><br>
+			<p>Quantit&aacute; taglie XLL disponibili:<%=bean.getTaglie().getQuantitaXXL() %></p><br>
 	
 			<p>Statistiche:  <%= bean.getStats()%> <br>
 		 			

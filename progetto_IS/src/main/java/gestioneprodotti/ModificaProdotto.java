@@ -160,7 +160,8 @@ public class ModificaProdotto extends HttpServlet {
 					sizes.setQuantitaXXL(quantityXXL);
 					bean.setTaglie(sizes);
 					productDao.doUpdateSizes(code, sizes);
-					photoDao.updatePhoto(bean);
+					if( fileupload )
+						photoDao.updatePhoto(bean);
 					
 					dispatcher = null;	
 					dispatcher = getServletContext().getRequestDispatcher("/admin/ProductView.jsp");	
