@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import checking.CheckException;
 /**
  * Servlet implementation class ProductControl
  */
@@ -26,7 +28,7 @@ public class CancellaProdotto extends HttpServlet {
 			Prodotto p = new Prodotto();
 			p.setCode(id);
 			productDao.doDelete(p);			
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 
@@ -40,5 +42,4 @@ public class CancellaProdotto extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

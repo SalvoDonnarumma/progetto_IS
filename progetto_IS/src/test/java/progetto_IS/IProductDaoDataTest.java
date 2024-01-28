@@ -1,6 +1,6 @@
 package progetto_IS;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals; 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
@@ -125,14 +125,14 @@ public class IProductDaoDataTest {
 		//prodotto già presente
     	assertThrows(JdbcSQLIntegrityConstraintViolationException.class, () -> {
     		Taglie taglie = new Taglie(5, 3, 1, 1, 3);
-        	Prodotto prodotto = new Prodotto(5, "K2Donna", "descrizione", "mute", 330.0, "stats", taglie, "imagep");
+        	Prodotto prodotto = new Prodotto(4, "K2Donna", "descrizione", "mute", 330.0, "stats", taglie, "imagep");
     		productDaoData.doSave(prodotto);
     	});
 	}
     
     @ParameterizedTest
     @MethodSource("doSaveTestProvider")
-    @DisplayName("TCU3_1_1 salvaCartaTestParamNullorVuoto")
+    @DisplayName("TCU3_1_1 salvaProdottoTestParamNullorVuoto")
   //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
     public void salvaCartaTestParamNullorVuoto(Integer idprodotto, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath) {
     	assertThrows(CheckException.class, () -> {
@@ -148,18 +148,15 @@ public class IProductDaoDataTest {
     			Arguments.of(5, null, "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
     			
     			Arguments.of(5, "K2Donna", "", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
-    			Arguments.of(5, "", null, "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", null, "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
     			
-    			Arguments.of(5, "", "descrizione", "", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
-    			Arguments.of(5, "", "descrizione", null, 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", null, 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
     			
-    			Arguments.of(5, "", "descrizione", "mute", 330.0, "", new Taglie(5, 3, 1, 1, 3), "imagep"),
-    			Arguments.of(5, "", "descrizione", "mute", 330.0, null, new Taglie(5, 3, 1, 1, 3), "imagep"),
-    			Arguments.of(5, "", "descrizione", "mute", -33.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
-    			Arguments.of(5, "", "descrizione", "mute", 330.0, "stats", null, "imagep"),
-    			
-    			Arguments.of(5, "", "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), ""),
-    			Arguments.of(5, "", "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), null)
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, "", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, null, new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", -33.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, "stats", null, "imagep")
     			);
     }
     
@@ -174,13 +171,6 @@ public class IProductDaoDataTest {
     	try {
 			actual = productDaoData.doRetrieveByKey(actual);
 		} catch (SQLException | CheckException e) {
-			e.printStackTrace();
-		}
-    	
-    	try {
-    		Taglie taglie_a = productDaoData.getSizesByKey(actual);
-    		actual.setTaglie(taglie_a);
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     	assertEquals(expected, actual);
@@ -221,15 +211,15 @@ public class IProductDaoDataTest {
 			e.printStackTrace();
 		}
 		
-		/*
 		try {
 			for(Prodotto p : actual) {
 				Taglie taglie_a = productDaoData.getSizesByKey(p);
 				p.setTaglie(taglie_a);
 			}
-		} catch (SQLException e) {
+			
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
-		}*/
+		}
 		assertEquals(expected, actual);
 	}
     
@@ -284,4 +274,235 @@ public class IProductDaoDataTest {
 		
 		assertEquals(expected, actual);
 	}
+    
+    @Test
+	@DisplayName("TCU1_1_4 doDeleteTestCorretto")
+	public void doDeleteTestCorretto() throws DatabaseUnitException{
+    	ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestioneprodotti/cancellaProdottoCorretto.xml"))
+                .getTable(table);
+    	Prodotto prodotto = new Prodotto();
+    	prodotto.setCode(4);   	
+    	try {
+			productDaoData.doDelete(prodotto);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable(table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @Test
+    @DisplayName("TCU1_1_4 doDeleteTestNull")
+    public void doDeleteTestNull() throws DatabaseUnitException{
+    	assertThrows(CheckException.class, ()->{ productDaoData.doDelete(null);});
+	}
+    
+    @Test
+    @DisplayName("TCU1_1_4 doDeleteTestVuoto")
+    public void doDeleteTestVuoto() throws DatabaseUnitException{
+    	assertThrows(CheckException.class, ()->{ productDaoData.doDelete(new Prodotto());});
+	}
+    
+    @Test
+    @DisplayName("TCU1_1_4 doDeleteTestNonPresente")
+    public void doDeleteTestNonPresente() throws DatabaseUnitException{
+    	ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/init/gestioneprodotti/ProdottiInit.xml"))
+                .getTable(table);
+    	Prodotto prodotto = new Prodotto();
+    	prodotto.setCode(5);   	
+    	try {
+			productDaoData.doDelete(prodotto);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable(table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @Test
+    @DisplayName("TCU3_1_5 modificaProdottoCorretto")
+    public void modificaProdottoTestCorretto() throws CheckException, DatabaseUnitException, SQLException {
+    	ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestioneprodotti/salvaProdottoCorretto.xml"))
+                .getTable(table);
+    	//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+    	Prodotto prodotto = new Prodotto(4, "K2Uomo", "descrizioneModificata", "mute", 360.0, "stats", null, "imagep");
+    	try {
+            productDaoData.doUpdate(prodotto.getCode(), prodotto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // Rilancia l'eccezione per segnalare che il test ha avuto un errore
+        }
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable(table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+    }
+    
+    @ParameterizedTest
+    @MethodSource("doSaveTestProviderUpdate")
+    @DisplayName("TCU3_1_5 modificaProdottoTestParamNullorVuoto")
+    //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+    public void modificaProdottoTestParamNullorVuoto(Integer idprodotto, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath) {
+    	assertThrows(CheckException.class, () -> {
+    		Prodotto prodotto = new Prodotto( idprodotto, name, descrizione, categoria, price, stats, taglie,imagePath);
+    		productDaoData.doUpdate(prodotto.getCode(), prodotto);
+    	});
+    }
+	
+    private static Stream<Arguments> doSaveTestProviderUpdate(){
+    	return Stream.of(
+    			//formato nome propietario non corretto
+    			Arguments.of(4, "", "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, null, "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			
+    			Arguments.of(4, "", "", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "", null, "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			
+    			Arguments.of(4, "K2Uomo", "descrizione", "", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2Uomo", "descrizione", null, 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			
+    			Arguments.of(4, "K2Uomo", "descrizione", "mute", 330.0, "", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", 330.0, null, new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", -33.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", 330.0, "stats", null, "imagep")
+    			);
+    }
+    
+    @Test
+    @DisplayName("TCU1_1_6 setTaglieTestCorretto")
+    public void setTaglieTestCorretto() throws DatabaseUnitException{
+    	ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestioneprodotti/modificaTaglieCorretto.xml"))
+                .getTable("Taglie");
+    	Prodotto prodotto = new Prodotto();
+    	prodotto.setCode(1);  
+    	Taglie taglie = new Taglie(1, 0,0,3,3);
+    	try {
+			productDaoData.doUpdateSizes(prodotto.getCode(), taglie);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable("Taglie");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @Test
+    @DisplayName("TCU1_1_6 setTaglieTestNonPresente")
+    public void setTaglieTestNonPresente() throws DatabaseUnitException{
+    	ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(IProductDaoDataTest.class.getClassLoader().getResourceAsStream("db/init/gestioneprodotti/ProdottiInit.xml"))
+                .getTable("taglie");
+    	Prodotto prodotto = new Prodotto();
+    	prodotto.setCode(5);  
+    	Taglie taglie = new Taglie(1,0,0,3,3);
+    	try {
+			productDaoData.doUpdateSizes(prodotto.getCode(), taglie);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	ITable actualTable = null;
+		try {
+			actualTable = tester.getConnection().createDataSet().getTable("taglie");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+    
+    @ParameterizedTest
+    @MethodSource("doSaveTestProviderUpdateSizes")
+    @DisplayName("TCU3_1_6 setTaglieTestParamNullorVuoto")
+    //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+    public void modificaSizesTestParamNullorVuoto(Integer idprodotto, Integer tagliaM, Integer tagliaL, Integer tagliaXL, Integer tagliaXXL) {
+    	assertThrows(CheckException.class, () -> {
+    		Taglie taglie = new Taglie(idprodotto, tagliaM, tagliaL, tagliaXL, tagliaXXL);
+    		productDaoData.doUpdateSizes(idprodotto, taglie);
+    	});
+    }
+	
+    private static Stream<Arguments> doSaveTestProviderUpdateSizes(){
+    	return Stream.of(
+    			//formato nome propietario non corretto
+    			Arguments.of(0, -1, 0, 3, 4),
+    			
+    			Arguments.of(1, -1, 0, 3, 4),
+    			
+    			Arguments.of(1, 1,-1, 3, 4),
+    			
+    			Arguments.of(1, 1, 0, -3, 4),
+    			
+    			Arguments.of(1, -1, 0, 3, -4)
+    			);
+    }
+    
+    @Test
+    @DisplayName("TCU3_1_7 getSizesTestCorretto()")
+    public void getSizesTestCorretto() throws CheckException {
+    	Taglie expected = new Taglie(1, 0,1,3,0);
+    	Prodotto p = new Prodotto();
+    	p.setCode(1);
+    	Taglie actual = null;
+    	try {
+			actual = productDaoData.getSizesByKey(p);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	assertEquals(expected, actual);
+    }
+    
+    @Test
+    @DisplayName("TCU3_1_7 getSizesTestNull()")
+    public void getSizesTestNull() throws CheckException {
+    	Prodotto p = new Prodotto();
+    	p.setCode(1);
+    	assertThrows(CheckException.class, () -> {
+    		productDaoData.getSizesByKey(null);
+    	});
+    }
+    
+    @Test
+    @DisplayName("TCU3_1_7 getSizesTestVuoto()")
+    public void getSizesTestVuoto() throws CheckException {
+    	Prodotto p = new Prodotto();
+    	assertThrows(CheckException.class, () -> {
+    		productDaoData.getSizesByKey(p);
+    	});
+    }
+    
+    @Test
+    @DisplayName("TCU3_1_7 getSizesTestNonPresente()")
+    public void getSizesTestNonPresente() throws CheckException {
+    	Taglie taglie = new Taglie();
+    	Prodotto p = new Prodotto();
+    	p.setCode(7);
+    	Taglie actual = null;
+    	try {
+			actual = productDaoData.getSizesByKey(p);
+		} catch (SQLException | CheckException e) {
+			e.printStackTrace();
+		}
+    	assertEquals(taglie, actual);
+    }
+    
 }

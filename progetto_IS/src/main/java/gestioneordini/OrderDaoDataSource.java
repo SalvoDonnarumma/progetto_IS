@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
@@ -352,7 +353,7 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 
 	@Override
-	public ProdottoOrdinato doRetrieveByKeyO(Prodotto p) throws SQLException {
+	public ProdottoOrdinato doRetrieveByKeyO(Prodotto p) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String selectSQL = "SELECT * FROM prodotto WHERE idProdotto = ?";

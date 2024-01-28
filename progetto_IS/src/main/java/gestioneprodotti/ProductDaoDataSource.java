@@ -74,9 +74,31 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized void doUpdate(int code, Prodotto product) throws SQLException {
+	public synchronized void doUpdate(int code, Prodotto product) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if( product == null )
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getCategoria() == null || product.getCategoria().equals("") || !ProdottoValidator.isValidCategoria(product.getCategoria()))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getDescrizione() == null || product.getDescrizione().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getNome() == null || product.getNome().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getStats() == null || product.getStats().equals(""))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getPrice() < 0 || !ProdottoValidator.isValidPrice(product.getPrice().toString()))
+			throw new CheckException("Prodotto non valido!");
+		
+		if(product.getTaglie() == null)
+			throw new CheckException("Prodotto non valido!");
+		
 		String update = "UPDATE " + ProductDaoDataSource.TABLE_NAME
 				+ " SET CATEGORIA=?, NOME=?, DESCRIZIONE=?, PRICE=?, STATS=?, IMAGE=? WHERE idProdotto=?";		
 		try {
@@ -102,9 +124,22 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized void doUpdateSizes(int code,Taglie sizes) throws SQLException {
+	public synchronized void doUpdateSizes(int code,Taglie sizes) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if(code < 0)
+			throw new CheckException("Taglia non valida!");
+		
+		if(sizes.getQuantitaM() == null || sizes.getQuantitaM()<0 || sizes.getQuantitaM().toString().matches("\\d+"))
+			throw new CheckException("Taglia non valida!");
+		if(sizes.getQuantitaL() == null || sizes.getQuantitaL()<0 || sizes.getQuantitaL().toString().matches("\\d+") )
+			throw new CheckException("Taglia non valida!");
+		if(sizes.getQuantitaXL() == null || sizes.getQuantitaXL()<0 || sizes.getQuantitaXL().toString().matches("\\d+") )
+			throw new CheckException("Taglia non valida!");
+		if(sizes.getQuantitaXXL() == null || sizes.getQuantitaXXL()<0 || sizes.getQuantitaXXL().toString().matches("\\d+") )
+			throw new CheckException("Taglia non valida!");
+		
 		String update = "UPDATE taglie SET tagliaM=?, tagliaL=?, tagliaXL=?, tagliaXXL=? WHERE idProdotto=?";
 		try {
 			connection = ds.getConnection();
@@ -161,13 +196,20 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized Taglie getSizesByKey(Prodotto product) throws SQLException{
+	public synchronized Taglie getSizesByKey(Prodotto product) throws SQLException, CheckException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Taglie taglie = new Taglie();
 		String selectSQL = "SELECT * FROM taglie WHERE idProdotto= ?";
 		
-		int code = product.getCode();
+		if( product == null )
+			throw new CheckException("codice prodotto non valido");
+		
+		if( product.getCode() == 0 || product.getCode() < 0)
+			throw new CheckException("codice prodotto non valido");
+		
+		Integer code = product.getCode();
+		
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
@@ -286,10 +328,15 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 
 	@Override
-	public synchronized boolean doDelete(Prodotto product) throws SQLException {
+	public synchronized boolean doDelete(Prodotto product) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
+		if( product == null )
+			throw new CheckException("Prodotto non valido!");
+		if( product.getCode() == null || product.getCode() == -1)
+			throw new CheckException("Prodotto non valido!");
+		
 		int result = 0;
 		int code = product.getCode();
 		
@@ -373,7 +420,7 @@ public class ProductDaoDataSource implements IProductDao {
 		return products;
 	}
 	
-	public synchronized Collection<Prodotto> sortByCategoria(String order) throws SQLException {
+	public synchronized Collection<Prodotto> sortByCategoria(String order) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Collection<Prodotto> products = new LinkedList<>();

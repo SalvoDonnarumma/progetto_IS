@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Prodotto idProdotto="1" categoria="coltelli" nome="Bcknife" price="30.0" descrizione="descrizione" stats="stats" image="imagep"/>
+    <Prodotto idProdotto="2" categoria="erogatori" nome="MK2Evo" price="160.0" descrizione="descrizione" stats="stats" image="imagep"/>
+    <Prodotto idProdotto="3" categoria="erogatori" nome="R105" price="130.0" descrizione="descrizione" stats="stats" image="imagep"/>
+    <Prodotto idProdotto="4" categoria="mute" nome="K2Uomo" price="360.0" descrizione="descrizioneModificata" stats="stats" image="imagep"/>
+    
+    <Taglie idProdotto="1" tagliaM="0" tagliaL="0" tagliaXL="3" tagliaXXL="3"/>
+    <Taglie idProdotto="2" tagliaM="5" tagliaL="4" tagliaXL="0" tagliaXXL="0"/>
+    <Taglie idProdotto="3" tagliaM="3" tagliaL="5" tagliaXL="0" tagliaXXL="2"/>
+    <Taglie idProdotto="4" tagliaM="7" tagliaL="1" tagliaXL="1" tagliaXXL="3"/>
+</dataset>

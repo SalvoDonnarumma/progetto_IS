@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import java.util.Collection;
 
+import checking.CheckException;
 import gestioneprodotti.Prodotto;
 import gestioneutenti.Utente;
 
@@ -16,5 +17,5 @@ public interface IOrderDao {
 	void changeOrderState(Ordine ordine) throws SQLException;
 	Collection<Ordine> doRetrieveAllByKey(Utente utente) throws SQLException;
 	void removeOrderByEmail(Utente utente) throws SQLException;
-	ProdottoOrdinato doRetrieveByKeyO(Prodotto po) throws SQLException;
+	ProdottoOrdinato doRetrieveByKeyO(Prodotto po) throws SQLException, CheckException;
 }

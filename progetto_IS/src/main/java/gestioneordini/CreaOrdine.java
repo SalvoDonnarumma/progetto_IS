@@ -173,7 +173,7 @@ public class CreaOrdine extends HttpServlet {
 					try {
 						product.setCode(id);
 						product = orderDao.doRetrieveByKeyO(product);
-					} catch (SQLException e1) {
+					} catch (SQLException | CheckException e1) {
 						e1.printStackTrace();
 					}
 					String error = "La quantita' "+size+" richiesta eccede quella disponibile!";
@@ -268,7 +268,7 @@ public class CreaOrdine extends HttpServlet {
 						try {
 							prodondb = orderDao.doRetrieveByKeyO(p);
 							
-						} catch (SQLException e) {
+						} catch (SQLException | CheckException e) {
 							e.printStackTrace();
 						}
 
@@ -318,7 +318,7 @@ public class CreaOrdine extends HttpServlet {
 							/* aggiungo tutti i prodotti nella lista dell'ordine */
 							System.out.println("***prodotto"+i+" :"+prodondb);
 							order.addOrder(prodondb);
-						} catch (SQLException e) {
+						} catch (SQLException | CheckException e) {
 							e.printStackTrace();
 						}					
 					}

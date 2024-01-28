@@ -7,14 +7,14 @@ public class Taglie implements Serializable {
 
 	public Taglie() {
 		super();
-		this.idProdotto = 0;
-		this.quantitaM = 0;
-		this.quantitaL = 0;
-		this.quantitaXL = 0;
-		this.quantitaXXL = 0;
+		this.idProdotto = -1;
+		this.quantitaM = -1;
+		this.quantitaL = -1;
+		this.quantitaXL = -1;
+		this.quantitaXXL = -1;
 	}
-	
-	public Taglie(int idProdotto, int quantitaM, int quantitaL, int quantitaXL, int quantitaXXL) {
+
+	public Taglie(Integer idProdotto, Integer quantitaM, Integer quantitaL, Integer quantitaXL, Integer quantitaXXL) {
 		super();
 		this.idProdotto = idProdotto;
 		this.quantitaM = quantitaM;
@@ -25,52 +25,57 @@ public class Taglie implements Serializable {
 
 
 
-	int idProdotto;
-	int quantitaM; 
-	int quantitaL;
-	int quantitaXL; 
-	int quantitaXXL;
-	
-	public int getIdProdotto() {
+	Integer idProdotto;
+	Integer quantitaM; 
+	Integer quantitaL;
+	Integer quantitaXL; 
+	Integer quantitaXXL;
+
+	public Integer getIdProdotto() {
 		return idProdotto;
 	}
-	public void setIdProdotto(int idProdotto) {
+
+	public void setIdProdotto(Integer idProdotto) {
 		this.idProdotto = idProdotto;
 	}
-	public int getQuantitaM() {
+
+	public Integer getQuantitaM() {
 		return quantitaM;
 	}
-	public void setQuantitaM(int quantitaM) {
+
+	public void setQuantitaM(Integer quantitaM) {
 		this.quantitaM = quantitaM;
 	}
-	public int getQuantitaL() {
+
+	public Integer getQuantitaL() {
 		return quantitaL;
 	}
-	public void setQuantitaL(int quantitaL) {
+
+	public void setQuantitaL(Integer quantitaL) {
 		this.quantitaL = quantitaL;
 	}
-	public int getQuantitaXL() {
+
+	public Integer getQuantitaXL() {
 		return quantitaXL;
 	}
-	public void setQuantitaXL(int quantitaXL) {
+
+	public void setQuantitaXL(Integer quantitaXL) {
 		this.quantitaXL = quantitaXL;
 	}
-	public int getQuantitaXXL() {
+
+	public Integer getQuantitaXXL() {
 		return quantitaXXL;
 	}
-	public void setQuantitaXXL(int quantitaXXL) {
+
+	public void setQuantitaXXL(Integer quantitaXXL) {
 		this.quantitaXXL = quantitaXXL;
 	}
-	@Override
-	public String toString() {
-		return "taglia M=" + quantitaM + "  taglia L=" + quantitaL
-				+ " taglia XL=" + quantitaXL + " taglia XXL=" + quantitaXXL;
-	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(idProdotto, quantitaL, quantitaM, quantitaXL, quantitaXXL);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -80,8 +85,15 @@ public class Taglie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Taglie other = (Taglie) obj;
-		return idProdotto == other.idProdotto && quantitaL == other.quantitaL && quantitaM == other.quantitaM
-				&& quantitaXL == other.quantitaXL && quantitaXXL == other.quantitaXXL;
+		return Objects.equals(idProdotto, other.idProdotto) && Objects.equals(quantitaL, other.quantitaL)
+				&& Objects.equals(quantitaM, other.quantitaM) && Objects.equals(quantitaXL, other.quantitaXL)
+				&& Objects.equals(quantitaXXL, other.quantitaXXL);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Taglie [idProdotto=" + idProdotto + ", quantitaM=" + quantitaM + ", quantitaL=" + quantitaL
+				+ ", quantitaXL=" + quantitaXL + ", quantitaXXL=" + quantitaXXL + "]";
+	}
+ 
 }
