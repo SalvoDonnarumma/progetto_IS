@@ -169,6 +169,7 @@ public class CreaOrdine extends HttpServlet {
 					int quantity = Integer.parseInt(request.getParameter("qnt"));
 					String size = request.getParameter("sz");
 					int id = Integer.parseInt(request.getParameter("id"));
+					System.out.println("Codice id da acquistare: "+id);
 					ProdottoOrdinato product = new ProdottoOrdinato();
 					try {
 						product.setCode(id);
@@ -267,7 +268,7 @@ public class CreaOrdine extends HttpServlet {
 						System.out.println("Prodotto nel carrello: "+p);
 						try {
 							prodondb = orderDao.doRetrieveByKeyO(p);
-							
+							System.out.println(prodondb);
 						} catch (SQLException | CheckException e) {
 							e.printStackTrace();
 						}

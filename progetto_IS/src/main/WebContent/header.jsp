@@ -171,8 +171,9 @@
 					}
 				else		{ //sezione utente normale 
 					 if( path.contains("/store.jsp") ) { %>	
-					 		<li class="item"><a href="<%=request.getContextPath()%>/store.jsp"><i class='bx bx-home-heart icon'></i></a></li>
-							<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a></li>	
+					 		<li class="item"><a href="<%=request.getContextPath()%>/userprofile.jsp"><i class='bx bxs-user icon'></i></a>	</li>
+							<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a>	</li>
+							<li class="item"><a href="<%=request.getContextPath()%>/cart.jsp"><i class='bx bx-cart icon'></i></a> </li>	
 <%					} else { %>
 					<li class="item"><a href="<%=request.getContextPath()%>/userprofile.jsp"><i class='bx bxs-user icon'></i></a>	</li>
 					<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a>	</li>

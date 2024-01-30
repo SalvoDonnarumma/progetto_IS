@@ -7,7 +7,7 @@
 		response.sendRedirect(request.getContextPath()+"/login.jsp");	
 		return;
 	}
-	Collection<?> products = (Collection<?>) request.getAttribute("products");
+	ArrayList<Prodotto> products = (ArrayList<Prodotto>) request.getAttribute("products");
 	request.getSession().setAttribute("fromStore", Boolean.FALSE);
 	if(products == null) {
 		response.sendRedirect(request.getContextPath()+"/OrdinaProdotti");	
@@ -51,9 +51,7 @@
 		</tr>
 		<%
 		if (products != null && products.size() != 0) {
-				Iterator<?> it = products.iterator();
-				while (it.hasNext()) {
-					Prodotto bean = (Prodotto) it.next();
+		    	for (Prodotto bean : products) {
 		%>
 		<tr>
 			<td><%=bean.getCode()%></td>
@@ -106,31 +104,6 @@
 	%>
 
 <br>
-
 <br>
-<h1>Upload photo:</h1>
-	<div class="UploadPhoto">
-<form action="UpdatePhoto" enctype="multipart/form-data" method="post">
-	Nome file caricato:
-	<select name="id">
-<%
-if(products != null && products.size() > 0) {
-		Iterator<?> it = products.iterator(); 
-		while(it.hasNext()) {
-	Prodotto item = (Prodotto)it.next();
-%>	
-		<option value="<%=item.getCode()%>"> cod: <%=item.getCode()%> nome: <%=item.getNome()%></option>
-<%
-		}
-	}	
-%>		
-	</select>
-	<br>
-	<input class="file" type="file" name="talkPhoto" value="" maxlength="255">	
-	<br>		
-	<input type="submit" class="submit" value="Upload">      <input type="reset">
-	<br>
-</form>
-	</div>
 </body>
 </html>

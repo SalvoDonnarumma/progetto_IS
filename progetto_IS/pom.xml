@@ -10,7 +10,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>17</release>
+          <release>9</release>
         </configuration>
       </plugin>
       <plugin>
@@ -25,7 +25,7 @@
     	<artifactId>maven-surefire-plugin</artifactId>
     	<version>3.0.0-M5</version>
     	<configuration>
-        <excludedGroups>org.slf4j</excludedGroups>
+        <excludedGroups>org.slf4j:slf4j-log4j12</excludedGroups>
     	</configuration>
 	</plugin>
     </plugins>
@@ -45,8 +45,8 @@
     <dependency>
     	<groupId>javax.servlet</groupId>
     	<artifactId>javax.servlet-api</artifactId>
-    	<version>3.1.0</version>
-    <scope>provided</scope>
+    	<version>4.0.1</version>
+    	<scope>provided</scope>
     </dependency>
     <dependency>
     		<groupId>junit</groupId>
@@ -69,11 +69,6 @@
     	<groupId>com.h2database</groupId>
     	<artifactId>h2</artifactId>
     	<version>2.2.224</version> 
-	</dependency>
-	<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.8.0-beta2</version> <!-- Utilizza l'ultima versione disponibile -->
 	</dependency>
 	<dependency>
     	<groupId>ch.qos.logback</groupId>

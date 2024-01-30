@@ -8,7 +8,7 @@
 		return;
 	}
 	System.out.println("Benvenuto nella pagina UserView");
-	Collection<?> users = (Collection<?>) request.getAttribute("users");
+	ArrayList<Utente> users = (ArrayList<Utente>) request.getAttribute("users");
 	request.getSession().setAttribute("fromStore", Boolean.FALSE);
 	if(users == null) {
 		response.sendRedirect(request.getContextPath()+"/OttieniElencoUtenti");	
@@ -50,10 +50,8 @@
 			<th> Azioni </th>
 		</tr>
 		<%
-		if (users != null && users.size() != 0) {
-				Iterator<?> it = users.iterator();
-				while (it.hasNext()) {
-					Utente bean = (Utente) it.next();
+		if (users!= null && users.size() != 0) {
+				for (Utente bean : users) {
 		%>
 		<tr>
 			<td><%=bean.getEmail()%></td>

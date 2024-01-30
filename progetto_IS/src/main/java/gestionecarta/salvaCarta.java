@@ -99,7 +99,7 @@ public class salvaCarta extends HttpServlet {
 		carta.setNumero_carta(numero_carta);
 		carta.setProprietario(proprietario);
 		try {
-			if(cartaDao.cartaEsistente(carta)) {
+			if(cartaDao.recuperaCarta(logged)!= null) {
 				cartaDao.cancellaCarta(carta);
 			}
 			cartaDao.salvaCarta(carta);

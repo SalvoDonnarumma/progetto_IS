@@ -83,8 +83,8 @@ public class Prodotto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Prodotto [code=" + code + ", name=" + name + ", descrizione=" + descrizione + ", categoria=" + categoria
-				+ ", price=" + price + ", stats=" + stats + ", taglie=" + taglie + ", imagePath=" + imagePath + "]";
+		return "Prodotto [code=" + code + ", name=" + name  + ", categoria=" + categoria
+				+ ", price=" + price + ", taglie=" + taglie + ", imagePath=" + imagePath + "]";
 	}
 
 	public String getStats() {

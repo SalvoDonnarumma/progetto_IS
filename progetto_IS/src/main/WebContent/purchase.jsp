@@ -1,7 +1,6 @@
  <!DOCTYPE html>
 <%
-	Collection <?> products = (Collection<?>) request.getSession().getAttribute("products");
-	Prodotto bean = null;
+	Collection <Prodotto> products = (Collection<Prodotto>) request.getSession().getAttribute("products");
 	String size = null;
 	Integer quantity = null;
 	List<String>sizes = (List<String>) request.getSession().getAttribute("sizes");
@@ -12,6 +11,7 @@
 		response.sendRedirect(request.getContextPath()+"/login.jsp");	
 		return;
 	}
+	Prodotto acquistare = new Prodotto();
 %>
 <%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente,gestionecarta.CardValidator"%>
 <html lang="it">
@@ -45,60 +45,60 @@
 	<h2 style="align: center;">Da voler acquistare: </h2>
 	<br>
 	<div class="col-25">
-	    <%
-	    if( products.size()>1) {
-	    	    	int i = 0;
-	    	if (products != null && products.size() != 0) {
-	    		Iterator<?> it = products.iterator();
-	    		while (it.hasNext()) {
-	    			bean = (Prodotto) it.next();
-	    %>
-			<div class="box1">		
-			     	<h3><%=bean.getNome()%></h3>
-		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode() %>">
-		 			<img src="<%=bean.getImagePath()%>" onerror="this.src='images/nophoto.png" alt="Immagine prodotto">
-		 			
-		 			</a>
-		 			<h4> Categoria: <%=bean.getCategoria()%> </h4>
-		 			<h4> Taglia: <%= sizes.get(i) %> Quantita': <%= qnts.get(i) %> </h4>
-			</div>
-	  <%
-	  i++;	}	
-	  	request.getSession().removeAttribute("sizes");
-	  	request.getSession().setAttribute("sizes", sizes);
-	  	request.getSession().removeAttribute("qnts");
-	  	request.getSession().setAttribute("qnts", qnts);
-	  	}
-	  %>
-	    <%
-	    } else {	
-	    	if (products != null && products.size() != 0) {
-	    		Iterator<?> it = products.iterator();
-	    		while (it.hasNext()) {
-	    			bean = (Prodotto) it.next();
-	    %>
-			<div class="box1">		
-			     	<h3><%=bean.getNome()%></h3>
-		 			<a href="product?action=read&fromStore=get&id=<%=bean.getCode()%>&">
-		 			<img src="<%= bean.getImagePath() %>" onerror="this.src='./img/nophoto.png'" alt="immagine prodotto">
-		 			</a>
-		 			<h4> Categoria: <%=bean.getCategoria()%> </h4>
-		 			<h5> <span class="price"> Prezzo: <%=bean.getPrice()*Integer.parseInt(request.getParameter("qnt0"))%></span> </h5>
-		 			<h4> Taglia: <%=request.getParameter("sz0")%> Quantita': <%=request.getParameter("qnt0")%> </h4>
-			</div>
-	  <% 		} 
-		   } 
-	     } %>
-	</div>
-	  <%  if( request.getParameter("tot") == null || request.getParameter("tot").equalsIgnoreCase("null") ) { %>
-	  		<h3> Prezzo dell'ordine: <%=bean.getPrice()*Integer.parseInt(request.getParameter("qnt0"))%>&euro;</h3>
-	  <% } else {%>
-	  		<h3> Prezzo dell'ordine: <%= request.getParameter("tot")%>&euro; </h3>	
-	  <% } %>		   
+    <% 
+        if (products.size() > 1) {
+            int i = 0;
+            if (products != null && products.size() != 0){
+                for (Prodotto bean : products) {
+    %>
+                    <div class="box1">
+                        <h3><%=bean.getNome()%></h3>
+                        <a href="product?action=read&fromStore=get&id=<%=bean.getCode() %>">
+                            <img src="<%=bean.getImagePath()%>" onerror="this.src='images/nophoto.png'" alt="Immagine prodotto">
+                        </a>
+                        <h4> Categoria: <%=bean.getCategoria()%> </h4>
+                        <h4> Taglia: <%= sizes.get(i) %> Quantita': <%= qnts.get(i) %> </h4>
+                    </div>
+                <%  i++;    
+                }
+                request.getSession().removeAttribute("sizes");
+                request.getSession().setAttribute("sizes", sizes);
+                request.getSession().removeAttribute("qnts");
+                request.getSession().setAttribute("qnts", qnts);   
+            }
+        } else {    
+            if (products != null && products.size() != 0) {
+                for (Prodotto bean : products) {
+                	acquistare.setCode(bean.getCode());
+    %>
+                    <div class="box1">
+                        <h3><%=bean.getNome()%></h3>
+                        <a href="product?action=read&fromStore=get&id=<%=bean.getCode()%>&">
+                            <img src="<%= bean.getImagePath() %>" onerror="this.src='./img/nophoto.png'" alt="immagine prodotto">
+                        </a>
+                        <h4> Categoria: <%=bean.getCategoria()%> </h4>
+                        <h5> <span class="price"> Prezzo: <%=bean.getPrice()*Integer.parseInt(request.getParameter("qnt0"))%></span> </h5>
+                        <h4> Taglia: <%=request.getParameter("sz0")%> Quantita': <%=request.getParameter("qnt0")%> </h4>
+                    </div>
+                    <%  if( request.getParameter("tot") == null || request.getParameter("tot").equalsIgnoreCase("null") ) { %>
+	  					<h3> Prezzo dell'ordine: <%=bean.getPrice()*Integer.parseInt(request.getParameter("qnt0"))%>&euro;</h3>
+	  					<% } else {%>
+	  					<h3> Prezzo dell'ordine: <%= request.getParameter("tot")%>&euro; </h3>	
+	  					<% } %>
+    <%        
+                }
+            }
+        }
+    %>
+	</div>	
+	  
+	  	   
 	 <br>
 	 <br> 	
 	<h2 style="align: center;">Conferma acquisto</h2>
 	<br>
+	
+	
 	<div class="row">
 	  <div class="col-75">
 	    <div class="container">
@@ -215,8 +215,11 @@
 	        
 	        <input onClick="purchaseAlert();" type="submit" value="Continue to checkout" class="btn">
 	      </form>
-	    <%} else { %>
-	    	<form action="creaOrdine?fromStore=true&action=purchaseOne&id=<%=bean.getCode()%>&sz=<%=request.getParameter("sz0")%>&qnt=<%=request.getParameter("qnt0")%>" method="post">
+	    <%
+	    } 
+		else { %>
+	    
+	    	<form action="creaOrdine?fromStore=true&action=purchaseOne&id=<%=acquistare.getCode()%>&sz=<%=request.getParameter("sz0")%>&qnt=<%=request.getParameter("qnt0")%>" method="post">
 	    	<div class="row">
 	          <div class="col-50">
 	            <h3>Dati Utente</h3>
@@ -309,7 +312,8 @@
 	                	<input type="text" id="expyear" name="anno_scadenza" placeholder="2024" required pattern="\d{4}"
 	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
 			 			<span id="errorEXPC"> </span>
-			 		<% } %>
+			 		<% } 
+	              	 %>
 	              </div>
 	              <div class="col-50">
 	                <label for="cvv">CVV</label>
@@ -325,8 +329,8 @@
 	          </div>
 	        </div>
 	        <input onClick="purchaseAlert();" type="submit" value="Continue to checkout" class="btn">
-	      </form>
-	    <%       }%>  
+	      </form> 
+	      <%} %>
 	    </div>
 	  </div>
 		</div>
