@@ -99,6 +99,9 @@ public class salvaCarta extends HttpServlet {
 		carta.setNumero_carta(numero_carta);
 		carta.setProprietario(proprietario);
 		try {
+			if(cartaDao.cartaEsistente(carta)) {
+				cartaDao.cancellaCarta(carta);
+			}
 			cartaDao.salvaCarta(carta);
 		} catch (SQLException | CheckException e) {
 			e.printStackTrace();

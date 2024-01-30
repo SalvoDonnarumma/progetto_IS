@@ -48,19 +48,34 @@ public class ProductDaoDataSource implements IProductDao {
 		if(product.getTaglie() == null)
 			throw new CheckException("Prodotto non valido!");
 			
-		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
+		String insertSQL = null;
+		if( product.getCode() != null || product.getCode()<0 )
+			insertSQL ="INSERT INTO " + ProductDaoDataSource.TABLE_NAME
+					+ " (IDPRODOTTO, CATEGORIA, NOME, DESCRIZIONE, PRICE, STATS, IMAGE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		else
+			insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
 				+ " (CATEGORIA, NOME, DESCRIZIONE, PRICE, STATS, IMAGE) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setString(1, product.getCategoria());
-			preparedStatement.setString(2, product.getNome());
-			preparedStatement.setString(3, product.getDescrizione());
-			preparedStatement.setDouble(4, product.getPrice());
-			preparedStatement.setString(5, product.getStats());
-			preparedStatement.setString(6, product.getImagePath());
-			
+			if( product.getCode() != null ) {
+				preparedStatement.setInt(1, product.getCode());
+				preparedStatement.setString(2, product.getCategoria());
+				preparedStatement.setString(3, product.getNome());
+				preparedStatement.setString(4, product.getDescrizione());
+				preparedStatement.setDouble(5, product.getPrice());
+				preparedStatement.setString(6, product.getStats());
+				preparedStatement.setString(7, product.getImagePath());
+			} else {
+				preparedStatement.setString(1, product.getCategoria());
+				preparedStatement.setString(2, product.getNome());
+				preparedStatement.setString(3, product.getDescrizione());
+				preparedStatement.setDouble(4, product.getPrice());
+				preparedStatement.setString(5, product.getStats());
+				preparedStatement.setString(6, product.getImagePath());
+			}
+					
 			preparedStatement.executeUpdate();
 		} finally {
 			try {

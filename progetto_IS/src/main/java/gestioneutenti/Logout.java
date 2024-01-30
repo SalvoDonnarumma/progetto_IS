@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestionecarrello.Carrello;
 import gestionecarrello.CarrelloDaoDataSource;
 import gestionecarrello.ICarrelloDao;
@@ -29,9 +30,11 @@ public class Logout extends HttpServlet {
 		Utente inSession = (Utente) request.getSession().getAttribute("logged");
 		Carrello carrello = (Carrello) request.getSession().getAttribute("cart");
 		try {
-			if(inSession != null && carrello != null)
-				carrelloDaoDataSource.salvaCarrello(carrello, inSession);
-		} catch (SQLException e) {
+			if(inSession != null && carrello != null) {
+				carrello.setIdcarrello(inSession.getId());
+				carrelloDaoDataSource.salvaCarrello(carrello);
+			}
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		request.getSession().invalidate();

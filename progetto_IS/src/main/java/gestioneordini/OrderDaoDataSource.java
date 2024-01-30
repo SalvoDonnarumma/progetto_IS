@@ -23,7 +23,7 @@ public class OrderDaoDataSource implements IOrderDao{
 		this.ds = ds;
 	}
 	
-	public int getLastCode() throws SQLException {
+	private int getLastCode() throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		

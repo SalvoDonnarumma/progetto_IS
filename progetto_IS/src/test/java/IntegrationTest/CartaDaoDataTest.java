@@ -1,28 +1,21 @@
-package progetto_IS;
+package IntegrationTest;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*; 
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
-import org.dbunit.Assertion;
-import org.dbunit.DatabaseUnitException;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.SortedTable;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,13 +27,12 @@ import org.mockito.Mockito;
 import checking.CheckException;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
-import gestioneutenti.UserDaoDataSource;
 import gestioneutenti.Utente;
 
-class ICartaDaoDataTest {
+class CartaDaoDataTest {
 	private Connection conn;
 	private DataSource ds;
-	private CartaDaoDataSource cartaDao;
+	private CartaDaoDataSource cartaDaoData;
     private static String table = "carta"; 
     
     @BeforeEach
@@ -55,7 +47,7 @@ class ICartaDaoDataTest {
 		
 		ds = Mockito.mock(DataSource.class);
         Mockito.when(ds.getConnection()).thenReturn(conn);
-        cartaDao = new CartaDaoDataSource(ds);
+        cartaDaoData = new CartaDaoDataSource(ds);
 	}
 	
 	public Connection newConnection() throws SQLException {
@@ -73,37 +65,9 @@ class ICartaDaoDataTest {
 		conn.close();
 	}
     
-	/*
     @Test
 	@DisplayName("TCU1_2_1 salvaCartaTestCorretto")
-	public void salvaCartaTestCorretto() throws CheckException, DataSetException, DatabaseUnitException{
-		ITable expectedTable = new FlatXmlDataSetBuilder()
-                .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/salvaCartaCorretto.xml"))
-                .getTable(table);
-    	Carta carta = new Carta(3, "Giorno Giovanna", "1111-2222-3333-4444", "05/2029");
-    	try {
-			cartaDaoData.salvaCarta(carta);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (CheckException e) {
-			e.printStackTrace();
-		}
-    	ITable actualTable = null;
-		try {
-			actualTable = tester.getConnection().createDataSet().getTable(table);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
-	}
-    
-    /*
-    @Test
-	@DisplayName("TCU1_2_1 salvaCartaTestPresente")
-	public void salvaCartaTestPresente() throws CheckException, DataSetException, DatabaseUnitException{
-		ITable expectedTable = new FlatXmlDataSetBuilder()
-                .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/salvaCartaCorretto.xml"))
-                .getTable(table);
+	public void salvaCartaTestCorretto() throws CheckException, DataSetException, SQLException{
     	Carta carta = new Carta(2, "Giorno Giovanna", "1111-2222-3333-4444", "05/2029");
     	try {
 			cartaDaoData.salvaCarta(carta);
@@ -112,13 +76,45 @@ class ICartaDaoDataTest {
 		} catch (CheckException e) {
 			e.printStackTrace();
 		}
-    	ITable actualTable = null;
-		try {
-			actualTable = tester.getConnection().createDataSet().getTable(table);
-		} catch (Exception e) {
+    	String resultSQL = "SELECT * FROM carta WHERE idcarta = 2";
+		Connection c = newConnection();
+		PreparedStatement ps = c.prepareStatement(resultSQL);
+		ResultSet rs = ps.executeQuery();
+		assertTrue(rs.next());
+		c.close();
+	}
+    
+    
+    @Test
+	@DisplayName("TCU1_2_1 salvaCartaTestPresente")
+	public void salvaCartaTestPresente() throws CheckException, DataSetException, SQLException{
+    	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
+    	try {
+			cartaDaoData.cancellaCarta(carta);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
 			e.printStackTrace();
 		}
-        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+    	
+    	try {
+			cartaDaoData.salvaCarta(carta);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	String resultSQL = "SELECT * FROM Carta WHERE idcarta = 2";
+		Connection c = newConnection();
+		PreparedStatement ps = c.prepareStatement(resultSQL);
+		ResultSet rs = ps.executeQuery();
+		assertTrue(rs.next());
+        assertEquals( "Giorno Giovanni" , rs.getString("proprietario"));
+        assertEquals( "1111-2222-3333-4444" , rs.getString("numero_carta"));
+        assertEquals( "05/2030" , rs.getString("data_scadenza"));
+		c.close(); 
 	}
     
     @Test
@@ -158,14 +154,11 @@ class ICartaDaoDataTest {
     			);
     }
     
+    
     @Test
 	@DisplayName("TCU1_2_2 cancellaCartaTestCorretto")
-	public void cancellaCartaCorrettoTest() throws CheckException, DataSetException, DatabaseUnitException{
-		ITable expectedTable = new FlatXmlDataSetBuilder()
-                .build(ICartaDaoDataTest.class.getClassLoader().getResourceAsStream("db/expected/gestionecarta/cancellaCartaCorretto.xml"))
-                .getTable(table);
-    	Carta carta = new Carta();
-    	carta.setIdCarta(2);
+	public void cancellaCartaCorrettoTest() throws CheckException, DataSetException, SQLException{
+    	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
     	try {
 			cartaDaoData.cancellaCarta(carta);
 		} catch (SQLException e) {
@@ -173,18 +166,17 @@ class ICartaDaoDataTest {
 		} catch (CheckException e) {
 			e.printStackTrace();
 		}
-    	ITable actualTable = null;
-		try {
-			actualTable = tester.getConnection().createDataSet().getTable(table);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+    	
+    	String resultSQL = "SELECT * FROM Carta WHERE idcarta = 2";
+		Connection c = newConnection();
+		PreparedStatement ps = c.prepareStatement(resultSQL);
+		ResultSet rs = ps.executeQuery();
+		assertTrue(!rs.next());
 	}
     
     @Test
 	@DisplayName("TCU1_2_2 cancellaCartaTestNull")
-	public void cancellaCartaTestNull() throws CheckException, DataSetException, DatabaseUnitException{
+	public void cancellaCartaTestNull() throws CheckException, DataSetException{
     	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(null);});
 	}
     
@@ -195,18 +187,21 @@ class ICartaDaoDataTest {
     	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(carta);});
 	}
     
+    
     @Test
     @DisplayName("TCU1_2_3 recuperaCartaTestCorretto")
     public void recuperaCartaTestCorretto() {
     	Carta expected = new Carta(1, "Donnarumma Salvatore","1111-2222-3333-4444","03/2028");
     	
-    	Utente utente = new Utente(1, "","","","","","", null);
+    	Utente utente = Mockito.mock(Utente.class);
+    	Mockito.when(utente.getId()).thenReturn(1);
     	Carta actual = null;
     	try {
 			actual = cartaDaoData.recuperaCarta(utente);
 		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
+    	
     	assertEquals(expected, actual);
     }
     	
@@ -233,5 +228,5 @@ class ICartaDaoDataTest {
 			e.printStackTrace();
 		}
     	assertEquals(null, actual);
-    }*/
+    }
 }

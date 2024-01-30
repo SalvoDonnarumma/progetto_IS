@@ -6,10 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
-
 import javax.sql.DataSource;
 
 import checking.CheckException;
@@ -20,13 +17,19 @@ import gestionecarta.ICartaDaoData;
 public class UserDaoDataSource implements IUserDao {
 
 	private DataSource ds = null;
-
+	private Connection connection = null;
+	
 	public UserDaoDataSource(DataSource ds) {
+		super();
 		this.ds = ds;
+		try {
+			connection = ds.getConnection();
+		}catch( SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int getLastCode() throws SQLException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		String getLast = "SELECT * from utente order by idUtente DESC LIMIT 1";
@@ -52,8 +55,6 @@ public class UserDaoDataSource implements IUserDao {
 	
 	@Override
 	public synchronized String doSaveUser(Utente user) throws SQLException, CheckException {
-
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		if(user.getId() == null)
@@ -73,13 +74,11 @@ public class UserDaoDataSource implements IUserDao {
 		
 		String insertSQL = "INSERT INTO utente (email, password, nome, cognome, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
 		
-		user.setPassword(toHash(user.getPassword()));
 		try {
 			connection = ds.getConnection();
-			
 			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, user.getEmail());
-			preparedStatement.setString(2, user.getPassword());
+			preparedStatement.setString(2, toHash(user.getPassword()));
 			preparedStatement.setString(3, user.getNome());
 			preparedStatement.setString(4, user.getCognome());
 			preparedStatement.setString(5, user.getTelefono());
@@ -98,10 +97,9 @@ public class UserDaoDataSource implements IUserDao {
 		
 		return user.getEmail();
 	}
-	
+		
 	@Override
 	public synchronized ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		ArrayList<Utente> users = new ArrayList<>();
@@ -148,7 +146,7 @@ public class UserDaoDataSource implements IUserDao {
 		return users;
 	}
 	
-	private String toHash(String password) {
+	static public String toHash(String password) {
         String hashString = null;
         try {
             java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-512");
@@ -173,7 +171,6 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	public synchronized Utente login(Utente user) throws SQLException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		String selectSQLUser = "SELECT * FROM utente WHERE ruolo = ?";
@@ -225,7 +222,6 @@ public class UserDaoDataSource implements IUserDao {
 	
 	@Override
 	public boolean changePass(String pass, Utente user) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		if( user == null )
@@ -246,7 +242,7 @@ public class UserDaoDataSource implements IUserDao {
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setString(1, this.toHash(pass));
+			preparedStatement.setString(1, toHash(pass));
 			preparedStatement.setInt(2, idUtente);
 
 			result = preparedStatement.executeUpdate();
@@ -265,11 +261,12 @@ public class UserDaoDataSource implements IUserDao {
 
 	@Override
 	public Utente doRetrieveByKey(Utente user) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Utente bean = new Utente();
 
+		if(user == null)
+			throw new CheckException("Utente non valido!");
 		if(user.getId() == null)
 			throw new CheckException("Id non valido!");
 		String selectSQL = "SELECT * FROM utente WHERE idUtente = ?" ;
@@ -307,9 +304,11 @@ public class UserDaoDataSource implements IUserDao {
 
 	@Override
 	public Utente doRetrieveByEmail(Utente user) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
+		if( user == null )
+			throw new CheckException("Utente non valido");
+			
 		Utente bean = new Utente();
 		if(user.getEmail() == null || user.getEmail().equals(""))
 			throw new CheckException("Email non valida!");
@@ -318,7 +317,6 @@ public class UserDaoDataSource implements IUserDao {
 
 		try {
 			connection = ds.getConnection();
-		
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, idUtente);
 			
@@ -348,7 +346,6 @@ public class UserDaoDataSource implements IUserDao {
 	
 	@Override
 	public List<String> getAllEmails() throws SQLException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;	
 		String selectSQL = "SELECT email FROM utente";
 		List<String> emails = new ArrayList<>();
@@ -372,5 +369,4 @@ public class UserDaoDataSource implements IUserDao {
 		}
 		return emails;
 	}
-
 }

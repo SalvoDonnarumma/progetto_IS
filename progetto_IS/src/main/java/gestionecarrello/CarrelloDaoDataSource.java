@@ -1,6 +1,9 @@
 package gestionecarrello;
 
-import java.sql.Connection;    
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.sql.Connection;     
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +12,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import checking.CheckException;
+import gestionecarta.Carta;
 import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
@@ -23,79 +30,78 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	}
 	
 	@Override
-	public void salvaCarrello(Carrello carrello, Utente utente) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		String insertSQL = "INSERT INTO prodottocarrello (idcarrello, idprodottoc) VALUES (?,?)";
-		List<Prodotto> lista_prodotti = carrello.getAllProduct();
-		Integer id_utente_sessione = utente.getId();
-	
-		if(carrelloEsistente(utente)) {
-			System.out.println("carrello già presente, lo cancello");
-			eliminaCarrello(utente);
-		}
-		
-		for(int i =0; i<lista_prodotti.size(); i++) {
-			try {
-				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, id_utente_sessione);
-				Integer id_prodotto_carrello = lista_prodotti.get(i).getCode();
-				preparedStatement.setInt(2, id_prodotto_carrello);
-				preparedStatement.executeUpdate();
-			} finally {
-				try {
-					if (preparedStatement != null)
-						preparedStatement.close();
-				} finally {
-					if (connection != null)
-						connection.close();
-				}
-			}
-		}
+	public void salvaCarrello(Carrello carrello) throws SQLException, CheckException {
+	    if (carrello == null) {
+	        throw new CheckException("Carrello non valido");
+	    }
+
+	    if( carrello.getIdcarrello() <0 )
+	    	throw new CheckException("Carrello non valido!");
+	    
+	    for( Prodotto p : carrello.getAllProduct())
+	    	if( p.getCode() < 0)
+	    		throw new CheckException("Carrello non valido!");
+	    	
+	    
+	    String insertSQL = "INSERT INTO prodottocarrello (idcarrello, idprodottoc) VALUES (?,?)";
+	    List<Prodotto> lista_prodotti = carrello.getAllProduct();
+	    Integer id_utente_sessione = carrello.getIdcarrello();
+
+	    if (carrelloEsistente(carrello)) {
+	        System.out.println("Carrello già presente, lo cancello");
+	        eliminaCarrello(carrello);
+	    }
+
+	    try (Connection connection = ds.getConnection()) {
+	        for (Prodotto prodotto : lista_prodotti) {
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+	                preparedStatement.setInt(1, id_utente_sessione);
+	                preparedStatement.setInt(2, prodotto.getCode());
+	                preparedStatement.executeUpdate();
+	            }
+	        }
+	    }
 	}
 
-	public boolean carrelloEsistente(Utente utente) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		String selectSQL = "SELECT * from prodottocarrello WHERE idcarrello = ?";
-		
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, utente.getId());
-			ResultSet resultset = preparedStatement.executeQuery();
-			
-			if(resultset.next()) {		
-				System.out.println("Sono stati trovati prodotti");
-				do {
-		            int idProdotto = resultset.getInt("idprodottoc");
-		            System.out.println("Id: "+idProdotto);
-		        } while (resultset.next());
-				return true;
-			}else {
-				System.out.println("Sono stati trovati prodotti");
-				return false;
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
+
+	private boolean carrelloEsistente(Carrello utente) throws SQLException {
+	    String selectSQL = "SELECT * from prodottocarrello WHERE idcarrello = ?";
+	    boolean flag = false;
+
+	    try (Connection connection = ds.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+	        preparedStatement.setInt(1, utente.getIdcarrello());
+
+	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	            if (resultSet.next()) {
+	                System.out.println("Sono stati trovati prodotti");
+	                do {
+	                    int idProdotto = resultSet.getInt("idprodottoc");
+	                    System.out.println("Id: " + idProdotto);
+	                } while (resultSet.next());
+	                flag = true;
+	            } else {
+	                System.out.println("Non sono stati trovati prodotti");
+	                flag = false;
+	            }
+	        }
+	    }
+
+	    return flag;
 	}
+
 	
-	public void eliminaCarrello(Utente utente) throws SQLException {
+	public void eliminaCarrello(Carrello utente) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		if(utente == null || utente.getIdcarrello()<0 )
+			throw new CheckException("Carrello non valido!");
 		String selectSQL = "DELETE from prodottocarrello WHERE idcarrello = ?";
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, utente.getId());
+			preparedStatement.setInt(1, utente.getIdcarrello());
 			preparedStatement.executeUpdate();			
 		} finally {
 			try {
@@ -113,6 +119,12 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		IProductDao productDao = new ProductDaoDataSource(ds);
+		
+		if(utente == null)
+			throw new CheckException("utente non valido!");
+		
+		if(utente.getId()<1)
+			throw new CheckException("utente non valido");
 		
 		String selectSQL = "SELECT * from prodottocarrello WHERE idcarrello = ?";
 		
@@ -152,4 +164,5 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 		}
 		return carrello;
 	}
+
 }

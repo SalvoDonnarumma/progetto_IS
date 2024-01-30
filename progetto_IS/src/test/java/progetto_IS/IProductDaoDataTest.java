@@ -112,7 +112,7 @@ public class IProductDaoDataTest {
         }
     	ITable actualTable = null;
 		try {
-			actualTable = tester.getConnection().createDataSet().getTable(table);
+			actualTable = tester.getConnection().createDataSet().getTable("prodotto");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

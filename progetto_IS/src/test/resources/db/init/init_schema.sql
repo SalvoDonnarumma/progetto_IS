@@ -27,14 +27,14 @@ CREATE TABLE IF NOT EXISTS `ordine` (
   `data` VARCHAR(45) NULL,
   `stato` VARCHAR(45) NULL,
   `prezzototale` FLOAT NULL,
-  `indirizzo` VARCHAR(45) NULL,
-  CONSTRAINT `fk_ordine_utente_idx` FOREIGN KEY (`idUtente`) REFERENCES `utente` (`idutente`) ON DELETE CASCADE ON UPDATE CASCADE
+  `indirizzo` VARCHAR(45) NULL
+ -- CONSTRAINT `fk_ordine_utente_idx` FOREIGN KEY (`idUtente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 -- Table `storageprogetto`.`prodotto`
 CREATE TABLE IF NOT EXISTS `prodotto` (
-  `idProdotto` INT NOT NULL AUTO_INCREMENT,
+  `idProdotto` INT NOT NULL,
   `categoria` VARCHAR(45) NULL,
   `nome` VARCHAR(45) NULL,
   `price` FLOAT NULL,
@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `prodotto` (
 CREATE TABLE IF NOT EXISTS `prodottocarrello` (
   `idcarrello` INT NOT NULL,
   `idprodottoc` INT NOT NULL,
-  PRIMARY KEY (`idcarrello`, `idprodottoc`),
-  CONSTRAINT `fk_prodottocarrello_utente` FOREIGN KEY (`idcarrello`) REFERENCES `utente` (`idutente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_prodottocarrello_prodotto` FOREIGN KEY (`idprodottoc`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`idcarrello`, `idprodottoc`)
+--  CONSTRAINT `fk_prodottocarrello_utente` FOREIGN KEY (`idcarrello`) REFERENCES `utente` (`idutente`) ON DELETE CASCADE ON UPDATE CASCADE,
+--  CONSTRAINT `fk_prodottocarrello_prodotto` FOREIGN KEY (`idprodottoc`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Table `storageprogetto`.`prodottoordinato`
@@ -62,9 +62,9 @@ CREATE TABLE IF NOT EXISTS `prodottoordinato` (
   `prezzo` FLOAT NULL,
   `quantita` INT NULL,
   `size` VARCHAR(5) NULL,
-  PRIMARY KEY (`idOrdine`, `idProdotto`),
-  CONSTRAINT `fk_prodottoordinato_ordine` FOREIGN KEY (`idOrdine`) REFERENCES `ordine` (`idOrdine`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_prodottoordinato_prodotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`idOrdine`, `idProdotto`)
+--  CONSTRAINT `fk_prodottoordinato_ordine` FOREIGN KEY (`idOrdine`) REFERENCES `ordine` (`idOrdine`) ON DELETE CASCADE ON UPDATE CASCADE,
+--  CONSTRAINT `fk_prodottoordinato_prodotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `taglie` (
   `tagliaL` INT NULL,
   `tagliaXL` INT NULL,
   `tagliaXXL` INT NULL,
-  PRIMARY KEY (`idProdotto`),
-  CONSTRAINT `fk_taglie_prodotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`idProdotto`)
+--  CONSTRAINT `fk_taglie_prodotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotto` (`idProdotto`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

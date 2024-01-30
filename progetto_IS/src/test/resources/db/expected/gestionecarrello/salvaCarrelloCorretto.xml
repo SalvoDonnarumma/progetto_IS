@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<prodottocarrello idcarrello="1" idprodottoc="1"/>
+	<prodottocarrello idcarrello="2" idprodottoc="1"/>
+	<prodottocarrello idcarrello="3" idprodottoc="1"/>
+	<prodottocarrello idcarrello="4" idprodottoc="2"/>
+	<prodottocarrello idcarrello="4" idprodottoc="3"/>
+</dataset>

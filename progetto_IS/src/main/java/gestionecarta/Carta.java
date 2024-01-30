@@ -1,6 +1,12 @@
 package gestionecarta;
 
-public class Carta {
+import java.io.Serializable;
+
+public class Carta implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3699971326056705511L;
 	int idCarta;
 	String proprietario;
 	String numero_carta;

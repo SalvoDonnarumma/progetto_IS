@@ -4,14 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.sql.DataSource;
 
 import checking.CheckException;
-import gestionecarrello.Carrello;
-import gestioneprodotti.Prodotto;
 import gestioneutenti.Utente;
 
 public class CartaDaoDataSource implements ICartaDaoData{
@@ -46,11 +41,6 @@ public class CartaDaoDataSource implements ICartaDaoData{
 		if(carta.getNumero_carta() == null || carta.getNumero_carta().equals("") || !CardValidator.isValidFormat(carta.getNumero_carta()))
 			throw new CheckException("carta non valida");
 		
-		
-		if(cartaEsistente(carta)) {
-			cancellaCarta(carta);
-		}
-		
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
@@ -74,7 +64,8 @@ public class CartaDaoDataSource implements ICartaDaoData{
 		}
 	}
 
-	protected boolean cartaEsistente(Carta carta) throws SQLException {
+	@Override
+	public boolean cartaEsistente(Carta carta) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String selectSQL = "SELECT * from carta WHERE idcarta = ?";

@@ -45,6 +45,19 @@ public class Utente implements Serializable {
 	}
 
 
+	public Utente(String email2, String nome2, String cognome2, String password2, String telefono2, String ruolo2,
+			Carta carta2) {
+		this.email = email2;
+		this.password = password2;
+		this.nome = nome2;
+		this.cognome = cognome2;
+		this.telefono = telefono2;
+		this.ruolo = ruolo2;
+		this.carta = carta2;
+	}
+
+
+
 	public String getEmail() {
 		return email;
 	}
