@@ -53,7 +53,7 @@ public class UtenteUnitDaoData {
         // Configura il mock per ritornare un risultato simulato quando executeQuery() è chiamato
         Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
 		
-     // Configura il mock per ritornare valori simulati quando chiamati i metodi del ResultSet
+        // Configura il mock per ritornare valori simulati quando chiamati i metodi del ResultSet
         Mockito.when(resultSet.next()).thenReturn(true); // Ci sono risultati
         Mockito.when(resultSet.getInt(Mockito.eq("idutente"))).thenReturn(1);
         Mockito.when(resultSet.getString(Mockito.eq("email"))).thenReturn("salvatoredonnarumma@gmail.com");
@@ -306,7 +306,6 @@ public class UtenteUnitDaoData {
 	    Connection connection = Mockito.mock(Connection.class);
 	    Mockito.when(ds.getConnection()).thenReturn(connection);
         PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        ResultSet resultSet = Mockito.mock(ResultSet.class);
         userDaoData = new UserDaoDataSource(ds);
         Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         
@@ -325,7 +324,7 @@ public class UtenteUnitDaoData {
 	
 	@Test
     @DisplayName("TCU1_1_4 doSaveUserTestChangePassword")
-    public void doSaveUserTestChangePassword() throws Exception {
+    public void changePasswordTestCorretto() throws Exception {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
 	    Mockito.when(ds.getConnection()).thenReturn(connection);

@@ -1,16 +1,13 @@
 package IntegrationTest;
 
 import static org.junit.Assert.assertTrue;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.sql.DataSource;
-
 import org.dbunit.Assertion;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.ITable;

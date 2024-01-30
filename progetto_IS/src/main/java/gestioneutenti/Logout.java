@@ -32,6 +32,8 @@ public class Logout extends HttpServlet {
 		try {
 			if(inSession != null && carrello != null) {
 				carrello.setIdcarrello(inSession.getId());
+				if(carrelloDaoDataSource.recuperaCarrello(inSession) != null)
+					carrelloDaoDataSource.eliminaCarrello(carrello);
 				carrelloDaoDataSource.salvaCarrello(carrello);
 			}
 		} catch (SQLException | CheckException e) {

@@ -1,7 +1,6 @@
 package gestionecarrello;
 
-import java.sql.SQLException;
-
+import java.sql.SQLException; 
 import checking.CheckException;
 import gestioneutenti.Utente;
 

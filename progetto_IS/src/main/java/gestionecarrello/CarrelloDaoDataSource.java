@@ -46,12 +46,7 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    String insertSQL = "INSERT INTO prodottocarrello (idcarrello, idprodottoc) VALUES (?,?)";
 	    List<Prodotto> lista_prodotti = carrello.getAllProduct();
 	    Integer id_utente_sessione = carrello.getIdcarrello();
-
-	    if (carrelloEsistente(carrello)) {
-	        System.out.println("Carrello già presente, lo cancello");
-	        eliminaCarrello(carrello);
-	    }
-
+	    
 	    try (Connection connection = ds.getConnection()) {
 	        for (Prodotto prodotto : lista_prodotti) {
 	            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -63,35 +58,6 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    }
 	}
 
-
-	private boolean carrelloEsistente(Carrello utente) throws SQLException {
-	    String selectSQL = "SELECT * from prodottocarrello WHERE idcarrello = ?";
-	    boolean flag = false;
-
-	    try (Connection connection = ds.getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
-	        preparedStatement.setInt(1, utente.getIdcarrello());
-
-	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-	            if (resultSet.next()) {
-	                System.out.println("Sono stati trovati prodotti");
-	                do {
-	                    int idProdotto = resultSet.getInt("idprodottoc");
-	                    System.out.println("Id: " + idProdotto);
-	                } while (resultSet.next());
-	                flag = true;
-	            } else {
-	                System.out.println("Non sono stati trovati prodotti");
-	                flag = false;
-	            }
-	        }
-	    }
-
-	    return flag;
-	}
-
-	
 	public void eliminaCarrello(Carrello utente) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

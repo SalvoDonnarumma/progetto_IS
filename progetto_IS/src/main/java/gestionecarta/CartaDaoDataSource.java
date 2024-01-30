@@ -63,41 +63,7 @@ public class CartaDaoDataSource implements ICartaDaoData{
 			}
 		}
 	}
-
-	@Override
-	public boolean cartaEsistente(Carta carta) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		String selectSQL = "SELECT * from carta WHERE idcarta = ?";
-		
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, carta.getIdCarta());
-			ResultSet resultset = preparedStatement.executeQuery();
-			
-			if(resultset.next()) {		
-				System.out.println("è già presente una carta");
-				do {
-		            int idCarta= resultset.getInt("idcarta");
-		            System.out.println("Id: "+idCarta);
-		        } while (resultset.next());
-				return true;
-			}else {
-				System.out.println("Carta non presente");
-				return false;
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-	}
-
+	
 	@Override
 	public Carta recuperaCarta(Utente utente) throws SQLException, CheckException {
 		Connection connection = null;
