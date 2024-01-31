@@ -83,7 +83,6 @@ public class CartaDaoDataSource implements ICartaDaoData{
 			ResultSet resultset = preparedStatement.executeQuery();
 			
 			if(resultset.next()) {		
-				do {
 		            int idPCarta = resultset.getInt("idcarta");
 		            String proprietario = resultset.getString("proprietario");
 		            String scadenza = resultset.getString("data_scadenza");
@@ -92,8 +91,7 @@ public class CartaDaoDataSource implements ICartaDaoData{
 		            recuperata.setProprietario(proprietario);
 		            recuperata.setData_scadenza(scadenza);
 		            recuperata.setNumero_carta(numero_carta);
-		        } while (resultset.next());
-				return recuperata;
+		            return recuperata;
 			} else 
 				return null; //Se non è stata trovata nessuna carta, restituisco null
 		} finally {

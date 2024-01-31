@@ -8,13 +8,13 @@ import checking.CheckException;
 
 public interface IUserDao {
 
-	public String doSaveUser(Utente user) throws SQLException, CheckException;
+	public Integer doSaveUser(Utente user) throws SQLException, CheckException;
 	
 	public ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException, CheckException;
 	
 	public Utente doRetrieveByKey(Utente user) throws SQLException, CheckException;
 	
-	public Utente login(Utente user) throws SQLException;
+	public Utente login(Utente user) throws SQLException, CheckException;
 	
 	public  Boolean validateOldPassword(String oldPassHash, String passToBeMatch);
 

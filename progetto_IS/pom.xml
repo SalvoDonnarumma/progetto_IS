@@ -81,5 +81,11 @@
     	<version>5.10.1</version>
     	<scope>test</scope>
 	</dependency>
+	<dependency>
+    	<groupId>org.mockito</groupId>
+    	<artifactId>mockito-inline</artifactId>
+    	<version>5.2.0</version> <!-- Sostituisci con la versione specifica di Mockito che stai usando -->
+    	<scope>test</scope>
+	</dependency>
 </dependencies>
 </project>

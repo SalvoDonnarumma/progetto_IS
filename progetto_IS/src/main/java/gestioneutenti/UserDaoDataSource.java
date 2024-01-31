@@ -54,26 +54,29 @@ public class UserDaoDataSource implements IUserDao {
 	}
 	
 	@Override
-	public synchronized String doSaveUser(Utente user) throws SQLException, CheckException {
+	public synchronized Integer doSaveUser(Utente user) throws SQLException, CheckException {
 		PreparedStatement preparedStatement = null;
 		
 		if(user.getId() == null)
 			throw new CheckException("Id non valido!");
 		if(user.getEmail() == null || user.getEmail() == "" || !UtenteRegistrazioneValidator.isValidEmail(user.getEmail()))
 			throw new CheckException("Id non valido!");
-		if(user.getPassword() == null || user.getPassword() == "")
+		if(user.getPassword() == null || user.getPassword() == "" || user.getPassword().length()<12)
 			throw new CheckException("Id non valido!");
-		if(user.getNome()== null || user.getNome() == "")
+		if(user.getNome()== null || user.getNome() == "" || !UtenteRegistrazioneValidator.isValidNome(user.getNome()))
 			throw new CheckException("Id non valido!");
-		if(user.getCognome() == null || user.getCognome() == "")
+		if(user.getCognome() == null || user.getCognome() == "" || !UtenteRegistrazioneValidator.isValidNome(user.getCognome()))
 			throw new CheckException("Id non valido!");
-		if(user.getTelefono() == null || user.getTelefono() == "")
+		if(user.getTelefono() == null || user.getTelefono() == "" || !UtenteRegistrazioneValidator.isValidTelefono(user.getTelefono()))
 			throw new CheckException("Id non valido!");
 		if(user.getRuolo() == null || user.getRuolo() == "")
 			throw new CheckException("Id non valido!");
-		
+		if( !user.getRuolo().equals("Utente") && !user.getRuolo().equals("Gestore Ordini") && !user.getRuolo().equals("Gestore Prodotti") && !user.getRuolo().equals("Gestori Utenti"))
+			throw new CheckException();
+			
 		String insertSQL = "INSERT INTO utente (email, password, nome, cognome, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
 		
+		Integer res = 0;
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
@@ -84,7 +87,7 @@ public class UserDaoDataSource implements IUserDao {
 			preparedStatement.setString(5, user.getTelefono());
 			preparedStatement.setString(6, user.getRuolo());
 		
-			preparedStatement.executeUpdate();
+			res = preparedStatement.executeUpdate();
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -95,7 +98,7 @@ public class UserDaoDataSource implements IUserDao {
 			}
 		}
 		
-		return user.getEmail();
+		return res;
 	}
 		
 	@Override
@@ -170,9 +173,18 @@ public class UserDaoDataSource implements IUserDao {
 		return hashedpassToBeMatch.equals(oldPassHash);
 	}
 	
-	public synchronized Utente login(Utente user) throws SQLException {
+	public synchronized Utente login(Utente user) throws SQLException, CheckException {
 		PreparedStatement preparedStatement = null;
-
+			
+		if(user == null)
+			throw new CheckException();
+		
+		if(user.getEmail() == null || user.getPassword() == null)
+			throw new CheckException();
+		
+		if(user.getEmail().equals("") || user.getPassword().equals(""))
+			throw new CheckException();
+		
 		String selectSQLUser = "SELECT * FROM utente WHERE ruolo = ?";
 		
 		String password = user.getPassword();

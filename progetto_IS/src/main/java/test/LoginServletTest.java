@@ -1,4 +1,5 @@
-package gestioneutenti;
+package test;
+
 import java.io.IOException;   
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,68 +21,39 @@ import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
 import gestionegestioneutenti.GestoreDaoDataSource;
 import gestionegestioneutenti.IGestoreDao;
+import gestioneutenti.Utente;
 
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/LoginServletTest")
+public class LoginServletTest extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	
-			IUserDao userDao = null;	
-			IGestoreDao gestoreDao = null;
-			ICarrelloDao carrelloDao = null;
-			DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-			userDao = new UserDaoDataSource(ds);
-			gestoreDao = new GestoreDaoDataSource(ds);
-			carrelloDao = new CarrelloDaoDataSource(ds);
-			
 			String username = request.getParameter("email");
 			String password = request.getParameter("password");
 			String jspName = request.getParameter("jspName");
 			List<String> errors = new ArrayList<>();
         	RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher("login.jsp");
 
-			if(username == null || username.trim().isEmpty()) {
-				errors.add("Il campo username non può essere vuoto!");
-			}
-            if(password == null || password.trim().isEmpty()) {
-            	errors.add("Il campo password non può essere vuoto!");
-			}
-            if (!errors.isEmpty()) {
-            	request.setAttribute("errors", errors);
-            	dispatcherToLoginPage.forward(request, response);
-            	return;
-            }
+        	if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+    	        errors.add("Il campo username e password non possono essere vuoti!");
+    	        request.setAttribute("errors", errors);
+    	        dispatcherToLoginPage.forward(request, response);
+    	        return;
+    	    }
+
 			
-			Utente match= new Utente();
+			Utente match= new Utente(); //Caso utente trovato 
 			match.setEmail(username);
 			match.setPassword(password);
-			try {
-				if(jspName.equals("loginutenti"))
-					match=userDao.login(match);
-				else if(jspName.equals("loginadmin"))
-					match=gestoreDao.loginGestore(match);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (CheckException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			if( match==null ) {
-				errors.add("Username o password non validi!");
-				request.setAttribute("errors", errors);
-				dispatcherToLoginPage.forward(request, response);
-				return;
-			} 
-					
-			ICartaDaoData cartaDao = null;
-			cartaDao = new CartaDaoDataSource(ds);	
-			try {
-				Carta carta = cartaDao.recuperaCarta(match);
-				match.setCarta(carta);
-			} catch (SQLException | CheckException e1) {
-				e1.printStackTrace();
-			}
+			match.setRuolo("Utente");
+				
+			/*
+			if (match == null) {
+		        errors.add("Username o password non validi!");
+		        request.setAttribute("errors", errors);
+		        dispatcherToLoginPage.forward(request, response);
+		        return;
+		    } */
 			
 			String result = match.getRuolo();
 			if( result.equals("Gestore Ordini")) { //sono state usate credenziali di admin
@@ -98,14 +70,8 @@ public class Login extends HttpServlet {
 					response.sendRedirect("store.jsp");	
 				} else if( result.equals("Utente") && result!=null ) { //sono state usate credenziali di un utente
 					//Recupero il carello salvato in maniera persistente
-					Carrello carrello = new Carrello();
-					try {
-						carrello = carrelloDao.recuperaCarrello(match);
-					} catch (SQLException | CheckException e) {
-						e.printStackTrace();
-					}
-					request.getSession().setAttribute("cart", carrello);
-					request.getSession().setAttribute("isAdmin", "utente"); //inserisco il token nella sessione
+					//request.getSession().setAttribute("cart", carrello);
+					request.getSession().setAttribute("isAdmin", "Utente"); //inserisco il token nella sessione
 					request.getSession().setAttribute("logged", match);
 					response.sendRedirect("store.jsp");
 			}
@@ -118,5 +84,27 @@ public class Login extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
+	public void doPostNonCorretta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = request.getParameter("email");
+	    String password = request.getParameter("password");
+	    String jspName = request.getParameter("jspName");
+	    List<String> errors = new ArrayList<>();
+	    RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher("login.jsp");
 
+	    if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+	        errors.add("Il campo username e password non possono essere vuoti!");
+	        request.setAttribute("errors", errors);
+	        dispatcherToLoginPage.forward(request, response);
+	        return;
+	    }
+
+	    Utente match = null; // Non è stato trovato nessun utente
+
+	    if (match == null) {
+	        errors.add("Username o password non validi!");
+	        request.setAttribute("errors", errors);
+	        dispatcherToLoginPage.forward(request, response);
+	        return;
+	    } 
+	}
 }

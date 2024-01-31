@@ -46,14 +46,14 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    String insertSQL = "INSERT INTO prodottocarrello (idcarrello, idprodottoc) VALUES (?,?)";
 	    List<Prodotto> lista_prodotti = carrello.getAllProduct();
 	    Integer id_utente_sessione = carrello.getIdcarrello();
-	    
+	    PreparedStatement preparedStatement = null;
+	    int i = 0;
 	    try (Connection connection = ds.getConnection()) {
 	        for (Prodotto prodotto : lista_prodotti) {
-	            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+	            	preparedStatement = connection.prepareStatement(insertSQL);
 	                preparedStatement.setInt(1, id_utente_sessione);
 	                preparedStatement.setInt(2, prodotto.getCode());
 	                preparedStatement.executeUpdate();
-	            }
 	        }
 	    }
 	}
@@ -107,8 +107,6 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 		            int idProdotto = resultset.getInt("idprodottoc");
 		            Prodotto id = new Prodotto();
 		            id.setCode(idProdotto);
-		            
-		            
 		            Prodotto p = productDao.doRetrieveByKey(id);
 					p.setTaglie(productDao.getSizesByKey(p));
 					prodotticarrello.add(p);
