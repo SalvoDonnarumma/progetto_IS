@@ -12,7 +12,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneutenti.Utente;
+import gestioneutenti.UtenteRegistrazioneValidator;
 
 public class GestoreDaoDataSource implements IGestoreDao {
 
@@ -23,9 +25,18 @@ public class GestoreDaoDataSource implements IGestoreDao {
 	}
 	
 	@Override
-	public void doSaveGestore(Utente admin) throws SQLException {
+	public void doSaveGestore(Utente admin) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if(admin == null)
+			throw new CheckException("admin non valido!");
+		if(admin.getCognome() == null || admin.getCognome().equals("") || !UtenteRegistrazioneValidator.isValidNome(admin.getCognome()) )
+			throw new CheckException("admin non valido!");
+		if(admin.getPassword() == null || admin.getPassword().equals("") || admin.getPassword().length()<12 )
+			throw new CheckException("admin non valido!");
+		if(admin.getRuolo() == null || admin.getRuolo().equals("") || !admin.getRuolo().contains("Gestore"))
+			throw new CheckException("admin non valido!");
 		
 		String insertSQL = "INSERT INTO utente (email, password, nome, cognome, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
 		
@@ -69,9 +80,14 @@ public class GestoreDaoDataSource implements IGestoreDao {
     }
 	
 	@Override
-	public void doDeleteGestore(Utente admin) throws SQLException {
+	public void doDeleteGestore(Utente admin) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if(admin == null)
+			throw new CheckException("admin non valido!");
+		if(admin.getEmail() == null || admin.getEmail().equals("") )
+			throw new CheckException("admin non valido!");
 		
 		String insertSQL = "DELETE FROM Utente WHERE email = ?";
 		
@@ -94,9 +110,16 @@ public class GestoreDaoDataSource implements IGestoreDao {
 	}
 
 	@Override
-	public boolean changePassGestore(Utente new_user) throws SQLException {
+	public boolean changePassGestore(Utente new_user) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if( new_user == null)
+			throw new CheckException("admin non valido!");
+		if(new_user.getPassword() == null || new_user.getPassword().equals("") || new_user.getPassword().length()<12 )
+			throw new CheckException("admin non valido!");
+		if(new_user.getId() == null || new_user.getId().equals(""))
+			throw new CheckException("admin non valido!");
 		
 		Integer idUtente = new_user.getId();
 		String deleteSQL = "UPDATE utente SET password = ? WHERE idUtente = ?";
@@ -158,14 +181,14 @@ public class GestoreDaoDataSource implements IGestoreDao {
 
 
 	@Override
-	public Collection<Utente> doRetrieveUtentiSorted(String sort) throws SQLException {
+	public ArrayList<Utente> doRetrieveUtentiSorted(String sort) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<Utente> users = new LinkedList<>();
+		ArrayList<Utente> users = new ArrayList<>();
 
 		String selectSQL = null;
-		if(sort == null)
+		if(sort == null || sort.equals(""))
 		 selectSQL = "SELECT * FROM utente" ;
 		else if(sort.equals("email"))
 			selectSQL = "SELECT * FROM utente ORDER BY email" ;

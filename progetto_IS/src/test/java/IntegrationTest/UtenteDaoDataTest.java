@@ -157,31 +157,7 @@ public class UtenteDaoDataTest {
 		assertThrows(CheckException.class, ()->{Utente utente = userDao.doRetrieveByKey(null);});
 	}
 	
-	@Test
-	@DisplayName("TCU1_1_3 doRetrieveAllUsersTestNull")
-	public void doRetrieveAllUsersTestNull(){
-		ArrayList<Utente> expected = new ArrayList<>();
-        expected.add(new Utente(1, "salvatoredonnarumma@gmail.com", "d0a845a8304784446b1a261ba3b59e27", "Salvatore", "Donnarumma", "320-1234567", "Utente", null));
-        expected.add(new Utente(2, "orlandotomeo@gmail.com", "d0a845a8304784446b1a261ba3b59e27", "Orlando", "Tomeo", "351-1234567", "Utente", null));
-        expected.add(new Utente(15, "moriocho@gmail.com", "4024462c4cf2afece78f8a233a05ba7e3c848331a71f65e1520c920d23c864ddf59a680faa664d03ee5c7dfc79d065451eb3af2bed4f1d68a6e3ff1a50b7e595", "Mario", "Rossi", "123-1234567", "Utente", null));
-        expected.add(new Utente(42, "luigistruzzo@gmail.com", "6d7548a36a194376c17f89df600194b052422c1f529d4a8f6ba052eed39f3aabb6b98e129f990bf9e3fc3d26aa3286d43314124699120b1acd19852b3f2ab56a", "Luigi", "Struzzo", "111-1231234", "Utente", null));
-        expected.add(new Utente(69, "matteoNapolitanoAdmin@gmail.com", "e9b22f8fb7c5105513d1134fba73e448e3225481807dc468d57fb6243d171d2665fceceba3ccb455749a2b740851cf5a6364df5b33b16efb7855fe28da3fac41", "", "Napolitano", "000-0000000", "Gestore Utenti", null));
-        expected.add(new Utente(73, "user1@gmail.com", "54ca9c5605b84c5d705da2db2af64bf1fd8b70c83aa9a745475eb6a741f7d44e4713330de752b66cb23c2df71bc6c458ee9b62b1c956ca9031e850be948c8885", "UtenteUNOIS", "IS", "111-1111111", "Utente", null));
-        expected.add(new Utente(74, "user2@gmail.com", "d11f1561b21074d5a357a77fbccb2ce33b743d8e168e02632b69a2b519e3ddc430771ee9d5df7fb5ae8a9f898d32eafd0ee141325b382618b8815aab1f311e2d", "UserDueIS", "User", "222-1212122", "Utente", null));
-        expected.add(new Utente(78, "emailGestoreUtenti@gmail.com", "e9b22f8fb7c5105513d1134fba73e448e3225481807dc468d57fb6243d171d2665fceceba3ccb455749a2b740851cf5a6364df5b33b16efb7855fe28da3fac41", "", "Napolitano", "123-1234567", "Gestore Utenti", null));
-        expected.add(new Utente(79, "emailGestoreProdotti@gmail.com", "e9b22f8fb7c5105513d1134fba73e448e3225481807dc468d57fb6243d171d2665fceceba3ccb455749a2b740851cf5a6364df5b33b16efb7855fe28da3fac41", "", "Russo", "789-1234567", "Gestore Prodotti", null));
-        expected.add(new Utente(80, "emailGestoreOrdini@gmail.com", "e9b22f8fb7c5105513d1134fba73e448e3225481807dc468d57fb6243d171d2665fceceba3ccb455749a2b740851cf5a6364df5b33b16efb7855fe28da3fac41", "", "Gallo", "123-7654321", "Gestore Ordini", null));
-		
-		ArrayList<Utente> actual = null;
-		try {
-			actual = (ArrayList<Utente>) userDao.doRetrieveAllUsers(null);
-		} catch (SQLException | CheckException e) {
-			e.printStackTrace();
-		}
-		assertEquals(expected, actual);
-	}
-	
-	
+	/*
 	@Test
 	@DisplayName("TCU1_1_3 doRetrieveAllUsersTestVuoto")
 	public void doRetrieveAllUsersTestVuoto(){
@@ -205,8 +181,10 @@ public class UtenteDaoDataTest {
 		}
 		assertEquals(expected, actual);
 	}
+	*/
 	
 	
+	/*
 	@Test
 	@DisplayName("TCU1_1_3 doRetrieveAllUsersTestEmail")
 	public void doRetrieveAllUsersTestEmail() throws CheckException{
@@ -231,8 +209,9 @@ public class UtenteDaoDataTest {
 		}
 		assertEquals(expected, actual);
 	}
+	*/
 	
-	
+	/*
 	@Test
 	@DisplayName("TCU1_1_3 doRetrieveAllUsersTestNome")
 	public void doRetrieveAllUsersTestNome() throws CheckException{
@@ -264,7 +243,7 @@ public class UtenteDaoDataTest {
 	public void doRetrieveAllUsersTestOrder(){
 		assertThrows(CheckException.class, ()->{ArrayList<Utente> actual = userDao.doRetrieveAllUsers("cognome");});
 	}
-	
+	*/
 	
 	@Test
 	@DisplayName("TCU1_1_4 doSaveUserTestCorretto")

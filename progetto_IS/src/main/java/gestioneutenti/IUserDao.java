@@ -10,8 +10,6 @@ public interface IUserDao {
 
 	public Integer doSaveUser(Utente user) throws SQLException, CheckException;
 	
-	public ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException, CheckException;
-	
 	public Utente doRetrieveByKey(Utente user) throws SQLException, CheckException;
 	
 	public Utente login(Utente user) throws SQLException, CheckException;

@@ -32,8 +32,7 @@ import gestioneutenti.Utente;
 class CartaDaoDataTest {
 	private Connection conn;
 	private DataSource ds;
-	private CartaDaoDataSource cartaDaoData;
-    private static String table = "carta"; 
+	private CartaDaoDataSource cartaDaoData; 
     
     @BeforeEach
 	public void setUp() throws ClassNotFoundException, SQLException {
@@ -89,8 +88,23 @@ class CartaDaoDataTest {
 	@DisplayName("TCU1_2_1 salvaCartaTestPresente")
 	public void salvaCartaTestPresente() throws CheckException, DataSetException, SQLException{
     	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
+    	Utente utente = new Utente();
+    	utente.setId(carta.getIdCarta());
+    	boolean flag = true;
     	try {
-			cartaDaoData.cancellaCarta(carta);
+			if( cartaDaoData.recuperaCarta(utente) != null )
+				flag = true;
+			else
+				flag = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
+    	
+    	try {
+    		if(flag)
+    			cartaDaoData.cancellaCarta(carta);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (CheckException e) {

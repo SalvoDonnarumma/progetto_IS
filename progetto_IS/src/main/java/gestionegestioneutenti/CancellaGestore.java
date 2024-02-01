@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneutenti.Utente;
 
 /**
@@ -29,7 +30,7 @@ public class CancellaGestore extends HttpServlet {
 			String email = request.getParameter("email");
 			admin.setEmail(email);
 			gestoreDao.doDeleteGestore(admin);				
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

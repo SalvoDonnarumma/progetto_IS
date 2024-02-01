@@ -100,54 +100,6 @@ public class UserDaoDataSource implements IUserDao {
 		
 		return res;
 	}
-		
-	@Override
-	public synchronized ArrayList<Utente> doRetrieveAllUsers(String order) throws SQLException, CheckException {
-		PreparedStatement preparedStatement = null;
-
-		ArrayList<Utente> users = new ArrayList<>();
-
-		String selectSQL = "SELECT * FROM utente" ;
-
-		if (order != null && !order.equals("")) {
-			selectSQL += "ORDER BY ?";
-			if( !order.equals("nome") && !order.equals("email"))
-				throw new CheckException("Ordinamento non valido");
-		}
-
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			if (order != null && !order.equals("")) {
-				preparedStatement.setString(1, order);
-			}
-			
-			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				Utente bean = new Utente();
-
-				bean.setId(rs.getInt("idutente"));
-				bean.setEmail(rs.getString("email"));
-				bean.setNome(rs.getString("nome"));
-				bean.setCognome(rs.getString("cognome"));
-				bean.setPassword(rs.getString("password"));
-				bean.setTelefono(rs.getString("telefono"));
-				bean.setRuolo(rs.getString("ruolo"));
-				users.add(bean);
-			}
-
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return users;
-	}
 	
 	static public String toHash(String password) {
         String hashString = null;

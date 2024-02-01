@@ -172,7 +172,8 @@ public class CartaUnitDaoData {
         Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         ResultSet resultSet = Mockito.mock(ResultSet.class);
         Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        Mockito.when(resultSet.next()).thenReturn(true);
+        Mockito.when(resultSet.next())
+        .thenReturn(true);
         Mockito.when(resultSet.getInt(Mockito.eq("idcarta"))).thenReturn(1);
         Mockito.when(resultSet.getString(Mockito.eq("proprietario"))).thenReturn("Donnarumma Salvatore");
         Mockito.when(resultSet.getString(Mockito.eq("data_scadenza"))).thenReturn("08/29");
@@ -191,7 +192,7 @@ public class CartaUnitDaoData {
 		Mockito.verify(preparedStatement, times(1)).executeQuery();
 		Mockito.verify(resultSet, times(1)).next();
 		
-        Mockito.verify(resultSet, times(1)).getString("idcarta");
+        Mockito.verify(resultSet, times(1)).getInt("idcarta");
         Mockito.verify(resultSet, times(1)).getString("proprietario");
         Mockito.verify(resultSet, times(1)).getString("data_scadenza");
         Mockito.verify(resultSet, times(1)).getString("numero_carta");
