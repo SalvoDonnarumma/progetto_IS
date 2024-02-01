@@ -59,7 +59,7 @@ public class ProductDaoDataSource implements IProductDao {
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			if( product.getCode() != null ) {
+			if( product.getCode()>0 ) {
 				preparedStatement.setInt(1, product.getCode());
 				preparedStatement.setString(2, product.getCategoria());
 				preparedStatement.setString(3, product.getNome());

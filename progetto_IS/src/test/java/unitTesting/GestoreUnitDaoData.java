@@ -118,8 +118,7 @@ public class GestoreUnitDaoData {
         Mockito.when(resultSet.next()).thenReturn(true, true, false); // Ci sono risultati
         Mockito.when(resultSet.getInt(Mockito.eq("idutente"))).thenReturn(1, 2);
         Mockito.when(resultSet.getString(Mockito.eq("email"))).thenReturn("salvatoredonnarumma@gmail.com", "orlandotomeo@gmal.com");
-        Mockito.when(resultSet.getString(Mockito.eq("password"))).thenReturn("hashedPassword", "hashedPassword");
-        
+        Mockito.when(resultSet.getString(Mockito.eq("password"))).thenReturn("hashedPassword", "hashedPassword");       
         Mockito.when(resultSet.getString(Mockito.eq("cognome"))).thenReturn("Donnarumma", "Tomeo");
         Mockito.when(resultSet.getString(Mockito.eq("telefono"))).thenReturn("320-1234567", "351-1234567");
         Mockito.when(resultSet.getString(Mockito.eq("ruolo"))).thenReturn("Gestore Utenti", "Gestore Utenti");
@@ -131,8 +130,8 @@ public class GestoreUnitDaoData {
         //Verifico che il risultato sia quello atteso
         assertEquals(2, result.size());
   
-     // Verifica che il metodo setString sia stato chiamato correttamente sul preparedStatement
-     // Mockito.verify(preparedStatement, times(1)).setString(eq(1), eq("salvatoredonnarumma@gmail.com"));
+        // Verifica che il metodo setString sia stato chiamato correttamente sul preparedStatement
+        // Mockito.verify(preparedStatement, times(1)).setString(eq(1), eq("salvatoredonnarumma@gmail.com"));
         // Verifica che il metodo executeQuery sia stato chiamato correttamente sul preparedStatement
         Mockito.verify(preparedStatement, times(1)).executeQuery();
         // Verifica che il metodo next sia stato chiamato correttamente sul resultSet
