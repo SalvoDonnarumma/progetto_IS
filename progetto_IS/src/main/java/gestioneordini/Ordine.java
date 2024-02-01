@@ -9,6 +9,20 @@ public class Ordine implements Serializable{
 		orders = new ArrayList<>();
 	}
 
+	public Ordine(List<ProdottoOrdinato> orders, String idUtente, String data, String stato, Integer idOrdine,
+			Double prezzototale, String indirizzo, String data_consegna) {
+		super();
+		this.orders = orders;
+		this.idUtente = idUtente;
+		this.data = data;
+		this.stato = stato;
+		this.idOrdine = idOrdine;
+		this.prezzototale = prezzototale;
+		this.indirizzo = indirizzo;
+		this.data_consegna = data_consegna;
+	}
+
+
 	List<ProdottoOrdinato> orders;
 	String idUtente;
 	String data;

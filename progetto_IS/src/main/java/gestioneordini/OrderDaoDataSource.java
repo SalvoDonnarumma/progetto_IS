@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -118,11 +119,11 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	@Override
-	public synchronized Collection<Ordine> doRetrieveAllOrders(String order) throws SQLException {
+	public synchronized ArrayList<Ordine> doRetrieveAllOrders(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<Ordine> orders = new LinkedList<>();
+		ArrayList<Ordine> orders = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM ordine" ;
 
@@ -164,10 +165,10 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	@Override
-	public synchronized Collection<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException {
+	public synchronized ArrayList<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		Collection<ProdottoOrdinato> singleorder = new LinkedList<>();
+		ArrayList<ProdottoOrdinato> singleorder = new ArrayList<>();
 
 		int code = ordine.getIdOrdine();
 		String selectSQL = "SELECT * FROM prodottoordinato WHERE idOrdine = ?" ;
@@ -260,11 +261,11 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	@Override
-	public synchronized Collection<Ordine> doRetrieveAllByKey(Utente utente) throws SQLException {
+	public synchronized ArrayList<Ordine> doRetrieveAllByKey(Utente utente) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
-		Collection<Ordine> orders = new LinkedList<>();
+		ArrayList<Ordine> orders = new ArrayList<>();
 		String email = utente.getEmail();
 
 		String selectSQL = "SELECT * FROM ordine WHERE idUtente = ?" ;
@@ -305,13 +306,13 @@ public class OrderDaoDataSource implements IOrderDao{
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String deleteSQL = "UPDATE ordine SET stato = ? WHERE idOrdine IN (?)";
+		String updateSQL = "UPDATE ordine SET stato = ? WHERE idOrdine IN (?)";
 
 		int idOrdine = ordine.getIdOrdine();
 		String stato = ordine.getStato();
 		try {
 			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
+			preparedStatement = connection.prepareStatement(updateSQL);
 			preparedStatement.setString(1, stato);
 			preparedStatement.setInt(2, idOrdine);
 

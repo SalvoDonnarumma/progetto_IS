@@ -23,7 +23,6 @@ public class ProductDaoDataSource implements IProductDao {
 	
 	@Override
 	public synchronized void doSave(Prodotto product) throws SQLException, CheckException {
-
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -402,7 +401,10 @@ public class ProductDaoDataSource implements IProductDao {
 			selectSQL += " ORDER BY categoria";
 		} else if( order != null && order.equals("nome")) {
 			selectSQL += " ORDER BY nome";
-		} else if( order != null)
+		} else if( order != null && order.equals("") ){
+				;
+			}
+		else if( order != null )
 			throw new CheckException("Ordinamento non valido!");
 		
 		try {
@@ -434,43 +436,5 @@ public class ProductDaoDataSource implements IProductDao {
 		}
 		return products;
 	}
-	
-	public synchronized Collection<Prodotto> sortByCategoria(String order) throws SQLException, CheckException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Collection<Prodotto> products = new LinkedList<>();
 
-		String selectSQL = "SELECT * FROM prodotto ORDER BY categoria";
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				Prodotto bean = new Prodotto();
-				int code = rs.getInt("idProdotto");
-				bean.setCode(code);
-				bean.setCategoria(rs.getString("CATEGORIA"));
-				bean.setNome(rs.getString("NOME"));
-				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrice(rs.getDouble("PRICE"));
-				bean.setStats(rs.getString("STATS"));
-				bean.setImagePath(rs.getString("IMAGE"));
-				Taglie taglie = this.getSizesByKey(bean);
-				bean.setTaglie(taglie);
-				products.add(bean);
-			}
-
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return products;
-	}	
 }

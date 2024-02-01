@@ -54,6 +54,7 @@ public class ProdottoUnitDaoData {
 		Taglie taglie = Mockito.mock(Taglie.class);
 		Prodotto prodotto = new Prodotto(0, "Nome prodotto", "Descrizione prodotto", "Coltelli",35.00, "statistiche", taglie, "imagepath");
 		
+		
 		productDaoData.doSave(prodotto);
 		
         Mockito.verify(preparedStatement, times(1)).setString(1, prodotto.getCategoria());
@@ -143,7 +144,6 @@ public class ProdottoUnitDaoData {
 		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
 		productDaoData = new ProductDaoDataSource(ds);
 		Taglie taglie = Mockito.mock(Taglie.class);
-	
 		
 		Mockito.when(resultSet.next()).thenReturn(true, true, false); // Ci sono risultati
 		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -168,4 +168,243 @@ public class ProdottoUnitDaoData {
         resultSet.close();
 	}
 	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveAllTest")
+	public void doRetrieveByAllTestNonPresente() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		Taglie taglie = Mockito.mock(Taglie.class);
+		
+		Mockito.when(resultSet.next()).thenReturn(false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        
+        productDaoData.doRetrieveAll(null);
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveAllTest")
+	public void doRetrieveByAllTestVuoto() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		Taglie taglie = Mockito.mock(Taglie.class);
+		
+		Mockito.when(resultSet.next()).thenReturn(true, true, false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.getInt(Mockito.eq("idProdotto"))).thenReturn(1, 2);
+        Mockito.when(resultSet.getString(Mockito.eq("CATEGORIA"))).thenReturn("Coltelli", "Erogatori");
+        Mockito.when(resultSet.getString(Mockito.eq("NOME"))).thenReturn("Kckife", "MK2Evo");       
+        Mockito.when(resultSet.getString(Mockito.eq("descrizione"))).thenReturn("Descrizione", "Descrizione");
+        Mockito.when(resultSet.getDouble(Mockito.eq("PRICE"))).thenReturn(35.00, 36.00);
+        Mockito.when(resultSet.getString(Mockito.eq("STATS"))).thenReturn("Statistiche", "Statistiche");
+        Mockito.when(resultSet.getString(Mockito.eq("IMAGE"))).thenReturn("ImagePath", "ImagePath");
+        
+        productDaoData.doRetrieveAll("");
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        // Verifica che il metodo next sia stato chiamato correttamente sul resultSet
+        Mockito.verify(resultSet, times(2) ).getInt(Mockito.eq("idProdotto"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("CATEGORIA"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("NOME"));       
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("descrizione"));
+        Mockito.verify(resultSet, times(2)).getDouble(Mockito.eq("PRICE"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("STATS"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("IMAGE"));
+        resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveAllTest")
+	public void doRetrieveByAllTestOrderNome() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		Taglie taglie = Mockito.mock(Taglie.class);
+		
+		Mockito.when(resultSet.next()).thenReturn(true, true, false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.getInt(Mockito.eq("idProdotto"))).thenReturn(1, 2);
+        Mockito.when(resultSet.getString(Mockito.eq("CATEGORIA"))).thenReturn("Coltelli", "Erogatori");
+        Mockito.when(resultSet.getString(Mockito.eq("NOME"))).thenReturn("Kckife", "MK2Evo");       
+        Mockito.when(resultSet.getString(Mockito.eq("descrizione"))).thenReturn("Descrizione", "Descrizione");
+        Mockito.when(resultSet.getDouble(Mockito.eq("PRICE"))).thenReturn(35.00, 36.00);
+        Mockito.when(resultSet.getString(Mockito.eq("STATS"))).thenReturn("Statistiche", "Statistiche");
+        Mockito.when(resultSet.getString(Mockito.eq("IMAGE"))).thenReturn("ImagePath", "ImagePath");
+        
+        productDaoData.doRetrieveAll("nome");
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        // Verifica che il metodo next sia stato chiamato correttamente sul resultSet
+        Mockito.verify(resultSet, times(2) ).getInt(Mockito.eq("idProdotto"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("CATEGORIA"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("NOME"));       
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("descrizione"));
+        Mockito.verify(resultSet, times(2)).getDouble(Mockito.eq("PRICE"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("STATS"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("IMAGE"));
+        resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveAllTest")
+	public void doRetrieveByAllTestOrderCategoria() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		Taglie taglie = Mockito.mock(Taglie.class);
+		
+		Mockito.when(resultSet.next()).thenReturn(true, true, false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.getInt(Mockito.eq("idProdotto"))).thenReturn(1, 2);
+        Mockito.when(resultSet.getString(Mockito.eq("CATEGORIA"))).thenReturn("Coltelli", "Erogatori");
+        Mockito.when(resultSet.getString(Mockito.eq("NOME"))).thenReturn("Kckife", "MK2Evo");       
+        Mockito.when(resultSet.getString(Mockito.eq("descrizione"))).thenReturn("Descrizione", "Descrizione");
+        Mockito.when(resultSet.getDouble(Mockito.eq("PRICE"))).thenReturn(35.00, 36.00);
+        Mockito.when(resultSet.getString(Mockito.eq("STATS"))).thenReturn("Statistiche", "Statistiche");
+        Mockito.when(resultSet.getString(Mockito.eq("IMAGE"))).thenReturn("ImagePath", "ImagePath");
+        
+        productDaoData.doRetrieveAll("categoria");
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        // Verifica che il metodo next sia stato chiamato correttamente sul resultSet
+        Mockito.verify(resultSet, times(2) ).getInt(Mockito.eq("idProdotto"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("CATEGORIA"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("NOME"));       
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("descrizione"));
+        Mockito.verify(resultSet, times(2)).getDouble(Mockito.eq("PRICE"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("STATS"));
+        Mockito.verify(resultSet, times(2)).getString(Mockito.eq("IMAGE"));
+        resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU doDeleteProdotto")
+	public void doDeleteProdottoTestCorretto() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		
+		Prodotto prodotto = new Prodotto();
+		prodotto.setCode(1);
+		
+		productDaoData.doDelete(prodotto);
+		
+		Mockito.verify(preparedStatement, times(2)).setInt(1, prodotto.getCode());
+        Mockito.verify(preparedStatement, times(2)).executeUpdate();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveByKeyTestCorretto")
+	public void doRetrieveByKeyTestCorretto() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		
+		Mockito.when(resultSet.next()).thenReturn(true, false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.getInt(Mockito.eq("idProdotto"))).thenReturn(1);
+        Mockito.when(resultSet.getString(Mockito.eq("CATEGORIA"))).thenReturn("Coltelli");
+        Mockito.when(resultSet.getString(Mockito.eq("NOME"))).thenReturn("Kckife");       
+        Mockito.when(resultSet.getString(Mockito.eq("descrizione"))).thenReturn("Descrizione");
+        Mockito.when(resultSet.getDouble(Mockito.eq("PRICE"))).thenReturn(35.00);
+        Mockito.when(resultSet.getString(Mockito.eq("STATS"))).thenReturn("Statistiche");
+        Mockito.when(resultSet.getString(Mockito.eq("IMAGE"))).thenReturn("ImagePath");
+        
+        Prodotto da_cercare = new Prodotto();
+        da_cercare.setCode(1);
+        
+        productDaoData.doRetrieveByKey(da_cercare);
+      
+        Mockito.verify(preparedStatement, times(1)).setInt(1, da_cercare.getCode());
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        
+        Mockito.verify(resultSet, times(1) ).getInt(Mockito.eq("IDPRODOTTO"));
+        Mockito.verify(resultSet, times(1)).getString(Mockito.eq("CATEGORIA"));
+        Mockito.verify(resultSet, times(1)).getString(Mockito.eq("NOME"));       
+        Mockito.verify(resultSet, times(1)).getString(Mockito.eq("DESCRIZIONE"));
+        Mockito.verify(resultSet, times(1)).getDouble(Mockito.eq("PRICE"));
+        Mockito.verify(resultSet, times(1)).getString(Mockito.eq("STATS"));
+        Mockito.verify(resultSet, times(1)).getString(Mockito.eq("IMAGE"));
+        resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveByKeyTestNonPresente")
+	public void doRetrieveByKeyTestNonPresente() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		
+		Mockito.when(resultSet.next()).thenReturn(false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        
+        Prodotto da_cercare = new Prodotto();
+        da_cercare.setCode(1);
+        
+        productDaoData.doRetrieveByKey(da_cercare);
+
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doRetrieveByKeyTestCorretto")
+	public void getTaglieByKeyTestCorretto() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		
+		Mockito.when(resultSet.next()).thenReturn(true, false); // Ci sono risultati
+		Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.getInt(Mockito.eq("idProdotto"))).thenReturn(1);
+        Mockito.when(resultSet.getInt(Mockito.eq("tagliaM"))).thenReturn(2);
+        Mockito.when(resultSet.getInt(Mockito.eq("tagliaL"))).thenReturn(0);       
+        Mockito.when(resultSet.getInt(Mockito.eq("tagliaXL"))).thenReturn(3);
+        Mockito.when(resultSet.getInt(Mockito.eq("tagliaXXL"))).thenReturn(5);
+        
+        Prodotto da_cercare = new Prodotto();
+        da_cercare.setCode(1);
+        
+        productDaoData.getSizesByKey(da_cercare);
+      
+        Mockito.verify(preparedStatement, times(1)).setInt(1, da_cercare.getCode());
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        
+        Mockito.verify(resultSet, times(1) ).getInt(Mockito.eq("idProdotto"));
+        Mockito.verify(resultSet, times(1)).getInt(Mockito.eq("tagliaM"));
+        Mockito.verify(resultSet, times(1)).getInt(Mockito.eq("tagliaL"));       
+        Mockito.verify(resultSet, times(1)).getInt(Mockito.eq("tagliaXL"));
+        Mockito.verify(resultSet, times(1)).getInt(Mockito.eq("tagliaXXL"));
+        resultSet.close();
+	}
 }
