@@ -114,19 +114,24 @@ public class Prodotto implements Serializable {
 	}
 	
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Prodotto prodotto = (Prodotto) o;
-        return Objects.equals(code, prodotto.code) &&
-                Objects.equals(name, prodotto.name) &&
-                Objects.equals(descrizione, prodotto.descrizione) &&
-                Objects.equals(categoria, prodotto.categoria) &&
-                Objects.equals(price, prodotto.price) &&
-                Objects.equals(stats, prodotto.stats) &&
-                Objects.equals(taglie, prodotto.taglie) &&
-                Objects.equals(imagePath, prodotto.imagePath);
-    }
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    Prodotto prodotto = (Prodotto) obj;
+	    return getCode() == prodotto.getCode() &&
+	           Double.compare(prodotto.getPrice(), getPrice()) == 0 &&
+	           Objects.equals(getNome(), prodotto.getNome()) &&
+	           Objects.equals(getCategoria(), prodotto.getCategoria()) &&
+	           Objects.equals(getDescrizione(), prodotto.getDescrizione()) &&
+	           Objects.equals(getStats(), prodotto.getStats()) &&
+	           Objects.equals(getTaglie(), prodotto.getTaglie()) &&
+	           Objects.equals(getImagePath(), prodotto.getImagePath());
+	}
+
 
     @Override
     public int hashCode() {

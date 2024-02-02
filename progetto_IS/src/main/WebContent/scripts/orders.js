@@ -108,7 +108,7 @@ function dynamicOrdersUser(url){
 function eliminaRiga(button, stato) {
 	
   console.log(stato);
-  if(stato == "IN CONSEGNA"){
+  if(stato == "IN CONSEGNA" || stato == "CONSEGNATO"){
 	  alert("Non \u00E8 possibile rimuovere un ordine in consegna!");
   }	else {
   	let text = "Stai per cancellare l'ordine, procedere con l'operazione?";

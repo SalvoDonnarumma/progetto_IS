@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
 import gestioneutenti.IUserDao;
 import gestioneutenti.UserDaoDataSource;
 
@@ -41,7 +42,7 @@ public class OrdinaUtenti extends HttpServlet {
 			request.removeAttribute("users");
 			request.setAttribute("users", adminDao.doRetrieveUtentiSorted(sort));
 		
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 

@@ -80,7 +80,7 @@ public class GestoreDaoDataSource implements IGestoreDao {
     }
 	
 	@Override
-	public void doDeleteGestore(Utente admin) throws SQLException, CheckException {
+	public int doDeleteGestore(Utente admin) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
@@ -96,7 +96,8 @@ public class GestoreDaoDataSource implements IGestoreDao {
 			
 			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, admin.getEmail());
-			preparedStatement.executeUpdate();
+			int res = preparedStatement.executeUpdate();
+			return res;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -181,7 +182,7 @@ public class GestoreDaoDataSource implements IGestoreDao {
 
 
 	@Override
-	public ArrayList<Utente> doRetrieveUtentiSorted(String sort) throws SQLException {
+	public ArrayList<Utente> doRetrieveUtentiSorted(String sort) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -194,6 +195,8 @@ public class GestoreDaoDataSource implements IGestoreDao {
 			selectSQL = "SELECT * FROM utente ORDER BY email" ;
 		else if(sort.equals("cognome"))
 			selectSQL = "SELECT * FROM utente ORDER BY cognome" ;
+		else if(sort != null)
+			throw new CheckException("Order not valid!");
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);

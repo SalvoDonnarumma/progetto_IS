@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+
 /**
  * Servlet implementation class OttieniElencoUtenti
  */
@@ -38,6 +40,9 @@ public class OttieniElencoUtenti extends HttpServlet {
 			request.setAttribute("users", adminDao.doRetrieveUtentiSorted(sort));
 		
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

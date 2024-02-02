@@ -12,7 +12,7 @@ public interface IGestoreDao {
 
 	void doSaveGestore(Utente admin) throws SQLException, CheckException;
 	
-	void doDeleteGestore(Utente user) throws SQLException, CheckException;
+	int doDeleteGestore(Utente user) throws SQLException, CheckException;
 
 	boolean changePassGestore(Utente new_pass) throws SQLException, CheckException;
 	
@@ -20,7 +20,7 @@ public interface IGestoreDao {
 	
 	public List<String> getAllEmails() throws SQLException;
 
-	public ArrayList<Utente> doRetrieveUtentiSorted(String sort) throws SQLException;
+	public ArrayList<Utente> doRetrieveUtentiSorted(String sort) throws SQLException, CheckException;
 
 	public Utente loginGestore(Utente match) throws SQLException;
 }

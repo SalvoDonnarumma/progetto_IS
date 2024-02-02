@@ -98,6 +98,12 @@ public class PhotoDaoDataTest {
 		assertTrue(rs.next());
         assertEquals( "imagepmodificata" , rs.getString("image"));
 		c.close();
+		
+		String updateSQL = "UPDATE prodotto SET image = './img_products/MK2EVO.jpg' WHERE idprodotto IN (34)";
+		Connection c1 = newConnection();
+		PreparedStatement ps1 = c1.prepareStatement(updateSQL);
+		int rs1 = ps1.executeUpdate();
+		c1.close();
     }
     
     
