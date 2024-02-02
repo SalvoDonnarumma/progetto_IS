@@ -8,6 +8,12 @@ public class ProdottoOrdinato extends Prodotto {
 	}
 
 	private static final long serialVersionUID = 981173534141524876L;
+	
+	public ProdottoOrdinato(int qnt, String sz) {
+		super();
+		this.qnt = qnt;
+		this.sz = sz;
+	}
 	public ProdottoOrdinato() {
 		super();
 		qnt=0;

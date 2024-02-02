@@ -59,17 +59,6 @@ public class LoginServletUnitTest {
         mockUser.setPassword("hashedPassword");
         mockUser.setRuolo("Utente");
         
-        /* 
-        servlet = new Login();
-        MockitoAnnotations.initMocks(this);
-        DataSource dataSourceMock = mock(DataSource.class);
-        ServletContext servletContextMock = mock(ServletContext.class);
-        when(servlet.getServletConfig().getServletContext()).thenReturn(servletContextMock);
-        when(servletContextMock.getAttribute("DataSource")).thenReturn(dataSourceMock);
-        Utente oracolo = new Utente(1, "iltoro@gmail.com", "hashedpass", "Lautaro", "Martinez", "331-2089654", "Utente", null);
-        when(userDao.login(mockUser)).thenReturn(oracolo);
-        */
-        
         //Eseguo la Servlet
         servlet.doPost(request, response);
 

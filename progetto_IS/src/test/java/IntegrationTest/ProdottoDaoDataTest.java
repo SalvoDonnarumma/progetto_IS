@@ -106,7 +106,10 @@ public class ProdottoDaoDataTest {
         listaProdotti.add(new Prodotto(84, "Sktknife", "Il coltello SKKnife per la pesca subacquea ha una lama di lunghezza ideale per molteplici usi subacquei. La lama è realizzata in acciaio inossidabile 304 e presenta un bordo affilato per affrontare varie situazioni sottomarine. La sua impugnatura ergonomica",
                 "Coltelli", 83.0, "Coltello da pesca subacquea\n- Lama in acciaio inossidabile 304\n- Lunghezza della lama 11 cm\n- Bordo affilato\n- Impugnatura ergonomica\n- Fodero in plastica con blocco di sicurezza\n- Attacco per gamba regolabile",
                 new Taglie(), "./img_products/SKTKnife.jpg"));
-     
+        listaProdotti.add(new Prodotto(105,"Supernova","La scarpetta di nuova concezione presenta vistose perforazioni (che impediscono il cosiddetto \"effetto paracadute\") e le articolazioni nel punto di giunzione con la pala, assorbono l'energia cinetica. La pala, con la sua lamella centrale estremamente larga, assicura un forte effetto di canalizzazione. Disponibili dalla taglia M alla XL.",
+        	    "Pinne",159.0,"MATERIALE: Thermoplastic rubber\r\nMODELLO: Open Heel\r\nLUNGHEZZA LAMA: 38cm / 15in (size R)\r\nPESO SINGOLA PINNA: 0.9kg / 2lb (size R)\r\nKIT COLORE: false",
+        	    new Taglie(), "./img_products/SeawingSupernova.jpg"));
+    
         ArrayList<Prodotto> actual = null;
         
         try {
@@ -145,6 +148,9 @@ public class ProdottoDaoDataTest {
         listaProdotti.add(new Prodotto(84, "Sktknife", "Il coltello SKKnife per la pesca subacquea ha una lama di lunghezza ideale per molteplici usi subacquei. La lama è realizzata in acciaio inossidabile 304 e presenta un bordo affilato per affrontare varie situazioni sottomarine. La sua impugnatura ergonomica",
                 "Coltelli", 83.0, "Coltello da pesca subacquea\n- Lama in acciaio inossidabile 304\n- Lunghezza della lama 11 cm\n- Bordo affilato\n- Impugnatura ergonomica\n- Fodero in plastica con blocco di sicurezza\n- Attacco per gamba regolabile",
                 new Taglie(), "./img_products/SKTKnife.jpg"));
+        listaProdotti.add(new Prodotto(105,"Supernova","La scarpetta di nuova concezione presenta vistose perforazioni (che impediscono il cosiddetto \"effetto paracadute\") e le articolazioni nel punto di giunzione con la pala, assorbono l'energia cinetica. La pala, con la sua lamella centrale estremamente larga, assicura un forte effetto di canalizzazione. Disponibili dalla taglia M alla XL.",
+        	    "Pinne",159.0,"MATERIALE: Thermoplastic rubber\r\nMODELLO: Open Heel\r\nLUNGHEZZA LAMA: 38cm / 15in (size R)\r\nPESO SINGOLA PINNA: 0.9kg / 2lb (size R)\r\nKIT COLORE: false",
+        	    new Taglie(), "./img_products/SeawingSupernova.jpg"));
         Collections.sort(listaProdotti, Comparator.comparing(Prodotto::getNome));
         
         ArrayList<Prodotto> actual = null;
@@ -180,6 +186,9 @@ public class ProdottoDaoDataTest {
         listaProdotti.add(new Prodotto(84, "Sktknife", "Il coltello SKKnife per la pesca subacquea ha una lama di lunghezza ideale per molteplici usi subacquei. La lama è realizzata in acciaio inossidabile 304 e presenta un bordo affilato per affrontare varie situazioni sottomarine. La sua impugnatura ergonomica",
                 "Coltelli", 83.0, "Coltello da pesca subacquea\n- Lama in acciaio inossidabile 304\n- Lunghezza della lama 11 cm\n- Bordo affilato\n- Impugnatura ergonomica\n- Fodero in plastica con blocco di sicurezza\n- Attacco per gamba regolabile",
                 new Taglie(), "./img_products/SKTKnife.jpg"));
+        listaProdotti.add(new Prodotto(105,"Supernova","La scarpetta di nuova concezione presenta vistose perforazioni (che impediscono il cosiddetto \"effetto paracadute\") e le articolazioni nel punto di giunzione con la pala, assorbono l'energia cinetica. La pala, con la sua lamella centrale estremamente larga, assicura un forte effetto di canalizzazione. Disponibili dalla taglia M alla XL.",
+        	    "Pinne",159.0,"MATERIALE: Thermoplastic rubber\r\nMODELLO: Open Heel\r\nLUNGHEZZA LAMA: 38cm / 15in (size R)\r\nPESO SINGOLA PINNA: 0.9kg / 2lb (size R)\r\nKIT COLORE: false",
+        	    new Taglie(), "./img_products/SeawingSupernova.jpg"));
         Collections.sort(listaProdotti, Comparator.comparing(Prodotto::getCategoria));
         
         ArrayList<Prodotto> actual = null;

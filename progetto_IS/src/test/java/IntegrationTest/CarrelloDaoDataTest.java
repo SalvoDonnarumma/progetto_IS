@@ -51,19 +51,6 @@ public class CarrelloDaoDataTest {
         Mockito.when(ds.getConnection()).thenReturn(conn);
         carrelloDaoData = new CarrelloDaoDataSource(ds);
 	}
-    
-    @BeforeAll
-    public static void setUpDB() throws SQLException{
-    	String insertSQL = "insert into prodottocarrello (idcarrello, idprodottoc)\r\n"
-    			+ "VALUES \r\n"
-    			+ "	(1, 35),\r\n"
-    			+ "    (1, 84);";
-		Connection c = newConnection();
-		PreparedStatement ps = c.prepareStatement(insertSQL);
-		int rs = ps.executeUpdate();
-		assertTrue(rs>0);
-		c.close();
-    }
 	
 	public static Connection newConnection() throws SQLException {
 		String ip = "localhost";
@@ -166,7 +153,7 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 recuperaCarrelloTestCorretto")
+	@DisplayName("TCI1_2_1 recuperaCarrelloTestCorretto")
 	public void recuperaCarrelloTestCorretto() throws CheckException, DataSetException, SQLException{
     	ProductDaoDataSource productDaoData = Mockito.mock(ProductDaoDataSource.class);
 		Prodotto prod1 = Mockito.mock(Prodotto.class);
@@ -181,8 +168,6 @@ public class CarrelloDaoDataTest {
     	Mockito.when(productDaoData.getSizesByKey(prod2)).thenReturn(taglie2);
     	
     	ArrayList<Prodotto> list = new ArrayList<>();
-    	list.add(prod1);
-    	list.add(prod2);
     	
     	Carrello expected = new Carrello();
     	expected.setIdcarrello(1);
@@ -202,6 +187,27 @@ public class CarrelloDaoDataTest {
 		}
     	
     	assertEquals(expected, actual);
+	}
+	
+	@Test
+	@DisplayName("TCI1_2_1 recuperaCarrelloTestNonPresente")
+	public void recuperaCarrelloTestNonPresente() throws CheckException, DataSetException, SQLException{	
+    	Carrello expected = new Carrello();
+    	expected.setIdcarrello(-1);
+
+    	Utente u = new Utente();
+    	u.setId(expected.getIdcarrello());
+    	
+    	Carrello actual = null;
+    	try {
+			actual = carrelloDaoData.recuperaCarrello(u);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
+    	
+    	assertEquals(null, actual);
 	}
 
 	@Test

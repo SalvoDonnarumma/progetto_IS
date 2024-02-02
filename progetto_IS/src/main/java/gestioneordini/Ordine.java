@@ -2,9 +2,15 @@ package gestioneordini;
 import java.io.Serializable; 
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.Objects;
 
 public class Ordine implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2756102178026823980L;
+
 	public Ordine() {
 		orders = new ArrayList<>();
 	}
@@ -104,5 +110,34 @@ public class Ordine implements Serializable{
 
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(data, data_consegna, idOrdine, idUtente, indirizzo, orders, prezzototale, stato);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ordine other = (Ordine) obj;
+		return Objects.equals(data, other.data) && Objects.equals(data_consegna, other.data_consegna)
+				&& Objects.equals(idOrdine, other.idOrdine) && Objects.equals(idUtente, other.idUtente)
+				&& Objects.equals(indirizzo, other.indirizzo) && Objects.equals(orders, other.orders)
+				&& Objects.equals(prezzototale, other.prezzototale) && Objects.equals(stato, other.stato);
+	}
+
+	@Override
+	public String toString() {
+		return "Ordine [orders=" + orders + ", idUtente=" + idUtente + ", data=" + data + ", stato=" + stato
+				+ ", idOrdine=" + idOrdine + ", prezzototale=" + prezzototale + ", indirizzo=" + indirizzo
+				+ ", data_consegna=" + data_consegna + "]";
 	}	
+	
+	
 }

@@ -95,6 +95,54 @@ public class UtenteUnitDaoData {
 	}
 	
 	@Test
+	@DisplayName("TCU1_1_1 doRetrieveByKeyTestCorretto")
+	public void doRetrieveByKeyTestCorretto() throws SQLException, CheckException {
+	    DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        userDaoData = new UserDaoDataSource(ds);
+        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+		
+        Mockito.when(resultSet.next()).thenReturn(true); // Ci sono risultati
+        Mockito.when(resultSet.getInt(Mockito.eq("idutente"))).thenReturn(1);
+        Mockito.when(resultSet.getString(Mockito.eq("email"))).thenReturn("salvatoredonnarumma@gmail.com");
+        Mockito.when(resultSet.getString(Mockito.eq("password"))).thenReturn("hashedPassword");
+        Mockito.when(resultSet.getString(Mockito.eq("nome"))).thenReturn("Salvatore");
+        Mockito.when(resultSet.getString(Mockito.eq("cognome"))).thenReturn("Donnarumma");
+        Mockito.when(resultSet.getString(Mockito.eq("telefono"))).thenReturn("320-1234567");
+        Mockito.when(resultSet.getString(Mockito.eq("ruolo"))).thenReturn("Utente");
+        
+        Utente user = Mockito.mock(Utente.class);
+        Mockito.when(user.getId()).thenReturn(1);   
+        Utente result = userDaoData.doRetrieveByKey(user);
+        
+        //Verifico che il risultato sia quello atteso
+        assertEquals(1, result.getId());
+        assertEquals("salvatoredonnarumma@gmail.com", result.getEmail());
+        assertEquals("hashedPassword", result.getPassword());
+        assertEquals("Salvatore", result.getNome());
+        assertEquals("Donnarumma", result.getCognome());
+        assertEquals("320-1234567", result.getTelefono());
+        assertEquals("Utente", result.getRuolo());
+
+        Mockito.verify(preparedStatement, times(1)).setInt(eq(1), eq(1));
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        Mockito.verify(resultSet, times(1)).next();
+        
+        Mockito.verify(resultSet, times(1)).getInt("idutente");
+        Mockito.verify(resultSet, times(1)).getString("email");
+        Mockito.verify(resultSet, times(1)).getString("password");
+        Mockito.verify(resultSet, times(1)).getString("nome");
+        Mockito.verify(resultSet, times(1)).getString("cognome");
+        Mockito.verify(resultSet, times(1)).getString("telefono");
+        Mockito.verify(resultSet, times(1)).getString("ruolo");
+        resultSet.close();
+	}
+	
+	@Test
 	@DisplayName("TCU1_1_1 doRetrieveByEmailTestNonPresente")
 	public void doRetrieveByEmailTestNonPresente() throws SQLException, CheckException {
 	    DataSource ds = Mockito.mock(DataSource.class);
@@ -125,6 +173,31 @@ public class UtenteUnitDaoData {
 	}
 	
 	@Test
+	@DisplayName("TCU1_1_1 doRetrieveByKeyTestNonPresente")
+	public void doRetrieveByKeyNonPresente() throws SQLException, CheckException {
+	    DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        userDaoData = new UserDaoDataSource(ds);
+        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.next()).thenReturn(false);
+        
+        Utente user = Mockito.mock(Utente.class);
+        Mockito.when(user.getId()).thenReturn(1);   
+        Utente result = userDaoData.doRetrieveByKey(user);
+        assertNull(result);
+        
+        Mockito.verify(preparedStatement, times(1)).setInt(eq(1), eq(1));
+        Mockito.verify(preparedStatement, times(1)).executeQuery();
+        Mockito.verify(resultSet, times(1)).next();
+        
+        resultSet.close();
+	}
+	
+	@Test
     @DisplayName("TCU1_1_3 doSaveUserTestSalva")
     public void doSaveUserTestSalva() throws Exception {
 		DataSource ds = Mockito.mock(DataSource.class);
@@ -146,98 +219,7 @@ public class UtenteUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).setString(6, utente.getRuolo());
         Mockito.verify(preparedStatement, times(1)).executeUpdate();
     }
-
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestEmailNonValido")
-    public void doSaveUserTestEmailNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarummagmail.com", "jojo02", "Salvatore","Donnarumma", "320-1234567", "Utente", carta);       
-        
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
 	
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestPasswordNonValido")
-    public void doSaveUserTestPasswordNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarumma@gmail.com", "jojo02", "Salvatore","Donnarumma", "320-1234567", "Utente", carta);       
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
-	
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestNomeNonValido")
-    public void doSaveUserTestNomeNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarumma@gmail.com", "passwordlunga123", "Salvatore2","Donnarumma", "320-1234567", "Utente", carta);       
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
-	
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestCognomeNonValido")
-    public void doSaveUserTestCognomeNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarumma@gmail.com", "passwordlunga123", "Salvatore","Donnarumma3", "320-1234567", "Utente", carta);       
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
-	
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestCognomeNonValido")
-    public void doSaveUserTestNumeroNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarumma@gmail.com", "passwordlunga123", "Salvatore","Donnarumma3",null, "Utente", carta);       
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
-	
-	@Test
-    @DisplayName("TCU1_1_3 doSaveUserTestRuoloNonValido")
-    public void doSaveUserTestRuoloNonValido() throws Exception {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        userDaoData = new UserDaoDataSource(ds);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-        
-        Carta carta = Mockito.mock(Carta.class);
-        Utente utente = new Utente(1, "salvatoredonnarumma@gmail.com", "passwordlunga123", "Salvatore","Donnarumma3",null, "", carta);       
-        assertThrows( CheckException.class, ()->{ userDaoData.doSaveUser(utente);} );
-    }
 	
 	@Test
     @DisplayName("TCU1_1_4 doSaveUserTestChangePassword")

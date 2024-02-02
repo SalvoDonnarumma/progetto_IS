@@ -221,11 +221,6 @@ public class CreaOrdine extends HttpServlet {
 						e.printStackTrace();
 					}
 					
-					/* svuoto il carrello */
-					Carrello newcart = new Carrello();
-					request.getSession().setAttribute("da_acquistare", null);
-					request.getSession().removeAttribute("cart");
-					request.getSession().setAttribute("cart", newcart);
 					if( salvaDati != null && salvaDati.equals("on")) { //Devo salvare la carta
 						ICartaDaoData cardDao = new CartaDaoDataSource(ds);
 						Carta carta = new Carta();
@@ -333,7 +328,7 @@ public class CreaOrdine extends HttpServlet {
 					Double ptot = Double.parseDouble(request.getParameter("tot"));
 					try {
 						order.setPrezzototale(ptot);
-						orderDao.doSaveAll(order);
+						orderDao.doSave(order);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

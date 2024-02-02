@@ -79,7 +79,9 @@ public class OrdineUnitDaoData {
 		prodotti.add(prod3);
 		
 		Ordine order  = new Ordine(prodotti, "useremail@gmail.com", "01/02/2024", "IN ELABORAZIONE", 1, 233.0, "Via Fontana, 95", "03/02/2024");
-		orderDaoData.doSaveAll(order);
+		orderDaoData.doSave(order);
+		Double totalprice = orderDaoData.doSaveProdottiOrdinati(prodotti, order);
+		orderDaoData.updatePrezzo(totalprice, order.getIdOrdine());
 		
 		//Inserisco l'ordine
 		Mockito.verify(preparedStatement, times(1)).setString(1, order.getEmailUtente());
@@ -113,7 +115,7 @@ public class OrdineUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU doDeleteOrderTestCorretto")
+	@DisplayName("TCU changeStateOrderTestCorretto")
 	public void changeStateOrderTestCorretto() throws SQLException {
 		ds = Mockito.mock(DataSource.class);
 		connection = mock(Connection.class);
@@ -269,4 +271,5 @@ public class OrdineUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).setInt(1, order.getIdOrdine());
         resultSet.close();
 	}
+	
 }

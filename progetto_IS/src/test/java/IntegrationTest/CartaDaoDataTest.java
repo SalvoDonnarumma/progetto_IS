@@ -118,8 +118,7 @@ class CartaDaoDataTest {
 		} catch (CheckException e) {
 			e.printStackTrace();
 		}
-    	
-    	
+    	  	
     	String resultSQL = "SELECT * FROM Carta WHERE idcarta = 2";
 		Connection c = newConnection();
 		PreparedStatement ps = c.prepareStatement(resultSQL);
