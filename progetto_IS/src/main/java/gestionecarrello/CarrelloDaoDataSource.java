@@ -82,51 +82,36 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	
 	@Override
 	public Carrello recuperaCarrello(Utente utente) throws SQLException, CheckException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		IProductDao productDao = new ProductDaoDataSource(ds);
-		
-		if(utente == null)
-			throw new CheckException("utente non valido!");
-		
-		if(utente.getId()<1)
-			throw new CheckException("utente non valido");
-		
-		String selectSQL = "SELECT * from prodottocarrello WHERE idcarrello = ?";
-		
-		List<Prodotto> prodotticarrello = new ArrayList<>();
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, utente.getId());
-			ResultSet resultset = preparedStatement.executeQuery();
-			
-			if(resultset.next()) {		
-				System.out.println("Sono stati trovati prodotti");
-				do {
-		            int idProdotto = resultset.getInt("idprodottoc");
-		            Prodotto id = new Prodotto();
-		            id.setCode(idProdotto);
-		            Prodotto p = productDao.doRetrieveByKey(id);
-					p.setTaglie(productDao.getSizesByKey(p));
-					prodotticarrello.add(p);
-		        } while (resultset.next());
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		Carrello carrello = new Carrello();
-		for(int i = 0; i<prodotticarrello.size(); i++) {
-			Prodotto p = prodotticarrello.get(i);
-			carrello.addProduct(p);
-		}
-		return carrello;
+	    IProductDao productDao = new ProductDaoDataSource(ds);
+
+	    if (utente == null)
+	        throw new CheckException("Utente non valido!");
+
+	    if (utente.getId() < 1)
+	        throw new CheckException("Id non valido");
+
+	    String selectSQL = "SELECT * FROM prodottocarrello WHERE idcarrello = ?";
+	    List<Prodotto> prodotticarrello = new ArrayList<>();
+
+	    try (Connection connection = ds.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+	        preparedStatement.setInt(1, utente.getId());
+	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	            while (resultSet.next()) {
+	                int idProdotto = resultSet.getInt("idprodottoc");
+	                Prodotto id = new Prodotto();
+	                id.setCode(idProdotto);
+	                Prodotto p = productDao.doRetrieveByKey(id);
+	                p.setTaglie(productDao.getSizesByKey(p));
+	                prodotticarrello.add(p);
+	            }
+	        }
+	    }
+
+	    Carrello carrello = new Carrello();
+	    prodotticarrello.forEach(carrello::addProduct);
+	    return carrello;
 	}
 
 }

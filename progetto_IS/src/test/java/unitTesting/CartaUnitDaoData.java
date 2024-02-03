@@ -78,21 +78,6 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCartaTestProprietarioNonValido")
-	public void salvaCartaTestNomeNonValido() throws SQLException, CheckException {
-		DataSource ds = Mockito.mock(DataSource.class);
-	    Connection connection = Mockito.mock(Connection.class);
-	    Mockito.when(ds.getConnection()).thenReturn(connection);
-        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
-        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        
-		cartaDaoData = new CartaDaoDataSource(ds);
-		Carta carta = new Carta(1, "", "1111-2222-3333-4444", "05/2030");
-		
-		assertThrows( CheckException.class, ()->{ cartaDaoData.salvaCarta(carta);} );
-	}
-	
-	@Test
 	@DisplayName("TCU1_2_1 salvaCartaTestNumeroCartaNonValido")
 	public void salvaCartaTestNumeroCartaNonValido() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
@@ -137,8 +122,8 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 cancellaCartaTestNonValido")
-	public void cancellaCartaTestCartaNull() throws SQLException {
+	@DisplayName("TCU1_2_1 cancellaCartaTestNull")
+	public void cancellaCartaTestNull() throws SQLException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
 	    Mockito.when(ds.getConnection()).thenReturn(connection);

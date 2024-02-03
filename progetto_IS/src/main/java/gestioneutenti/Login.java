@@ -1,5 +1,5 @@
 package gestioneutenti;
-import java.io.IOException;   
+import java.io.IOException;    
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,6 @@ import gestionecarrello.ICarrelloDao;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
-import gestionegestioneutenti.GestoreDaoDataSource;
-import gestionegestioneutenti.IGestoreDao;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -27,11 +25,9 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 	
 			IUserDao userDao = null;	
-			IGestoreDao gestoreDao = null;
 			ICarrelloDao carrelloDao = null;
 			DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 			userDao = new UserDaoDataSource(ds);
-			gestoreDao = new GestoreDaoDataSource(ds);
 			carrelloDao = new CarrelloDaoDataSource(ds);
 			
 			String username = request.getParameter("email");
@@ -59,7 +55,7 @@ public class Login extends HttpServlet {
 				if(jspName.equals("loginutenti"))
 					match=userDao.login(match);
 				else if(jspName.equals("loginadmin"))
-					match=gestoreDao.loginGestore(match);
+					match=userDao.loginGestore(match);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} catch (CheckException e) {

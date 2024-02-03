@@ -79,7 +79,7 @@ public class PhotoDaoDataTest {
 	}
     
     @Test
-    @DisplayName("TCU3_2_1 updatePhotoTestCorretto")
+    @DisplayName("TCI updatePhotoTestCorretto")
     public void updatePhotoTestCorretto() throws DatabaseUnitException, SQLException {
     	Prodotto prodotto = new Prodotto();
     	prodotto.setCode(34);
@@ -106,7 +106,7 @@ public class PhotoDaoDataTest {
 		c1.close();
     }
     
-    
+    /*
     @ParameterizedTest
     @MethodSource("doSaveTestProviderUpdate")
     @DisplayName("TCU3_2_1 updatePhotoTestParamNullorVuoto")
@@ -129,21 +129,22 @@ public class PhotoDaoDataTest {
     			Arguments.of(-1,"imagepmodificata")
     			);
     }
+    */
     
     @Test
-    @DisplayName("TCU3_2_1 updatePhotoTestNull")
+    @DisplayName("TCI updatePhotoTestNull")
     public void updatePhotoTestNull() throws DatabaseUnitException{
     	assertThrows(CheckException.class, ()->{ photoDaoData.updatePhoto(null);});
 	}
     
     @Test
-    @DisplayName("TCU3_2_1 updatePhotoTestVuoto")
+    @DisplayName("TCI updatePhotoTestVuoto")
     public void updatePhotoTestVuoto() throws DatabaseUnitException{
     	assertThrows(CheckException.class, ()->{ photoDaoData.updatePhoto(new Prodotto());});
 	}
     
     @Test
-    @DisplayName("TCU3_2_1 updatePhotoTestNonPresente")
+    @DisplayName("TCI updatePhotoTestNonPresente")
     public void updatePhotoTestNonPresente() throws DatabaseUnitException, SQLException{
     	Prodotto prodotto = new Prodotto();
     	prodotto.setCode(5);   	

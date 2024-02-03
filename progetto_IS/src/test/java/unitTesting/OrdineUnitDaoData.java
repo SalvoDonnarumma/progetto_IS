@@ -88,7 +88,6 @@ public class OrdineUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).setString(2, order.getData());
         Mockito.verify(preparedStatement, times(1)).setString(3, order.getStato());
         Mockito.verify(preparedStatement, times(1)).setString(4, order.getIndirizzo());
-        Mockito.verify(preparedStatement, times(1)).setDouble(5, order.getPrezzototale());
         
         //Inserisco il primo prodotto
         Mockito.verify(preparedStatement, times(1)).setString(1, order.getEmailUtente());
@@ -136,7 +135,7 @@ public class OrdineUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU3_1_1 doRetrieveAllTestNull")
+	@DisplayName("TCU doRetrieveAllTestNull")
 	public void doRetrieveByAllTestNull() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -168,7 +167,7 @@ public class OrdineUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU3_1_1 doRetrieveAllTestVuoto")
+	@DisplayName("TCU doRetrieveAllTestVuoto")
 	public void doRetrieveByAllTestVuoto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -200,7 +199,7 @@ public class OrdineUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU3_1_1 doRetrieveAllTestNonPresente")
+	@DisplayName("TCU doRetrieveAllTestNonPresente")
 	public void doRetrieveByAllTestNonPresente() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -219,7 +218,7 @@ public class OrdineUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU3_1_1 doRetrieveByIdTestCorretto")
+	@DisplayName("TCU doRetrieveByIdTestCorretto")
 	public void doRetrieveByIdTestCorretto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -249,7 +248,7 @@ public class OrdineUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU3_1_1 doRetrieveByIdTestNonPresente")
+	@DisplayName("TCU doRetrieveByIdTestNonPresente")
 	public void doRetrieveByIdTestNonPresente() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);

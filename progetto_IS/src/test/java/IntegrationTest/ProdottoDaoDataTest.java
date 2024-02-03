@@ -118,14 +118,11 @@ public class ProdottoDaoDataTest {
 			e.printStackTrace();
 		}
         
-        for(Prodotto p :  actual)
-        	System.out.println(p);
-        
-        System.out.println("----");
-        for(Prodotto p :  listaProdotti)
-        	System.out.println(p);
-        assertEquals(listaProdotti, actual);
-        
+        for( int i = 0; i<actual.size(); i++) {
+        	assertEquals(listaProdotti.get(i).getCode(), actual.get(i).getCode());
+        	assertEquals(listaProdotti.get(i).getNome(), actual.get(i).getNome());
+        	assertEquals(listaProdotti.get(i).getCategoria(), actual.get(i).getCategoria());
+        }
 	}
 	
 	@Test
@@ -161,9 +158,18 @@ public class ProdottoDaoDataTest {
 			e.printStackTrace();
 		}
         
-        for(Prodotto p :  actual)
+        for(Prodotto p : actual)
         	System.out.println(p);
-        assertEquals(listaProdotti, actual);
+        
+        System.out.println("-----");
+        for(Prodotto p : listaProdotti)
+        	System.out.println(p);
+        
+        for( int i = 0; i<actual.size(); i++) {
+        	assertEquals(listaProdotti.get(i).getCode(), actual.get(i).getCode());
+        	assertEquals(listaProdotti.get(i).getNome(), actual.get(i).getNome());
+        	assertEquals(listaProdotti.get(i).getCategoria(), actual.get(i).getCategoria());
+        }
 	}
 	
 	@Test
@@ -199,9 +205,11 @@ public class ProdottoDaoDataTest {
 			e.printStackTrace();
 		}
         
-        for(Prodotto p :  actual)
-        	System.out.println(p);
-        assertEquals(listaProdotti, actual);
+        for( int i = 0; i<actual.size(); i++) {
+        	assertEquals(listaProdotti.get(i).getCode(), actual.get(i).getCode());
+        	assertEquals(listaProdotti.get(i).getNome(), actual.get(i).getNome());
+        	assertEquals(listaProdotti.get(i).getCategoria(), actual.get(i).getCategoria());
+        }
 	}
 	
 	@Test

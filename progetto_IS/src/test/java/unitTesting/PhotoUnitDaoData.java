@@ -43,7 +43,7 @@ public class PhotoUnitDaoData {
 	    }
 
 	    @Test
-	    @DisplayName("TCU2_1 updatePhotoTestCorretto")
+	    @DisplayName("updatePhotoTestCorretto")
 	    public void updatePhotoTestCorretto() throws SQLException, CheckException {
 	        // Preparare i dati del prodotto per il test
 	        Prodotto prodotto = new Prodotto(1,"Nome","Descrizione","CAtegoria",1.0,"Stats",null,"path/immagine.jpg");   
@@ -54,7 +54,7 @@ public class PhotoUnitDaoData {
 	        Mockito.verify(preparedStatement, times(1)).executeUpdate();
 	    }
 	    @Test
-	    @DisplayName("Test updatePhoto con Prodotto valido")
+	    @DisplayName("updatePhotoTestConProdottoValido")
 	    public void updatePhotoTestConProdottoValido() throws SQLException, CheckException {
 	        // Preparare i dati del prodotto per il test
 	        Prodotto prodotto = new Prodotto(1, "Nome", "Descrizione", "Categoria", 1.0, "Stats", null, "path/immagine.jpg");
@@ -69,7 +69,7 @@ public class PhotoUnitDaoData {
 	    }
 
 	    @Test
-	    @DisplayName("TCU2_2 updatePhotoTestNull")
+	    @DisplayName("updatePhotoTestNull")
 	    public void updatePhotoTestConProdottoNullo() {
 	        // Chiamare il metodo che si sta testando con un prodotto nullo e verificare che sollevi un'eccezione
 	        assertThrows(CheckException.class, () -> photoDaoData.updatePhoto(null));

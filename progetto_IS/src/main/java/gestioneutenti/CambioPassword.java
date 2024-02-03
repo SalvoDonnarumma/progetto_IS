@@ -42,6 +42,7 @@ public class CambioPassword extends HttpServlet {
 			List<String> errors = new ArrayList<>();
 			RequestDispatcher dispatcherChangePassPage = null;
 			Boolean no_email = false;
+			
 			if(bean == null || bean.getRuolo().equals("Gestore Utenti")) {
 				dispatcherChangePassPage = request.getRequestDispatcher("changepass2.jsp");
 			}else
@@ -72,8 +73,10 @@ public class CambioPassword extends HttpServlet {
 		    	}
 		    }
 		    
+		    Utente pass_to_match = new Utente();
+		    pass_to_match.setPassword(oldPass);
 		    if(!no_email) {
-		    	if( !userDao.validateOldPassword(bean.getPassword(), oldPass) ) {
+		    	if( !userDao.validateOldPassword(bean, pass_to_match) ) {
 		    		errors.add("La vecchia password inserita non &egrave; valida!");
 		    		request.setAttribute("errors", errors);
 		    		dispatcherChangePassPage.forward(request, response);

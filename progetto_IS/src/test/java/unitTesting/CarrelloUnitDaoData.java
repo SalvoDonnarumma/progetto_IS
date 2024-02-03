@@ -1,34 +1,22 @@
 package unitTesting;
-
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import checking.CheckException;
 import gestionecarrello.Carrello;
 import gestionecarrello.CarrelloDaoDataSource;
-import gestioneprodotti.IProductDao;
 import gestioneprodotti.Prodotto;
-import gestioneprodotti.Taglie;
 import gestioneutenti.Utente;
 
 public class CarrelloUnitDaoData {
@@ -49,7 +37,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_3_1 salvaCarrelloTestCorretto")
+	@DisplayName("TCU salvaCarrelloTestCorretto")
 	public void salvaCarrelloTestCorretto() throws SQLException, CheckException {
 		Prodotto prod1 = Mockito.mock(Prodotto.class);
 		Prodotto prod2 = Mockito.mock(Prodotto.class);
@@ -70,7 +58,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_3_2 salvaCarrelloTestNull")
+	@DisplayName("TCU salvaCarrelloTestNull")
 	public void salvaCarrelloTestNull() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 		Connection connection = Mockito.mock(Connection.class);
@@ -83,7 +71,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_3_3 salvaCarrelloTestMinoreZero")
+	@DisplayName("TCU salvaCarrelloTestMinoreZero")
 	public void salvaCarrelloTestMinoreZero() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 		Connection connection = Mockito.mock(Connection.class);
@@ -96,7 +84,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_3_3 salvaCarrelloTestProdottiFallito")
+	@DisplayName("TCU salvaCarrelloTestProdottiFallito")
 	public void salvaCarrelloTestProdottiFallito() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 		Connection connection = Mockito.mock(Connection.class);
@@ -114,7 +102,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_4_0 eliminaCarrelloSuccesso")
+	@DisplayName("TCU eliminaCarrelloSuccesso")
 	public void eliminaCarrelloSuccessoTest() throws SQLException, CheckException {
 		Carrello carrello = new Carrello();
 		carrello.setIdcarrello(1);
@@ -130,7 +118,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_4_1 eliminaCarrelloTestCarrelloNull")
+	@DisplayName("TCU eliminaCarrelloTestCarrelloNull")
 	public void eliminaCarrelloTestCarrelloNull() {
 		assertThrows(CheckException.class, () -> {
 			carrelloDaoData.eliminaCarrello(null);
@@ -138,7 +126,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_4_2 eliminaCarrelloTestIdNegativo")
+	@DisplayName("TCU eliminaCarrelloTestIdNegativo")
 	public void eliminaCarrelloTestIdNegativo() {
 		Carrello carrello = new Carrello();
 		carrello.setIdcarrello(-1);
@@ -149,7 +137,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_5_1 recuperaCarrelloTestCarrelloNull")
+	@DisplayName("TCU recuperaCarrelloTestCarrelloNull")
 	public void recuperaCarrelloTestCarrelloNull() {
 		assertThrows(CheckException.class, () -> {
 			carrelloDaoData.recuperaCarrello(null);
@@ -157,7 +145,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU1_5_2 recuperaCarrelloTestIdNegativo")
+	@DisplayName("TCU recuperaCarrelloTestIdNegativo")
 	public void recuperaCarrelloTestIdNegativo() {
 		Utente u = new Utente();
 		u.setId(-1);

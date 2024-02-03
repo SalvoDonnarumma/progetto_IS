@@ -82,7 +82,11 @@
 			<% if( nondisponibile ){ %>
 				<p style="color: red; text-align: justify;"> Acquisto momentaneamente non disponibile! Il prodotto che stai
 									   cercando attualmente non è disponibile per l'acquisto, riprova
-									   più tardi!</p>						   
+									   più tardi!</p>
+									   <br>
+			<%	if( isAdmin.equals("Gestore Prodotti")){ %>
+						<a href="OttieniDettagliProdotto?to=modify&id=<%=bean.getCode()%>" class="modify-btn" onClick="functionAlert()"> Modifica prodotto</a>
+			<%	}	%>						   
 			<%} else { %>	
 				<div class="quantiy" style="padding-left: 20px;">	
 					<p> Quantita': 

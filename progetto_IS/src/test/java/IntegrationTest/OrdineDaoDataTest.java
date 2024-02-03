@@ -108,7 +108,7 @@ public class OrdineDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCU changeStateOrderTestCorretto")
+	@DisplayName("TCI changeStateOrderTestCorretto")
 	public void changeStateOrderTestCorretto() throws SQLException {
 		Ordine order  = new Ordine();
 		order.setStato("IN CONSEGNA");

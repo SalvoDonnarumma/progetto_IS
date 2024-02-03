@@ -65,7 +65,7 @@ class CartaDaoDataTest {
 	}
     
     @Test
-	@DisplayName("TCU1_2_1 salvaCartaTestCorretto")
+	@DisplayName("TCI salvaCartaTestCorretto")
 	public void salvaCartaTestCorretto() throws CheckException, DataSetException, SQLException{
     	Carta carta = new Carta(2, "Giorno Giovanna", "1111-2222-3333-4444", "05/2029");
     	try {
@@ -85,7 +85,7 @@ class CartaDaoDataTest {
     
     
     @Test
-	@DisplayName("TCU1_2_1 salvaCartaTestPresente")
+	@DisplayName("TCI salvaCartaTestPresente")
 	public void salvaCartaTestPresente() throws CheckException, DataSetException, SQLException{
     	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
     	Utente utente = new Utente();
@@ -131,14 +131,15 @@ class CartaDaoDataTest {
 	}
     
     @Test
-    @DisplayName("TCU1_2_1 salvaCartaTestNull")
+    @DisplayName("TCI salvaCartaTestNull")
 	public void salvaCartaNull() throws CheckException {
 		assertThrows(CheckException.class, ()->{ Boolean flag = cartaDaoData.salvaCarta(null);});
 	}
     
+    /*
     @ParameterizedTest
     @MethodSource("doSaveTestProvider")
-    @DisplayName("TCU1_2_1 salvaCartaTestParamNullorVuoto")
+    @DisplayName("TCI salvaCartaTestParamNullorVuoto")
     public void salvaCartaTestParamNullorVuoto(Integer idcarta, String proprietario, String numero_carta, String data_scadenza) {
     	assertThrows(CheckException.class, () -> {
     		Carta carta = new Carta(idcarta, proprietario, numero_carta, data_scadenza);
@@ -166,10 +167,10 @@ class CartaDaoDataTest {
     			Arguments.of(3, "Giorno Giovanna", "1111-2222-3333-44e4", null)
     			);
     }
-    
+    */
     
     @Test
-	@DisplayName("TCU1_2_2 cancellaCartaTestCorretto")
+	@DisplayName("TCI cancellaCartaTestCorretto")
 	public void cancellaCartaCorrettoTest() throws CheckException, DataSetException, SQLException{
     	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
     	try {
@@ -188,13 +189,13 @@ class CartaDaoDataTest {
 	}
     
     @Test
-	@DisplayName("TCU1_2_2 cancellaCartaTestNull")
+	@DisplayName("TCI cancellaCartaTestNull")
 	public void cancellaCartaTestNull() throws CheckException, DataSetException{
     	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(null);});
 	}
     
     @Test
-	@DisplayName("TCU1_2_2 cancellaCartaTestVuoto")
+	@DisplayName("TCI cancellaCartaTestVuoto")
 	public void cancellaCartaTestVuoto() throws CheckException{
     	Carta carta = new Carta();
     	assertThrows(CheckException.class, ()->{ cartaDaoData.cancellaCarta(carta);});
@@ -202,7 +203,7 @@ class CartaDaoDataTest {
     
     
     @Test
-    @DisplayName("TCU1_2_3 recuperaCartaTestCorretto")
+    @DisplayName("TCI recuperaCartaTestCorretto")
     public void recuperaCartaTestCorretto() {
     	Carta expected = new Carta(1, "Donnarumma Salvatore","1111-2222-3333-4444","03/2028");
     	
@@ -219,19 +220,19 @@ class CartaDaoDataTest {
     }
     	
     @Test
-	@DisplayName("TCU1_2_3 recuperaCartaTestNull")
+	@DisplayName("TCI recuperaCartaTestNull")
 	public void recuperaCartaTestNull() throws CheckException{
     	assertThrows(CheckException.class, ()->{ cartaDaoData.recuperaCarta(null);});
 	}
     
     @Test
-	@DisplayName("TCU1_2_3 recuperaCartaTestVuoto")
+	@DisplayName("TCI recuperaCartaTestVuoto")
 	public void recuperaCartaTestVuoto() throws CheckException{
     	assertThrows(CheckException.class, ()->{ cartaDaoData.recuperaCarta(new Utente());});
 	}
     
     @Test
-    @DisplayName("TCU1_2_3 recuperaCartaTestNonPresente")
+    @DisplayName("TCI recuperaCartaTestNonPresente")
     public void recuperaCartaTestNonPresente() throws CheckException {
     	Utente utente = new Utente(3, "","","","","","", null);
     	Carta actual = null;

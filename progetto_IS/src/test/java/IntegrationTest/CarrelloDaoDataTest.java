@@ -68,7 +68,7 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCarrelloTestCorretto")
+	@DisplayName("TCI salvaCarrelloTestCorretto")
 	public void salvaCarrelloTestCorretto() throws CheckException, DataSetException, SQLException{
     	Prodotto prod1 = Mockito.mock(Prodotto.class);
     	Mockito.when(prod1.getCode()).thenReturn(34);
@@ -110,7 +110,7 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCarrelloTestPresente")
+	@DisplayName("TCI salvaCarrelloTestPresente")
 	public void salvaCarrelloTestPresente() throws CheckException, DataSetException, SQLException{
     	Prodotto prod1 = Mockito.mock(Prodotto.class);
     	Mockito.when(prod1.getCode()).thenReturn(34);
@@ -153,7 +153,7 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCI1_2_1 recuperaCarrelloTestCorretto")
+	@DisplayName("TCI recuperaCarrelloTestCorretto")
 	public void recuperaCarrelloTestCorretto() throws CheckException, DataSetException, SQLException{
     	ProductDaoDataSource productDaoData = Mockito.mock(ProductDaoDataSource.class);
 		Prodotto prod1 = Mockito.mock(Prodotto.class);
@@ -190,7 +190,7 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
-	@DisplayName("TCI1_2_1 recuperaCarrelloTestNonPresente")
+	@DisplayName("TCI recuperaCarrelloTestNonPresente")
 	public void recuperaCarrelloTestNonPresente() throws CheckException, DataSetException, SQLException{	
     	Carrello expected = new Carrello();
     	expected.setIdcarrello(-1);
@@ -211,7 +211,7 @@ public class CarrelloDaoDataTest {
 	}
 
 	@Test
-	@DisplayName("TCU1_2_2 cancellaCartaTestCorretto")
+	@DisplayName("TCI cancellaCartaTestCorretto")
 	public void cancellaCartaCorrettoTest() throws CheckException, DataSetException, SQLException{
     	Carrello carrello = new Carrello();
     	carrello.setIdcarrello(1);

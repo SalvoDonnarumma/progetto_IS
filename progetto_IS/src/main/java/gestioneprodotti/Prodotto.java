@@ -132,11 +132,20 @@ public class Prodotto implements Serializable {
 	           Objects.equals(getImagePath(), prodotto.getImagePath());
 	}
 
+	@Override
+	public int hashCode() {
+	    return Objects.hash(
+	            getCode(),
+	            getNome(),
+	            getCategoria(),
+	            getDescrizione(),
+	            getPrice(),
+	            getStats(),
+	            getTaglie(),
+	            getImagePath()
+	    );
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, name, descrizione, categoria, price, stats, taglie, imagePath);
-    }
 
 }
 
