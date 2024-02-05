@@ -9,6 +9,26 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js">
 </script>
 <script>
+function aggiungiAlCarrello(id) {
+    // Recupera i dati del prodotto da inviare al server (puoi usar jQuery o Fetch API)
+    var datiProdotto = {
+        idProdotto: id,  // Sostituisci con l'effettivo ID del prodotto
+        quantita: 1       // Sostituisci con la quantità desiderata
+    };
+    // Effettua una richiesta AJAX al server per aggiungere il prodotto al carrello
+    // Sostituisci "/aggiungiAlCarrello" con l'endpoint reale sulla tua servlet
+    $.post("<%=request.getContextPath()%>/AggiungiAlCarrello", datiProdotto, function(response) {
+        // Aggiorna dinamicamente la pagina senza ricaricare l'intera pagina
+        aggiornaNumeroCarrello(response.numeroProdottiCarrello);
+    });
+}
+
+function aggiornaNumeroCarrello(numeroProdotti) {
+    // Aggiorna il contenuto del numeretto con il nuovo numero di prodotti
+    document.getElementById("numeroCarrello").innerText = numeroProdotti;
+}
+</script>
+<script>
 	$(document).ready(function(){
 		dynamicStore("<%=request.getContextPath()%>/StoreServlet");
 	});	

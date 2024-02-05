@@ -27,6 +27,10 @@ public class RimuoviProdottoDalCarrello extends HttpServlet {
 		cart.removeProduct(removeP);
 		request.getSession().removeAttribute("cart");
 		request.getSession().setAttribute("cart", cart);
+		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"numeroProdottiCarrello\": " + cart.getSize() + "}");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

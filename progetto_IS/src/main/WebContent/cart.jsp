@@ -20,6 +20,10 @@
 		var encodedId = encodeURIComponent(id);
 		dynamicCart("<%= request.getContextPath() %>/AggiungiProdottoAlCarrello?id=" + encodedId);
 	});	
+	function aggiornaNumeroCarrello(numeroProdotti) {
+	    // Aggiorna il contenuto del numeretto con il nuovo numero di prodotti
+	    document.getElementById("numeroCarrello").innerText = numeroProdotti;
+	}
 </script>    
 <jsp:include page="header.jsp" flush="true"/>
 <style>

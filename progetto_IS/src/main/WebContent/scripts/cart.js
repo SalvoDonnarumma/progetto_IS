@@ -109,12 +109,17 @@ function totaleParziale(){
 	
 	cassa = document.getElementById("cassa");
 	cassa.getElementsByClassName("tot")[0].innerHTML = tot.toFixed(2);
+	if (tot === 0.00) {
+        $("#link").hide();
+    } else {
+        $("#link").show();
+    }
 }
 
 function eliminaRiga(button) {
   let row = button.parentNode.parentNode;
   let idProdotto = button.getAttribute("id");
-  console.log(idProdotto);
+  console.log("Id prodotto: "+idProdotto);
   let pathArray = window.location.pathname.split('/');
   let contextPath = '/' + pathArray[1];
   let url = contextPath + "/RemoveProductFromCart";
@@ -126,10 +131,10 @@ function eliminaRiga(button) {
     success: function(response) {
       // Rimuovi la riga del prodotto dal carrello nell'interfaccia utente
       row.parentNode.removeChild(row);
-
 	  dynamicCart(contextPath+"/CartServlet");
       // Aggiorna i totali
       totaleParziale();
+      aggiornaNumeroCarrello(response.numeroProdottiCarrello);
     },
     error: function(xhr, status, error) {
       console.error(error);

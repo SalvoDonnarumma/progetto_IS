@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<%@ page import="gestioneutenti.Utente"%>
+<%@ page import="gestioneutenti.Utente, gestionecarrello.*"%>
 <html lang="it">
 <head>
 <meta charset="ISO-8859-1">
@@ -104,6 +104,16 @@
   color: white;
 }
 
+.numeroCarrello {
+    position: absolute;
+    background-color: #f76645; /* Colore di sfondo opzionale */
+    color: white; /* Colore del testo opzionale */
+    border-radius: 50%; /* Opzionale per ottenere un aspetto rotondo */
+    padding: 0.2em 0.5em; /* Opzionale per aggiungere spazio intorno al numero */
+    text: bold;
+    font-family: 'Arial', sans-serif;
+}
+
 </style>
 </head>
 <body>
@@ -134,7 +144,19 @@
 				<li class="item"><a href="<%=request.getContextPath()%>/login.jsp"> <button class="button button1">ACCEDI</button> </a> </li>
 				<li class="item"><a href="<%=request.getContextPath()%>/registrazione.jsp"> <button class="button button2">REGISTRATI</button> </a> </li>
 				<li class="item"><a href="<%=request.getContextPath()%>/store.jsp"><i class='bx bx-home-heart icon'></i></a>	</li>
-				<li class="item"><a href="<%=request.getContextPath()%>/cart.jsp"><i class='bx bx-cart icon'></i></a> </li>	
+				<% Carrello cart = (Carrello) request.getSession().getAttribute("cart");
+				   int numeroProdotti;
+				   if( cart != null)
+					   numeroProdotti = cart.getSize();	
+				   else
+					   numeroProdotti = 0;
+					%>
+				<li class="item">
+    					<a href="<%=request.getContextPath()%>/cart.jsp">
+        					<i class='bx bx-cart icon'></i>
+        					<span id="numeroCarrello" class="numeroCarrello"><%=numeroProdotti%> </span>
+    					</a>
+				</li>	
 				<%
 			} else if( isAdmin.equals("Gestore Ordini") ){ //sezione admin		
 					if( path.contains("/admin") ) { %>		
