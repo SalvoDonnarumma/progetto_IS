@@ -41,63 +41,11 @@ public class ModificaProdotto extends HttpServlet {
 					
 					RequestDispatcher dispatcher = null;
 					dispatcher = getServletContext().getRequestDispatcher("/admin/errorpagemodifyproduct.jsp");
-					
-					if( nome == null) 
-						dispatcher.forward(request, response);
-					
-					if( price != null) {
-						if( !ProdottoValidator.isValidPrice(price.toString()) ) {
-							System.out.println("Campo prezzo non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
-					
-					if( price != null) {
-						if( !ProdottoValidator.isValidPrice(price.toString()) ) {
-							System.out.println("Campo prezzo non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
-					
-					if( categoria != null) {
-						if( !ProdottoValidator.isValidCategoria(categoria) ) {
-							System.out.println("Campo categoria non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} else {
-						System.out.println("Campo categoria vuoto");	
-						dispatcher.forward(request, response);
-					}
-					
-					
-					Integer quantityM = Integer.parseInt(request.getParameter("tagliaM"));
-					if( quantityM != null) {
-						if( !ProdottoValidator.isValidQuantity(quantityM.toString())) {
-							System.out.println("Campo qnt M non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
+								
+					Integer quantityM = Integer.parseInt(request.getParameter("tagliaM")); 
 					Integer quantityL = Integer.parseInt(request.getParameter("tagliaL"));
-					if( quantityL != null) {
-						if( !ProdottoValidator.isValidQuantity(quantityL.toString())) {
-							System.out.println("Campo qnt L non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
 					Integer quantityXL = Integer.parseInt(request.getParameter("tagliaXL"));
-					if( quantityXL != null) {
-						if( !ProdottoValidator.isValidQuantity(quantityXL.toString())) {
-							System.out.println("Campo qnt XL non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
 					Integer quantityXXL = Integer.parseInt(request.getParameter("tagliaXXL"));
-					if( quantityXXL != null) {
-						if( !ProdottoValidator.isValidQuantity(quantityXXL.toString())) {
-							System.out.println("Campo qnt XXL non valido");
-							dispatcher.forward(request, response);
-						}	 
-					} 
 					
 					String imagePath = null;
 					String tempPath = null;
@@ -115,7 +63,6 @@ public class ModificaProdotto extends HttpServlet {
 									uploadFile(part.getInputStream(), tempPath);
 								}
 							} else {
-								System.out.println("File vuoto");
 								fileupload = false;
 							}
 						}
@@ -149,9 +96,15 @@ public class ModificaProdotto extends HttpServlet {
 					if( fileupload ) {
 						bean.setImagePath(imagePath);
 					}
+				
 					bean.setCode(code);
-					productDao.doUpdate(code, bean);
-					
+					try {
+						productDao.doUpdate(code, bean);
+					} catch (CheckException e) {
+						e.printStackTrace();
+						dispatcher.forward(request, response);
+						return;
+					}
 					
 					Taglie sizes = new Taglie();			
 					sizes.setQuantitaM(quantityM);
@@ -159,10 +112,15 @@ public class ModificaProdotto extends HttpServlet {
 					sizes.setQuantitaXL(quantityXL);
 					sizes.setQuantitaXXL(quantityXXL);
 					bean.setTaglie(sizes);
-					productDao.doUpdateSizes(code, sizes);
-					if( fileupload )
-						photoDao.updatePhoto(bean);
-					
+					try {
+						productDao.doUpdateSizes(code, sizes);
+						if( fileupload )
+							photoDao.updatePhoto(bean);
+					} catch (CheckException e) {
+						e.printStackTrace();
+						dispatcher.forward(request, response);
+						return;
+					}	
 					dispatcher = null;	
 					dispatcher = getServletContext().getRequestDispatcher("/admin/ProductView.jsp");	
 					dispatcher.forward(request, response);

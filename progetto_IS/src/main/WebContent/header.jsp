@@ -195,12 +195,36 @@
 					 if( path.contains("/store.jsp") ) { %>	
 					 		<li class="item"><a href="<%=request.getContextPath()%>/userprofile.jsp"><i class='bx bxs-user icon'></i></a>	</li>
 							<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a>	</li>
-							<li class="item"><a href="<%=request.getContextPath()%>/cart.jsp"><i class='bx bx-cart icon'></i></a> </li>	
+							<% Carrello cart = (Carrello) request.getSession().getAttribute("cart");
+				  			   int numeroProdotti;
+				   			   if( cart != null)
+					  			 numeroProdotti = cart.getSize();	
+				   			   else
+					  			 numeroProdotti = 0;
+							%>
+							<li class="item">
+    						<a href="<%=request.getContextPath()%>/cart.jsp">
+        						<i class='bx bx-cart icon'></i>
+        						<span id="numeroCarrello" class="numeroCarrello"><%=numeroProdotti%> </span>
+    						</a>
+							</li>	
 <%					} else { %>
 					<li class="item"><a href="<%=request.getContextPath()%>/userprofile.jsp"><i class='bx bxs-user icon'></i></a>	</li>
 					<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a>	</li>
 					<li class="item"><a href="<%=request.getContextPath()%>/store.jsp"><i class='bx bx-home-heart icon'></i></a>	</li>
-					<li class="item"><a href="<%=request.getContextPath()%>/cart.jsp"><i class='bx bx-cart icon'></i></a> </li>	
+					<% Carrello cart = (Carrello) request.getSession().getAttribute("cart");
+				   int numeroProdotti;
+				   if( cart != null)
+					   numeroProdotti = cart.getSize();	
+				   else
+					   numeroProdotti = 0;
+					%>
+					<li class="item">
+    					<a href="<%=request.getContextPath()%>/cart.jsp">
+        					<i class='bx bx-cart icon'></i>
+        					<span id="numeroCarrello" class="numeroCarrello"><%=numeroProdotti%> </span>
+    					</a>
+					</li>	
 					<%  }
 							} %>	
 			</ul>

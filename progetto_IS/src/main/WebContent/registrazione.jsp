@@ -51,7 +51,7 @@ function disattivaErrore(){
  
  	<form action="SignUp" method="post">
  		<div class="txt_field email-field"> <!-- Nome -->
- 			<input type="text" name="firstname" id="firstname" required pattern="^[A-Za-z]+$" 
+ 			<input type="text" name="firstname" id="firstname"
  			 onkeyup="disattivaErrore();"
 			 onChange="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 <span id="errorName"> </span> <label>Nome</label>

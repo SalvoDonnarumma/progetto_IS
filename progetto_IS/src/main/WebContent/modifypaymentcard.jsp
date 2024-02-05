@@ -1,11 +1,12 @@
 <%
- 	Utente bean = (Utente) request.getSession().getAttribute("logged"); //quando una persona si logga salvo i suoi dati nella sessione
+ 	Carta carta = null;
+	Utente bean = (Utente) request.getSession().getAttribute("logged"); //quando una persona si logga salvo i suoi dati nella sessione
   	if( bean == null ){
   		response.sendRedirect("./login.jsp");		
   		return;
+  	} else {
+  		carta = bean.getCarta(); 	
   	}
-  	Utente logged = (Utente) request.getSession().getAttribute("logged");
-	Carta carta = logged.getCarta(); 	
  %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -13,6 +14,7 @@
 <%@ page import="java.util.*,gestioneprodotti.Prodotto,gestioneprodotti.ProductDaoDataSource,gestioneutenti.Utente, gestionecarta.Carta"%>
 <html lang="en">
 <head>
+	<script src="scripts/validate.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifica dati pagamento</title>
@@ -93,26 +95,33 @@ button:hover {
     <form class="form_payment" action="salvaCarta" method="post">
         <label for="cardNumber">Numero carta:</label>
         <% if( carta != null) {%>
-			<input type="text" id="cardNumber" name="numero_carta" value="<%=carta.getNumero_carta()%>" required>
+			<input type="text" id="cardNumber" name="numero_carta" value="<%=carta.getNumero_carta()%>" required
+			 onChange="validateFormElem(this, document.getElementById('errorNumber'), formatNumberCardErrorMessage)">
 		<%} else { %>        
-        	<input type="text" id="cardNumber" name="numero_carta" placeholder="Enter card number" required>
+        	<input type="text" id="cardNumber" name="numero_carta" placeholder="1111-2222-3333-4444" required
+			 onChange="validateFormElem(this, document.getElementById('errorNumber'), formatNumberCardErrorMessage)">
 		<%} %>
-		
+		<span id="errorNumber"> </span>
 		
         <label for="cardHolder">Proprietario Carta:</label>
         <% if( carta != null) {%>
-			 <input type="text" id="cardHolder" name="nome" value="<%=carta.getProprietario() %>" required>
+			 <input type="text" id="cardHolder" name="nome" value="<%=carta.getProprietario() %>" required
+			 onChange="validateFormElem(this, document.getElementById('errorProprietario'), emptyFieldErrorMessage)">
 		<%} else { %>        
-        	 <input type="text" id="cardHolder" name="nome" placeholder="Enter card holder name" required>
+        	 <input type="text" id="cardHolder" name="nome" placeholder="Enter card holder name" required
+        	 onChange="validateFormElem(this, document.getElementById('errorProprietario'), emptyFieldErrorMessage)">
 		<%} %>
-
+		<span id="errorProprietario"> </span>
+		
         <label for="expiryDate">Expiry Date:</label>
         <% if( carta != null) {%>
-			 <input type="text" id="expirationdate" name="data" value="<%=carta.getData_scadenza()%>" required>
+			 <input type="text" id="expirationdate" name="data" value="<%=carta.getData_scadenza()%>" required
+			 onChange="validateFormElem(this, document.getElementById('errorDate'), dateErrorMessage)">
 		<%} else { %>        
-        	 <input type="text" id="expirationdate" name="data" placeholder="01/2024" required>
+        	 <input type="text" id="expirationdate" name="data" placeholder="01/2024" required
+        	 onChange="validateFormElem(this, document.getElementById('errorDate'), dateErrorMessage)">
 		<%} %>
-        
+        <span id="errorDate"> </span>
 
         <button type="submit">Modica o inserisci i dati</button>
         <div class="errors" style="color: red;">

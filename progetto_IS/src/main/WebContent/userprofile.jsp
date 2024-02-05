@@ -32,28 +32,34 @@
         <div class="user-info">
             <h1>Informazioni personali</h1>
             <ul>
-                <li><strong>Nome:</strong> <%=bean.getNome() %></li>
+            	<% if( !bean.getRuolo().contains("Gestore")) {%>     
+                	<li><strong>Nome:</strong> <%=bean.getNome() %></li>
+                <%} %>
                 <li><strong>Cognome:</strong> <%=bean.getCognome() %></li>
                 <li><strong>Email:</strong> <%=bean.getEmail() %> 
-                <div class="password-change"> 
-            		<p> <a href="./changepass.jsp" class="no-border-link">Cambia password</a></p>
-            		<p> <a href="./modifypaymentcard.jsp" class="no-border-link">Modifica dati carta di pagamento</a></p>
-       			 </div>
+                <% if( !bean.getRuolo().contains("Gestore")) {%>            
+                	<div class="password-change"> 
+            			<p> <a href="./changepass.jsp" class="no-border-link">Cambia password</a></p>
+            			<p> <a href="./modifypaymentcard.jsp" class="no-border-link">Modifica dati carta di pagamento</a></p>
+       				</div>
+       			<%} %>
        			</li>
                 <li><strong>Numero di telefono:</strong> <%=bean.getTelefono() %></li>
             </ul>
         </div>
-          
-        <div class="orders" id="orders">   
-        </div>
-        <div class="links">
-        	<div class="torna">  
-        	    <p> <a href="<%=request.getContextPath()%>/store.jsp" class="no-border-link">Torna allo store</a></p>
+		       
+		<% if( !bean.getRuolo().contains("Gestore")) {%>         
+        	<div class="orders" id="orders">   
         	</div>
-        	<div class="logout">  
-            	<p> <a href="Logout" class="no-border-link">Logout</a></p>
+        	<div class="links">
+        		<div class="torna">  
+        	    	<p> <a href="<%=request.getContextPath()%>/store.jsp" class="no-border-link">Torna allo store</a></p>
+        		</div>
+        		<div class="logout">  
+            		<p> <a href="Logout" class="no-border-link">Logout</a></p>
+        		</div>
         	</div>
-        </div>
+        <%} %>
     </div>
     
     <br>

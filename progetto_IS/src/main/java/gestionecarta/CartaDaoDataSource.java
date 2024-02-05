@@ -33,11 +33,13 @@ public class CartaDaoDataSource implements ICartaDaoData{
 			throw new CheckException("carta non valida");
 		
 		String mm = carta.getData_scadenza().substring(0, 2);
-		String aa = carta.getData_scadenza().substring(3, 7);
+		String aa = carta.getData_scadenza().substring(3, 7);	
 		if( !CardValidator.isValidMonth(CardValidator.convertiNumeroInMese(mm)))
 			throw new CheckException("carta non valida");
 		if( !CardValidator.isYearNotExpired(aa))
 			throw new CheckException("carta non valida");
+		if( !CardValidator.isMonthNotExpired(Integer.parseInt(mm), Integer.parseInt(aa)))
+			throw new CheckException("carta non valida");	
 		if(carta.getNumero_carta() == null || carta.getNumero_carta().equals("") || !CardValidator.isValidFormat(carta.getNumero_carta()))
 			throw new CheckException("carta non valida");
 		

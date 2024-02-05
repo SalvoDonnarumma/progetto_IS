@@ -92,7 +92,7 @@ public class Taglie implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Taglie [idProdotto=" + idProdotto + ", quantitaM=" + quantitaM + ", quantitaL=" + quantitaL
+		return "Taglie disponibili:" + " quantitaM=" + quantitaM + ", quantitaL=" + quantitaL
 				+ ", quantitaXL=" + quantitaXL + ", quantitaXXL=" + quantitaXXL + "]";
 	}
  

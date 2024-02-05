@@ -65,45 +65,54 @@ public class CreaOrdine extends HttpServlet {
 		if(nome_carta == null) {
 			System.out.println("Nome carta è vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		if(numero_carta != null) {
 			if(!CardValidator.isValidFormat(numero_carta)) {
 				System.out.println("Numero di carta non è valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		}else {
 			System.out.println("Campo numero carta vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(mese_scadenza != null) {
 			if(!CardValidator.isValidMonth(mese_scadenza)) {
 				System.out.println("Mese di scadenza non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		}else {
 			System.out.println("Mese scadenza vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(anno_scadenza != null) {
 			if(!CardValidator.isYearNotExpired(anno_scadenza)) {
 				System.out.println("Campo anno scadenza non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo anno scadenza vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(cvv != null) {
 			if(!CardValidator.isValidCVV(cvv)) {
 				System.out.println("Campo anno scadenza vuoto");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo cvv vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		System.out.println("Carta Valida");
 		
@@ -118,50 +127,60 @@ public class CreaOrdine extends HttpServlet {
 			if(!UtenteCheckoutValidator.isValidNome(nome_utente)) {
 				System.out.println("Nome utente non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		}else {
 			System.out.println("Nome utente vuoto "+nome_utente);
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(indirizzo != null) {
 			if(!UtenteCheckoutValidator.isValidIndirizzo(indirizzo)) {
 				System.out.println("Campo indirizzo non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo indirizzo vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(city != null) {
 			if(!UtenteCheckoutValidator.isValidCitta(city)) {
 				System.out.println("Campo città non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo città vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(stato != null) {
 			if(!UtenteCheckoutValidator.isValidStato(stato)) {
 				System.out.println("Campo stato non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo stato vuoto "+stato);
 			dispatcher.forward(request, response);
+			return;
 		}
 		
 		if(cap != null) {
 			if(!UtenteCheckoutValidator.isValidCAP(cap)) {
 				System.out.println("Campo cap non valido");
 				dispatcher.forward(request, response);
+				return;
 			}
 		} else {
 			System.out.println("Campo cap vuoto");
 			dispatcher.forward(request, response);
+			return;
 		}
 		System.out.println("Dati utente validi");
 				

@@ -50,6 +50,7 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	public synchronized void doSave(Ordine bean) throws SQLException {
+		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		

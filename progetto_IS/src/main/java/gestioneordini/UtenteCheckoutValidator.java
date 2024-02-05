@@ -12,8 +12,7 @@ public class UtenteCheckoutValidator {
     }
 	
 	public static boolean isValidCitta(String input) {
-	    // \p{L} è utilizzata per rappresentare tutte le lettere di qualsiasi lingua, inclusi caratteri con accenti
-	    String regex = "^[\\p{L}\\s]+$";
+	    String regex = "^[\\p{L}'\\s]+$";
 	    return input.matches(regex);
 	}
 

@@ -30,31 +30,35 @@ public class ProductDaoDataSource implements IProductDao {
 			throw new CheckException("Prodotto non valido!");
 		
 		if(product.getCategoria() == null || product.getCategoria().equals("") || !ProdottoValidator.isValidCategoria(product.getCategoria()))
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Categoria non valido!");
 		
 		if(product.getDescrizione() == null || product.getDescrizione().equals(""))
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Descrizione non valido!");
 		
 		if(product.getNome() == null || product.getNome().equals(""))
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Nome non valido!");
 		
 		if(product.getStats() == null || product.getStats().equals(""))
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Statistiche non valido!");
 		
 		if(product.getPrice() < 0 || !ProdottoValidator.isValidPrice(product.getPrice().toString()))
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Prezzo non valido!");
 		
 		if(product.getTaglie() == null)
-			throw new CheckException("Prodotto non valido!");
+			throw new CheckException("Taglie non valido!");
+		
+		if(product.getImagePath() == null)
+			throw new CheckException("Image non valido!");
 			
 		String insertSQL = null;
-		if( product.getCode() != null || product.getCode()<0 )
+		if( product.getCode() != null && product.getCode()>0 )
 			insertSQL ="INSERT INTO " + ProductDaoDataSource.TABLE_NAME
 					+ " (IDPRODOTTO, CATEGORIA, NOME, DESCRIZIONE, PRICE, STATS, IMAGE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		else
 			insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
 				+ " (CATEGORIA, NOME, DESCRIZIONE, PRICE, STATS, IMAGE) VALUES (?, ?, ?, ?, ?, ?)";
-
+		System.out.println(product);
+		System.out.println(insertSQL);
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
@@ -85,6 +89,33 @@ public class ProductDaoDataSource implements IProductDao {
 					connection.close();
 			}
 		}
+	}
+	
+	public Prodotto getLast() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String selectSQL = "SELECT * FROM prodotto\r\n"
+				+ "ORDER BY idProdotto DESC\r\n"
+				+ "LIMIT 1;\r\n"
+				+ "";
+		Prodotto bean = new Prodotto();
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) { 
+				bean.setCode(rs.getInt("IDPRODOTTO"));
+			}
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return bean;
 	}
 	
 	@Override
@@ -144,15 +175,16 @@ public class ProductDaoDataSource implements IProductDao {
 		
 		if(code < 0)
 			throw new CheckException("Taglia non valida!");
-		
+		if( sizes == null )
+			throw new CheckException("Taglia non valida");
 		if(sizes.getQuantitaM() == null || sizes.getQuantitaM()<0 || !sizes.getQuantitaM().toString().matches("\\d+"))
-			throw new CheckException("Taglia non valida!");
+			throw new CheckException("Taglia M non valida!");
 		if(sizes.getQuantitaL() == null || sizes.getQuantitaL()<0 || !sizes.getQuantitaL().toString().matches("\\d+") )
-			throw new CheckException("Taglia non valida!");
+			throw new CheckException("Taglia L non valida!");
 		if(sizes.getQuantitaXL() == null || sizes.getQuantitaXL()<0 || !sizes.getQuantitaXL().toString().matches("\\d+") )
-			throw new CheckException("Taglia non valida!");
+			throw new CheckException("Taglia XL non valida!");
 		if(sizes.getQuantitaXXL() == null || sizes.getQuantitaXXL()<0 || !sizes.getQuantitaXXL().toString().matches("\\d+") )
-			throw new CheckException("Taglia non valida!");
+			throw new CheckException("Taglia XXL non valida!");
 		
 		String update = "UPDATE taglie SET tagliaM=?, tagliaL=?, tagliaXL=?, tagliaXXL=? WHERE idProdotto=?";
 		try {
@@ -249,18 +281,31 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized void setSizesByKey(int code,Taglie taglie) throws SQLException{
+	public synchronized void setSizesByKey(int code,Taglie sizes) throws SQLException, CheckException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		if(code < 0)
+			throw new CheckException("Taglia non valida!");
+		if( sizes == null )
+			throw new CheckException("Taglia non valida");
+		if(sizes.getQuantitaM() == null || sizes.getQuantitaM()<0 || !sizes.getQuantitaM().toString().matches("\\d+"))
+			throw new CheckException("Taglia M non valida!");
+		if(sizes.getQuantitaL() == null || sizes.getQuantitaL()<0 || !sizes.getQuantitaL().toString().matches("\\d+") )
+			throw new CheckException("Taglia L non valida!");
+		if(sizes.getQuantitaXL() == null || sizes.getQuantitaXL()<0 || !sizes.getQuantitaXL().toString().matches("\\d+") )
+			throw new CheckException("Taglia XL non valida!");
+		if(sizes.getQuantitaXXL() == null || sizes.getQuantitaXXL()<0 || !sizes.getQuantitaXXL().toString().matches("\\d+") )
+			throw new CheckException("Taglia XXL non valida!");
+		
 		String query = "INSERT INTO taglie (idProdotto, tagliaM, tagliaL, tagliaXL, tagliaXXL) VALUES (?,?,?,?,?)";
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, code);
-			preparedStatement.setInt(2, taglie.getQuantitaM());
-			preparedStatement.setInt(3, taglie.getQuantitaL());
-			preparedStatement.setInt(4, taglie.getQuantitaXL());
-			preparedStatement.setInt(5, taglie.getQuantitaXXL());
+			preparedStatement.setInt(2, sizes.getQuantitaM());
+			preparedStatement.setInt(3, sizes.getQuantitaL());
+			preparedStatement.setInt(4, sizes.getQuantitaXL());
+			preparedStatement.setInt(5, sizes.getQuantitaXXL());
 			preparedStatement.executeUpdate();
 		} finally {
 			try {

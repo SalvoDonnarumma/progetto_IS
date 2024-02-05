@@ -45,7 +45,6 @@
     <div class="error-container">
         <h1>Errore Modifica o Inserimento Prodotto</h1>
         <p>I dati inseriti per la modifica/inserimento del prodotto sono errati. Si prega di controllare e riprovare.</p>
-   		 <p>Torna indietro e correggi i dati</p> <br>
    		 <p><a href="./admin/ProductView.jsp">Torna al Catalogo</a></p>
     </div>
 </body>

@@ -112,7 +112,7 @@
 
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input name="nome" type="text" maxlength="25" required placeholder="Enter name">
+                <input name="nome" type="text" maxlength="25">
             </div>
 
             <div class="form-group">
@@ -136,13 +136,13 @@
             <div class="form-group">
                 <label>Quantit&aacute;: </label><br> 
                 <label>Taglia M: <input style="width:30%;" name="tagliaM" type="number" min="0"></label>
-                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number" min="0"></label>
+                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number"></label>
                 <label>Taglia XL: <input style="width:30%;" name="tagliaXL" type="number" min="0"></label>
                 <label>Taglia XXL: <input style="width:30%;" name="tagliaXXL" type="number" min="0"></label>
             </div>
 
             <div class="form-group">
-                <label for="description">Description:</label>
+                <label for="description">Descrizione:</label>
                 <textarea name="descrizione" maxlength="500" rows="10" required placeholder="Enter description"></textarea>
             </div>
 

@@ -42,18 +42,6 @@ public class RegistrazioneUtente extends HttpServlet {
 		 * e segnalo all'utente tramite un alert (presente nel .js della registrazione)*/
 		String registrazione = "registrazione.jsp";
 		
-		if( !UtenteRegistrazioneValidator.isValidEmail(username) )
-			dispatcherToErrorPage.forward(request, response);
-		
-		if( !UtenteRegistrazioneValidator.isValidNome(name) )
-			dispatcherToErrorPage.forward(request, response);
-		
-		if( !UtenteRegistrazioneValidator.isValidNome(surname) )
-			dispatcherToErrorPage.forward(request, response);
-		
-		if( !UtenteRegistrazioneValidator.isValidTelefono(telefono) )
-			dispatcherToErrorPage.forward(request, response);
-		
         if ( !password.equals(confpassword) ) {  //controllo se password e conferma password sono uguali
         	request.setAttribute("errors", errors);
         	RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher(registrazione);
@@ -98,8 +86,11 @@ public class RegistrazioneUtente extends HttpServlet {
 			user.setRuolo("Utente");
 			userDao.doSaveUser(user);
 			idUtente = userDao.getLastCode();
-		} catch (SQLException | CheckException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch(CheckException e) {
+			dispatcherToErrorPage.forward(request, response);
+			return;
 		}
 		
 		user.setId(idUtente);

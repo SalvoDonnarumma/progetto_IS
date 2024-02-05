@@ -18,7 +18,7 @@ public interface IProductDao {
 
 	Taglie getSizesByKey(Prodotto product) throws SQLException, CheckException;
 
-	void setSizesByKey(int code, Taglie taglie) throws SQLException;
+	void setSizesByKey(int code, Taglie taglie) throws SQLException, CheckException;
 
 	public int doRetrieveByName(Prodotto product) throws SQLException;
 
@@ -27,6 +27,8 @@ public interface IProductDao {
 	void doUpdate(int code, Prodotto product) throws SQLException, CheckException;
 
 	void decreaseSize(Taglie sizes, int qnt, String size, int code) throws SQLException;
+	
+	public Prodotto getLast() throws SQLException;
 }
 
 

@@ -273,7 +273,7 @@ public class ProdottoDaoDataTest {
 		
 		try {
 			productDao.setSizesByKey(105, taglie);;
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		

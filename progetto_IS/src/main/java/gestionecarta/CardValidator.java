@@ -1,5 +1,7 @@
 package gestionecarta;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +31,13 @@ public class CardValidator {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+    
+    public static boolean isMonthNotExpired(int month, int year) {
+        LocalDate currentDate = LocalDate.now();
+        YearMonth cardExpiration = YearMonth.of(year, month);
+
+        return cardExpiration.isAfter(YearMonth.from(currentDate));
     }
 
     public static boolean isValidCVV(String input) {

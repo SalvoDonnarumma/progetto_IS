@@ -44,67 +44,32 @@ public class salvaCarta extends HttpServlet {
 		String data = request.getParameter("data");
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("modifypaymentcard.jsp");
-		List<String> errors = new ArrayList<>();
-		
-		if( proprietario == null || proprietario.trim().isEmpty()) {
-			System.out.println(proprietario);
-			errors.add("Il campo username non può essere vuoto!");
-			request.setAttribute("errors", errors);
-        	dispatcher.forward(request, response);
-        	return;
-		}
-		
-		if( numero_carta == null || !CardValidator.isValidFormat(numero_carta)) {
-			System.out.println(numero_carta);
-			errors.add("Il campo numero carta non rispetta il formato richiesto!");
-			request.setAttribute("errors", errors);
-        	dispatcher.forward(request, response);
-        	return;
-		}	
-		
 		
 		String mm, aa;
-		if( data == null || data.trim().isEmpty()) {
-			System.out.println(data);
-			errors.add("Il campo data non rispetta il formato richiesto!");
-			request.setAttribute("errors", errors);
-        	dispatcher.forward(request, response);
-        	return;
-		} else {
-			mm = data.substring(0, 2);
-			aa = data.substring(3, 7);
-			
-			if( !CardValidator.isValidMonth(convertiNumeroInMese(mm)) ) {
-				System.out.println(mm);
-				errors.add("Il campo data non rispetta il formato richiesto!");
-				request.setAttribute("errors", errors);
-	        	dispatcher.forward(request, response);
-	        	return;
-			}
-			
-			if( !CardValidator.isYearNotExpired(aa) ) {
-				System.out.println(aa);
-				errors.add("Il campo  data non rispetta il formato richiesto!");
-				request.setAttribute("errors", errors);
-	        	dispatcher.forward(request, response);
-	        	return;
-			}
-		}
-		
-		errors.clear();
+		mm = data.substring(0, 2);
+		aa = data.substring(3, 7);
+
 		Utente logged = (Utente) request.getSession().getAttribute("logged");
 		Carta carta =  new Carta();
 		carta.setIdCarta(logged.getId());
 		carta.setData_scadenza(mm+"/"+aa);
 		carta.setNumero_carta(numero_carta);
 		carta.setProprietario(proprietario);
+		
+		ArrayList<String> errors = new ArrayList<>();
+		
 		try {
 			if(cartaDao.recuperaCarta(logged)!= null) {
 				cartaDao.cancellaCarta(carta);
 			}
 			cartaDao.salvaCarta(carta);
-		} catch (SQLException | CheckException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (CheckException e) {
+			errors.add("Uno dei campi inseriti non &egrave valido!");
+			request.setAttribute("errors", errors);
+			dispatcher.forward(request, response);
+			return;
 		}
 		
 		logged.setCarta(carta);
