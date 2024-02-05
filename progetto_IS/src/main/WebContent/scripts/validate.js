@@ -26,6 +26,40 @@ function validateFormElem(formElem, span, errorMessage) {
   return false;
 }
 
+function validateForm2Elem(formElem1, formElem2, span, errorMessage) {
+	if(formElem1.checkValidity()){
+		formElem1.classList.remove("error");
+		span.style.color = "red";
+		span.innerHTML = "";
+		return true;
+	}
+	if(formElem2.checkValidity()){
+		formElem2.classList.remove("error");
+		span.style.color = "red";
+		span.innerHTML = "";
+		return true;
+	}
+	formElem1.classList.add("error");
+	  span.style.color = "red";
+	  if (formElem1.validity.valueMissing) {
+	    span.innerHTML = emptyFieldErrorMessage;
+	  } else if (formElem1.id === "password" && formElem1.value.length < 10) {
+	    span.innerHTML = passwordMinLengthErrorMessage;
+	  } else {
+	    span.innerHTML = errorMessage;
+	  }
+	 formElem2.classList.add("error");
+	  span.style.color = "red";
+	  if (formElem2.validity.valueMissing) {
+	    span.innerHTML = emptyFieldErrorMessage;
+	  } else if (formElem2.id === "password" && formElem2.value.length < 10) {
+	    span.innerHTML = passwordMinLengthErrorMessage;
+	  } else {
+	    span.innerHTML = errorMessage;
+	  }
+  return false;
+}
+
 function validate() {
 	let valid = true;	
 	let form = document.getElementById("regForm");

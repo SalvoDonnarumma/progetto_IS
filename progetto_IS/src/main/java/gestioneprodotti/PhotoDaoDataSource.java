@@ -5,7 +5,8 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import checking.CheckException;
-import view.sito.*;
+import gestionesito.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

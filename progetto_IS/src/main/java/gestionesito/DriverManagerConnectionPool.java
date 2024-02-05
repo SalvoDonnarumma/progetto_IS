@@ -1,4 +1,4 @@
-package view.sito;
+package gestionesito;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

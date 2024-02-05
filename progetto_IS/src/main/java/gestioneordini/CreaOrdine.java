@@ -214,6 +214,7 @@ public class CreaOrdine extends HttpServlet {
 					order.setStato("IN ELABORAZIONE");
 					order.setData(dateTime);
 					order.setIndirizzo(indirizzo);
+					order.setPrezzototale(quantity*product.getPrice());
 
 					try {
 						orderDao.doSave(order);

@@ -21,14 +21,16 @@ function disattivaErrore(){
  <h1>OctoLogin</h1>
    <form action="Login" method="post">
      <div class="txt_field email-field">
-    <input type="email" name="email" required onkeyup="disattivaErrore();"
-        onchange="validateFormElem(this, document.getElementById('errorEmail'), emailErrorMessage)" id="email">
+    <input type="email" name="email" onkeyup="disattivaErrore();"
+        onchange="validateFormElem(this, document.getElementById('errorEmail'), emptyFieldErrorMessage)" id="email">
     <span id="errorEmail" class="error-text"></span>
     <label>Email</label>
 </div>
-    <div class="txt_field email-field"> 
-       <input type="password" name="password" required> <label>Password</label>
-    </div>
+   <div class="txt_field email-field"> 
+       <input type="password" name="password"
+       onchange="validateFormElem(this, document.getElementById('errorPass'), emptyFieldErrorMessage)" id="pass"> <label>Password</label>
+   	   <span id="errorPass" class="error-text"></span>
+   </div>
    <input type="hidden" name="jspName" value="loginutenti">
     <div class="errors" style="color: red;">
     <% 
@@ -42,8 +44,9 @@ function disattivaErrore(){
     %>
     </div>
     
-    <div class="pass"><a href="changepass2.jsp">Password dimenticata?</a></div>
-    <input type="submit" value="Login">
+   	<div class="pass"><a href="changepass2.jsp">Password dimenticata?</a></div>
+    <input type="submit" value="Login" 
+    onclick="validateForm2Elem(document.getElementById('email'), document.getElementById('pass'), document.getElementById('errorPass'), emptyFieldErrorMessage)">
                       
     Non sei un membro? 
     <a href="registrazione.jsp"> <b> Registrami </b></a>

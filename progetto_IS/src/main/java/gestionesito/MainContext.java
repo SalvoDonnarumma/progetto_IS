@@ -1,4 +1,4 @@
-package view.sito;
+package gestionesito;
 
 import javax.naming.Context;  
 import javax.naming.InitialContext;
