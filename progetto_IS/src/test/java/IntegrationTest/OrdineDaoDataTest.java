@@ -2,6 +2,8 @@ package IntegrationTest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +19,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import checking.CheckException;
+import gestionecarta.Carta;
 import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
 import gestioneordini.ProdottoOrdinato;
@@ -83,7 +87,7 @@ public class OrdineDaoDataTest {
 		Ordine order  = new Ordine(prodotti, "useremail@gmail.com", "01/02/2024", "IN ELABORAZIONE", 1, 233.0, "Via Fontana, 95", "03/02/2024");
 		try {
 			orderDao.doSave(order);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		
@@ -98,7 +102,6 @@ public class OrdineDaoDataTest {
 		assertEquals(order.getIndirizzo(), rs.getString("indirizzo"));		
 		Integer code = rs.getInt("idOrdine");
 		c.close();
-		
 		
 		String insertSQL = "delete from ordine where idordine = "+code;
 		Connection c1 = newConnection();
@@ -116,7 +119,7 @@ public class OrdineDaoDataTest {
 		
 		try {
 			orderDao.changeOrderState(order);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		
@@ -137,6 +140,27 @@ public class OrdineDaoDataTest {
 		PreparedStatement ps1 = c1.prepareStatement(updateSQL);
 		int rs1 = ps1.executeUpdate();
 		c1.close();
+	}
+	
+	@Test
+	@DisplayName("TCI changeStateOrderTestNull")
+	public void changeStateOrderTestNull() {
+		assertThrows(CheckException.class, () -> { orderDao.changeOrderState(null);});
+	}
+	
+	@Test
+	@DisplayName("TCI  changeStateOrderTestVuoto")
+	public void changeStateOrderTestVuoto() {
+		assertThrows(CheckException.class, () -> { orderDao.changeOrderState(new Ordine());});
+	}
+	
+	@Test
+	@DisplayName("TCI  changeStateOrderTestVuoto")
+	public void changeStateOrderTestNonValido() {
+		Ordine order  = new Ordine();
+		order.setStato("IN CONSEGNO");
+		order.setIdOrdine(145);
+		assertThrows(CheckException.class, () -> { orderDao.changeOrderState(new Ordine());});
 	}
 	
 	@Test
@@ -204,7 +228,7 @@ public class OrdineDaoDataTest {
 			
 		try {
 			actual = orderDao.doRetrieveById(order);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		
@@ -223,11 +247,23 @@ public class OrdineDaoDataTest {
 		ArrayList<ProdottoOrdinato> actual = new ArrayList<>();
 		try {
 			actual = orderDao.doRetrieveById(order);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 		
 		assertEquals(prodotti, actual);
+	}
+	
+	@Test
+	@DisplayName("TCI doRetrieveByIdTestNull")
+	public void doRetrieveByIdTestNull() {
+		assertThrows(CheckException.class, () -> { orderDao.doRetrieveById(null);});
+	}
+	
+	@Test
+	@DisplayName("TCI doRetrieveByIdTestVuoto")
+	public void doRetrieveByIdTestVuoto() {
+		assertThrows(CheckException.class, () -> { orderDao.doRetrieveById(new Ordine());});
 	}
 	
 	@Test

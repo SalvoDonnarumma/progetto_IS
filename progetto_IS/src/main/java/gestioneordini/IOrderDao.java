@@ -9,10 +9,10 @@ import gestioneutenti.Utente;
 
 public interface IOrderDao {
 
-	ArrayList<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException; 
-	void doSave(Ordine ordine) throws SQLException;
+	ArrayList<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException, CheckException; 
+	void doSave(Ordine ordine) throws SQLException, CheckException;
 	ArrayList<Ordine> doRetrieveAllOrders(String order) throws SQLException;
-	void changeOrderState(Ordine ordine) throws SQLException;
+	void changeOrderState(Ordine ordine) throws SQLException, CheckException;
 	ArrayList<Ordine> doRetrieveAllByKey(Utente utente) throws SQLException;
 	ProdottoOrdinato doRetrieveByKeyO(Prodotto po) throws SQLException, CheckException;
 }

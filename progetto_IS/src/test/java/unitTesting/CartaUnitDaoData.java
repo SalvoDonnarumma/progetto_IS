@@ -43,7 +43,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCartaTestCorretto")
+	@DisplayName("TCU salvaCartaTestCorretto")
 	public void salvaCartaTestCorretto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -63,7 +63,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCartaTestIdNonValido")
+	@DisplayName("TCU salvaCartaTestIdNonValido")
 	public void salvaCartaTestIdNonValido() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -78,7 +78,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCartaTestNumeroCartaNonValido")
+	@DisplayName("TCU salvaCartaTestNumeroCartaNonValido")
 	public void salvaCartaTestNumeroCartaNonValido() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -93,7 +93,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 salvaCartaTestDataNonValido")
+	@DisplayName("TCU salvaCartaTestDataNonValido")
 	public void salvaCartaTestDataNonValido() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -108,8 +108,8 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 cancellaCartaTestCorretto")
-	public void cancellaCartaTestDataNonValido() throws SQLException, CheckException {
+	@DisplayName("TCU cancellaCartaTestCorretto")
+	public void cancellaCartaTestCorretto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
 	    Mockito.when(ds.getConnection()).thenReturn(connection);
@@ -122,7 +122,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 cancellaCartaTestNull")
+	@DisplayName("TCU cancellaCartaTestNull")
 	public void cancellaCartaTestNull() throws SQLException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -134,7 +134,19 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 cancellaCartaTestNonValido")
+	@DisplayName("TCU cancellaCartaTestNull")
+	public void cancellaCartaTestVuoto() throws SQLException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        
+        assertThrows( CheckException.class, ()->{ cartaDaoData.cancellaCarta(new Carta());} );
+	}
+	
+	@Test
+	@DisplayName("TCU cancellaCartaTestNonValido")
 	public void cancellaCartaTestCartaVuota() throws SQLException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -146,7 +158,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 recuperaTestCorretto")
+	@DisplayName("TCU recuperaTestCorretto")
 	public void recuperaCartaTestCorretto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -185,7 +197,7 @@ public class CartaUnitDaoData {
 	}
 	
 	@Test
-	@DisplayName("TCU1_2_1 recuperaCartaTestNonPresente")
+	@DisplayName("TCU recuperaCartaTestNonPresente")
 	public void recuperaCartaTestNonPresente() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 	    Connection connection = Mockito.mock(Connection.class);
@@ -207,6 +219,23 @@ public class CartaUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).executeQuery();
         Mockito.verify(resultSet, times(1)).next();
         resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU recuperaCartaTestNull")
+	public void recuperaCartaTestNull() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        cartaDaoData = new CartaDaoDataSource(ds);
+        Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.next()).thenReturn(false); // Ci sono risultati
+       
+        assertThrows( CheckException.class, ()->{ cartaDaoData.recuperaCarta(null);} );
 	}
 	
 }

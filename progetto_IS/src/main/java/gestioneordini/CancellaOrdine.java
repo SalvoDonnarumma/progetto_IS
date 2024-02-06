@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+
 @WebServlet("/RemoveOrderServlet")
 public class CancellaOrdine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class CancellaOrdine extends HttpServlet {
 			toRemove.setIdOrdine(Integer.parseInt(request.getParameter("idOrdine")));
 			toRemove.setStato("RIMOSSO");
 			orderDao.changeOrderState(toRemove);
-		} catch (NumberFormatException | SQLException e) {
+		} catch (NumberFormatException | SQLException | CheckException e) {
 			e.printStackTrace();
 		} 
 	}

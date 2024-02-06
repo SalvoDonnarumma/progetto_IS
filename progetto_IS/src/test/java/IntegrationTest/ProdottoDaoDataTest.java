@@ -2,6 +2,7 @@ package IntegrationTest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
@@ -18,9 +20,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 import checking.CheckException;
+import gestionecarta.Carta;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
@@ -85,6 +91,35 @@ public class ProdottoDaoDataTest {
 		int rs1 = ps1.executeUpdate();
 		c1.close();		
 	}
+	
+	@ParameterizedTest
+    @MethodSource("doSaveTestProvider")
+    @DisplayName("TCI salvaProdototoTestParamNullorVuoto")
+    public void salvaCartaTestParamNullorVuoto(Integer idprodotto, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath) {
+    	assertThrows(CheckException.class, () -> {
+    		Prodotto prodotto = new Prodotto( idprodotto, name, descrizione, categoria, price, stats, taglie,imagePath);
+    		productDao.doSave(prodotto);
+    	});
+    }
+	
+	private static Stream<Arguments> doSaveTestProvider(){
+    	return Stream.of(
+    			//formato nome propietario non corretto
+    			Arguments.of(5, "", "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, null, "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(5, "K2Donna", "", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", null, "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(5, "K2Donna", "descrizione", "", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", null, 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, "", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, null, new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", -33.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(5, "K2Donna", "descrizione", "mute", 330.0, "stats", null, "imagep")
+    			);
+    }
 	
 	@Test
 	@DisplayName("TCI doRetrieveAllTestCorretto")
@@ -421,4 +456,73 @@ public class ProdottoDaoDataTest {
 		int rs1 = ps1.executeUpdate();
 		c1.close();
 	}
+	
+	@ParameterizedTest
+    @MethodSource("updateTestProvider")
+    @DisplayName("TCI updateProdottoTestParamNullorVuoto")
+    //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+    public void modificaProdottoTestParamNullorVuoto(Integer idprodotto, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath) {
+    	assertThrows(CheckException.class, () -> {
+    		Prodotto prodotto = new Prodotto( idprodotto, name, descrizione, categoria, price, stats, taglie,imagePath);
+    		productDao.doUpdate(prodotto.getCode(), prodotto);
+    	});
+    }
+
+    private static Stream<Arguments> updateTestProvider(){
+    	return Stream.of(
+    			//formato nome propietario non corretto
+    			Arguments.of(4, "", "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, null, "descrizione", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(4, "", "", "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "", null, "mute", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(4, "K2Uomo", "descrizione", "", 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2Uomo", "descrizione", null, 330.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+
+    			Arguments.of(4, "K2Uomo", "descrizione", "mute", 330.0, "", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", 330.0, null, new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", -33.0, "stats", new Taglie(5, 3, 1, 1, 3), "imagep"),
+    			Arguments.of(4, "K2uomo", "descrizione", "mute", 330.0, "stats", null, "imagep")
+    			);
+    }
+    
+    @Test
+    @DisplayName("TCI updateProdottoTestNull")
+    public void  updateProdottoTestNull() {
+    	assertThrows(CheckException.class, () -> {
+    		productDao.doUpdate(34, null);
+    	});
+    }
+    
+    @Test
+    @DisplayName("TCI updateProdottoTestIdNonValido")
+    public void  updateProdottoTestVuoto() {
+    	assertThrows(CheckException.class, () -> {
+    		Prodotto p = new Prodotto();
+    		productDao.doUpdate(-1, p);
+    	});
+    }
+	
+	@ParameterizedTest
+    @MethodSource("doSaveTestProviderUpdateSizes")
+    @DisplayName("TCI setTaglieTestParamNullorVuoto")
+    //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+    public void updateSizesTestParamNullorVuoto(Integer idprodotto, Integer tagliaM, Integer tagliaL, Integer tagliaXL, Integer tagliaXXL) {
+    	assertThrows(CheckException.class, () -> {
+    		Taglie taglie = new Taglie(idprodotto, tagliaM, tagliaL, tagliaXL, tagliaXXL);
+    		productDao.doUpdateSizes(idprodotto, taglie);
+    	});
+    }
+
+    private static Stream<Arguments> doSaveTestProviderUpdateSizes(){
+    	return Stream.of(
+    			//formato nome propietario non corretto
+    			Arguments.of(0, -1, 0, 3, 4),
+    			Arguments.of(1, -1, 0, 3, 4),
+    			Arguments.of(1, 1,-1, 3, 4),
+    			Arguments.of(1, 1, 0, -3, 4),
+    			Arguments.of(1, -1, 0, 3, -4)
+    			);
+    }
 }

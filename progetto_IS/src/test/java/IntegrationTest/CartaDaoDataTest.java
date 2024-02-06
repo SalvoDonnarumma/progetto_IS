@@ -136,7 +136,6 @@ class CartaDaoDataTest {
 		assertThrows(CheckException.class, ()->{ Boolean flag = cartaDaoData.salvaCarta(null);});
 	}
     
-    /*
     @ParameterizedTest
     @MethodSource("doSaveTestProvider")
     @DisplayName("TCI salvaCartaTestParamNullorVuoto")
@@ -167,7 +166,6 @@ class CartaDaoDataTest {
     			Arguments.of(3, "Giorno Giovanna", "1111-2222-3333-44e4", null)
     			);
     }
-    */
     
     @Test
 	@DisplayName("TCI cancellaCartaTestCorretto")

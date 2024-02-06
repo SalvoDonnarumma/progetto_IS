@@ -1,5 +1,6 @@
 package unitTesting;
 
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -20,6 +21,7 @@ import org.mockito.Mockito;
 
 import checking.CheckException;
 import gestionecarrello.CarrelloDaoDataSource;
+import gestionecarta.Carta;
 import gestioneprodotti.Prodotto;
 import gestioneprodotti.ProductDaoDataSource;
 import gestioneprodotti.Taglie;
@@ -67,6 +69,171 @@ public class ProdottoUnitDaoData {
 	}
 	
 	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoNomeNull")
+	public void doSaveProdottoTestNomeNull() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, null, "Descrizione prodotto", "Coltelli",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoNomeVuoto")
+	public void doSaveProdottoTestNomeVuoto() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "", "Descrizione", "Coltelli",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoDescrizioneNull")
+	public void doSaveProdottoTestDescrizioneNull() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", null, "Coltelli",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoDescrizioneVuoto")
+	public void doSaveProdottoTestDescrizioneVuoto() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "", "Coltelli",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoCategoriaNull")
+	public void doSaveProdottoCategoriaNull() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0,  "Nome", "Descrizione", null,35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoCategoriaVuoto")
+	public void doSaveProdottoCategoriaVuoto() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0,  "Nome", "Descrizione", "",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoCategoriaNonValida")
+	public void doSaveProdottoCategoriaNonValida() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "Descrizione", "Coltello",35.00, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoPrezzoNull")
+	public void doSaveProdottoPrezzoNull() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "Descrizione", "Coltelli",null, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoPrezzoNonValido")
+	public void doSaveProdottoPrezzoNonValido() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "Descrizione", "Coltello",-1.0, "statistiche", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoStastisticheVuoto")
+	public void doSaveProdottoStastisticheVuoto() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "Descrizione", "Coltello",33.0, "", taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
+	@DisplayName("TCU3_1_1 doSaveProdottoStastisticheNull")
+	public void doSaveProdottoStastisticheNull() throws SQLException, CheckException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		productDaoData = new ProductDaoDataSource(ds);
+		//int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
+		Taglie taglie = Mockito.mock(Taglie.class);
+		Prodotto prodotto = new Prodotto(0, "Nome", "Descrizione", "Coltello",33.0,null, taglie, "imagepath");
+		assertThrows( CheckException.class, ()->{ productDaoData.doSave(prodotto);} );
+	}
+	
+	@Test
 	@DisplayName("TCU3_1_1 setTaglieByKey")
 	public void doSaveTaglieTestCorretto() throws SQLException, CheckException {
 		ds = Mockito.mock(DataSource.class);
@@ -86,6 +253,8 @@ public class ProdottoUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).setInt(5, taglie.getQuantitaXXL());
         Mockito.verify(preparedStatement, times(1)).executeUpdate();
 	}
+	
+	
 	
 	@Test
 	@DisplayName("TCU3_1_1 doUpdateProdottoTestCorretto")

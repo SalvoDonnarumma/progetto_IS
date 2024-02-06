@@ -41,7 +41,7 @@ public class ProductDaoDataSource implements IProductDao {
 		if(product.getStats() == null || product.getStats().equals(""))
 			throw new CheckException("Statistiche non valido!");
 		
-		if(product.getPrice() < 0 || !ProdottoValidator.isValidPrice(product.getPrice().toString()))
+		if( product.getPrice() == null || product.getPrice() < 0 || !ProdottoValidator.isValidPrice(product.getPrice().toString()))
 			throw new CheckException("Prezzo non valido!");
 		
 		if(product.getTaglie() == null)
@@ -122,6 +122,9 @@ public class ProductDaoDataSource implements IProductDao {
 	public synchronized void doUpdate(int code, Prodotto product) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if( code < 0 )
+			throw new CheckException("Prodotto non valido!");
 		
 		if( product == null )
 			throw new CheckException("Prodotto non valido!");

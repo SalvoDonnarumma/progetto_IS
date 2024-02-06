@@ -2,6 +2,7 @@ package IntegrationTest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -110,6 +111,18 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
+	@DisplayName("TCI salvaCarrelloTestNull")
+	public void salvaCarrelloTestNull() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.salvaCarrello(null);});
+	}
+	
+	@Test
+	@DisplayName("TCI salvaCarrelloTestVuoto")
+	public void salvaCarrelloTestVuoto() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.salvaCarrello(new Carrello());});
+	}
+	
+	@Test
 	@DisplayName("TCI salvaCarrelloTestPresente")
 	public void salvaCarrelloTestPresente() throws CheckException, DataSetException, SQLException{
     	Prodotto prod1 = Mockito.mock(Prodotto.class);
@@ -190,6 +203,18 @@ public class CarrelloDaoDataTest {
 	}
 	
 	@Test
+	@DisplayName("TCI recuperaCarrelloTestVuoto")
+	public void recuperaCarrelloTestVuoto() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.recuperaCarrello(new Utente());});
+	}
+	
+	@Test
+	@DisplayName("TCI salvaCarrelloTestVuoto")
+	public void recuperaCarrelloTestNull() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.recuperaCarrello(null);});
+	}
+	
+	@Test
 	@DisplayName("TCI recuperaCarrelloTestNonPresente")
 	public void recuperaCarrelloTestNonPresente() throws CheckException, DataSetException, SQLException{	
     	Carrello expected = new Carrello();
@@ -229,6 +254,18 @@ public class CarrelloDaoDataTest {
 		ResultSet rs = ps.executeQuery();
 		assertTrue(!rs.next());
 		c.close();
+	}
+	
+	@Test
+	@DisplayName("TCI cancellaCarrelloTestNull")
+	public void cancellaCarrelloTestNull() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.eliminaCarrello(null);});
+	}
+	
+	@Test
+	@DisplayName("TCI salvaCarrelloTestVuoto")
+	public void cancellaCarrelloTestVuoto() {
+		assertThrows(CheckException.class, ()->{carrelloDaoData.eliminaCarrello(new Carrello());});
 	}
 	
 }

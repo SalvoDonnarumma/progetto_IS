@@ -237,7 +237,7 @@ public class CreaOrdine extends HttpServlet {
 
 					try {
 						orderDao.doSave(order);
-					} catch (SQLException e) {
+					} catch (SQLException | CheckException e) {
 						e.printStackTrace();
 					}
 					
@@ -349,7 +349,7 @@ public class CreaOrdine extends HttpServlet {
 					try {
 						order.setPrezzototale(ptot);
 						orderDao.doSave(order);
-					} catch (SQLException e) {
+					} catch (SQLException | CheckException e) {
 						e.printStackTrace();
 					}
 		

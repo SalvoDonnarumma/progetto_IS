@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import checking.CheckException;
+
 /**
  * Servlet implementation class CambiaStatoOrdineServlet
  */
@@ -35,7 +37,11 @@ public class CambiaStatoOrdineServlet extends HttpServlet {
 			Ordine toRemove = new Ordine();
 			toRemove.setIdOrdine(Integer.parseInt(request.getParameter("idOrdine")));
 			toRemove.setStato(request.getParameter("stato").toString());
-			orderDao.changeOrderState(toRemove);
+			try {
+				orderDao.changeOrderState(toRemove);
+			} catch (CheckException e) {
+				e.printStackTrace();
+			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}

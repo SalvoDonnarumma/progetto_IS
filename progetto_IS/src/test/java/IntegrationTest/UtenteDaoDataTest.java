@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 import org.dbunit.DatabaseUnitException;
@@ -20,6 +21,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 import checking.CheckException;
 import gestioneutenti.UserDaoDataSource;
@@ -147,6 +151,43 @@ public class UtenteDaoDataTest {
 		int rs1 = ps1.executeUpdate();
 		c1.close();
 	}
+	
+	@ParameterizedTest
+    @MethodSource("doSaveTestProvider")
+    @DisplayName("TCI doSaveTestNonSalva")
+    public void doSaveTestNonSalva(Integer id, String email, String password, String nome, String cognome, String telefono, String ruolo) {
+    	assertThrows(CheckException.class, () -> {
+    		Utente utente = new Utente(id, email, password, nome, cognome, telefono, ruolo, null);
+			userDao.doSaveUser(utente);
+    	});
+    }
+	
+	private static Stream<Arguments> doSaveTestProvider(){
+    	return Stream.of(
+    			//formato email non corretto
+    			Arguments.of(3, "jojoland.com", "Giorno", "Giovanna", "jojo02", "333-1234567", "utente"),
+    			//email vuota
+    			Arguments.of(3, "", "Giorno", "Giovanna", "jojo02", "333-1234567", "utente"),
+    			//password vuota
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","Giovanna", "","333-1234567", "utente"),
+    			//nome vuoto
+    			Arguments.of(3, "jojoland2@gmail.com", "","Giovanna", "jojo02","333-1234567", "utente"),
+    			//nome null
+    			Arguments.of(3, "jojoland2@gmail.com", null,"Giovanna", "jojo02","333-1234567", "utente"),
+    			//cognome vuoto
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","", "jojo02","333-1234567", "utente"),
+    			//cognome null
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno",null, "jojo02","333-1234567", "utente"),
+    			//telefono vuoto
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","Giovanna", "jojo02","", "utente"),
+    			//telefono null
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","Giovanna", "jojo02",null, "utente"),
+    			//ruolo vuoto
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","Giovanna", "jojo02","333-1234567", ""),
+    			//ruolo null
+    			Arguments.of(3, "jojoland2@gmail.com", "Giorno","Giovanna", "jojo02","333-1234567", null)
+    			);
+    }
 	
 	@Test
 	@DisplayName("TCI doRetrieveByKeyTestCorretto")

@@ -106,7 +106,6 @@ public class PhotoDaoDataTest {
 		c1.close();
     }
     
-    /*
     @ParameterizedTest
     @MethodSource("doSaveTestProviderUpdate")
     @DisplayName("TCU3_2_1 updatePhotoTestParamNullorVuoto")
@@ -124,12 +123,10 @@ public class PhotoDaoDataTest {
     	return Stream.of(
     			//formato nome propietario non corretto
     			Arguments.of(4, ""),
-    			Arguments.of(4, null),
-    			
+    			Arguments.of(4, null),			
     			Arguments.of(-1,"imagepmodificata")
     			);
     }
-    */
     
     @Test
     @DisplayName("TCI updatePhotoTestNull")

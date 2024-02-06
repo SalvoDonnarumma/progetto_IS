@@ -49,10 +49,21 @@ public class OrderDaoDataSource implements IOrderDao{
 		return idOrdine;
 	}
 	
-	public synchronized void doSave(Ordine bean) throws SQLException {
+	public synchronized void doSave(Ordine bean) throws SQLException, CheckException {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		if(bean == null)
+			throw new CheckException("Ordine non valido");
+		if(bean.getEmailUtente() == null)
+			throw new CheckException("Email non valida");
+		if(bean.getData() == null)
+			throw new CheckException("Data non valida");
+		if(bean.getStato() == null)
+			throw new CheckException("Stato non valido");
+		if(bean.getIndirizzo() == null)
+			throw new CheckException("Indirizzo non valido");
 		
 		String insertSQL1 = "INSERT INTO ordine (idUtente, data, stato, indirizzo, prezzototale) VALUES (?, ?, ?, ?, ?)";
 		try {
@@ -220,11 +231,17 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 	
 	@Override
-	public synchronized ArrayList<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException {
+	public synchronized ArrayList<ProdottoOrdinato> doRetrieveById(Ordine ordine) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ArrayList<ProdottoOrdinato> singleorder = new ArrayList<>();
 
+		if( ordine == null )
+			throw new CheckException("");
+		
+		if( ordine.getIdOrdine() == null )
+			throw new CheckException("");
+		
 		int code = ordine.getIdOrdine();
 		String selectSQL = "SELECT * FROM prodottoordinato WHERE idOrdine = ?" ;
 
@@ -232,9 +249,7 @@ public class OrderDaoDataSource implements IOrderDao{
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, code);
-			
 			ResultSet rs = preparedStatement.executeQuery();
-
 			while (rs.next()) {
 				ProdottoOrdinato bean = new ProdottoOrdinato();
 				bean.setNome(rs.getString("nome"));
@@ -246,7 +261,6 @@ public class OrderDaoDataSource implements IOrderDao{
 				
 				singleorder.add(bean);
 			}
-
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -294,11 +308,19 @@ public class OrderDaoDataSource implements IOrderDao{
 	}
 
 	@Override
-	public void changeOrderState(Ordine ordine) throws SQLException {
+	public void changeOrderState(Ordine ordine) throws SQLException, CheckException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String updateSQL = "UPDATE ordine SET stato = ? WHERE idOrdine IN (?)";
 
+		if( ordine == null )
+			throw new CheckException("Ordine non valido!");
+		if( ordine.getStato() == null)
+			throw new CheckException("stato non valido!");
+		if( !ordine.getStato().equals("IN CONSEGNA") && !ordine.getStato().equals("IN ELABORAZIONE") && !ordine.getStato().equals("CONSEGNATO"))
+			throw new CheckException("valore stato non valido!");
+		if( ordine.getIdOrdine() == null)
+			throw new CheckException("Id ordine non valido!");
 		int idOrdine = ordine.getIdOrdine();
 		String stato = ordine.getStato();
 		try {

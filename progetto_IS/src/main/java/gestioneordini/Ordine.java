@@ -13,6 +13,13 @@ public class Ordine implements Serializable{
 
 	public Ordine() {
 		orders = new ArrayList<>();
+		idUtente = null;
+		data = null;
+		stato = null;
+		idOrdine = null;
+		prezzototale = null;
+		indirizzo = null;
+		data_consegna = null;
 	}
 
 	public Ordine(List<ProdottoOrdinato> orders, String idUtente, String data, String stato, Integer idOrdine,

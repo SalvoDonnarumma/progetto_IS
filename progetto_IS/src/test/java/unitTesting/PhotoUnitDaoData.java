@@ -45,27 +45,16 @@ public class PhotoUnitDaoData {
 	    @Test
 	    @DisplayName("updatePhotoTestCorretto")
 	    public void updatePhotoTestCorretto() throws SQLException, CheckException {
-	        // Preparare i dati del prodotto per il test
-	        Prodotto prodotto = new Prodotto(1,"Nome","Descrizione","CAtegoria",1.0,"Stats",null,"path/immagine.jpg");   
+	        // Preparare i dati del prodotto per il test 
+	        Prodotto prodotto = Mockito.mock(Prodotto.class);
+	        Mockito.when(prodotto.getImagePath()).thenReturn("path/immagine.jpg");
+	        Mockito.when(prodotto.getCode()).thenReturn(1);
+	        
 	        photoDaoData.updatePhoto(prodotto);
 	        
 	        Mockito.verify(preparedStatement, times(1)).setString(1, prodotto.getImagePath());
 	        Mockito.verify(preparedStatement, times(1)).setInt(2, prodotto.getCode());
 	        Mockito.verify(preparedStatement, times(1)).executeUpdate();
-	    }
-	    @Test
-	    @DisplayName("updatePhotoTestConProdottoValido")
-	    public void updatePhotoTestConProdottoValido() throws SQLException, CheckException {
-	        // Preparare i dati del prodotto per il test
-	        Prodotto prodotto = new Prodotto(1, "Nome", "Descrizione", "Categoria", 1.0, "Stats", null, "path/immagine.jpg");
-
-	        // Chiamare il metodo che si sta testando
-	        photoDaoData.updatePhoto(prodotto);
-
-	        // Verificare che il metodo abbia interagito correttamente con i mock
-	        verify(preparedStatement, times(1)).setString(1, prodotto.getImagePath());
-	        verify(preparedStatement, times(1)).setInt(2, prodotto.getCode());
-	        verify(preparedStatement, times(1)).executeUpdate();
 	    }
 
 	    @Test
@@ -73,6 +62,13 @@ public class PhotoUnitDaoData {
 	    public void updatePhotoTestConProdottoNullo() {
 	        // Chiamare il metodo che si sta testando con un prodotto nullo e verificare che sollevi un'eccezione
 	        assertThrows(CheckException.class, () -> photoDaoData.updatePhoto(null));
+	    }
+	    
+	    @Test
+	    @DisplayName("updatePhotoTestVuoto")
+	    public void updatePhotoTestConProdottoVuoto() {
+	        // Chiamare il metodo che si sta testando con un prodotto nullo e verificare che sollevi un'eccezione
+	        assertThrows(CheckException.class, () -> photoDaoData.updatePhoto(new Prodotto()));
 	    }
 
 }

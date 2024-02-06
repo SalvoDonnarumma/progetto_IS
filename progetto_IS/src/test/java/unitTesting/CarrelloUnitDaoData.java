@@ -72,7 +72,7 @@ public class CarrelloUnitDaoData {
 
 	@Test
 	@DisplayName("TCU salvaCarrelloTestMinoreZero")
-	public void salvaCarrelloTestMinoreZero() throws SQLException, CheckException {
+	public void salvaCarrelloTestVuoto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 		Connection connection = Mockito.mock(Connection.class);
 		Mockito.when(ds.getConnection()).thenReturn(connection);
@@ -124,15 +124,12 @@ public class CarrelloUnitDaoData {
 			carrelloDaoData.eliminaCarrello(null);
 		});
 	}
-
+	
 	@Test
-	@DisplayName("TCU eliminaCarrelloTestIdNegativo")
-	public void eliminaCarrelloTestIdNegativo() {
-		Carrello carrello = new Carrello();
-		carrello.setIdcarrello(-1);
-
+	@DisplayName("TCU eliminaCarrelloTestCarrelloNull")
+	public void eliminaCarrelloTestCarrelloVuoto() {
 		assertThrows(CheckException.class, () -> {
-			carrelloDaoData.eliminaCarrello(carrello);
+			carrelloDaoData.eliminaCarrello(new Carrello());
 		});
 	}
 
@@ -145,13 +142,10 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU recuperaCarrelloTestIdNegativo")
+	@DisplayName("TCU recuperaCarrelloTestVuoto")
 	public void recuperaCarrelloTestIdNegativo() {
-		Utente u = new Utente();
-		u.setId(-1);
-
 		assertThrows(CheckException.class, () -> {
-			carrelloDaoData.recuperaCarrello(u);
+			carrelloDaoData.recuperaCarrello(new Utente());
 		});
 	}
 }

@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 
 import com.google.gson.Gson;
 
+import checking.CheckException;
+
 /**
  * Servlet implementation class visualizzaDettagliOrdine
  */
@@ -34,7 +36,7 @@ public class VisualizzaDettagliOrdine extends HttpServlet {
 			Ordine o = new Ordine();
 			o.setIdOrdine(Integer.parseInt(idOrdine));
 			order = orderDao.doRetrieveById(o);
-		} catch (SQLException e) {
+		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}
 			

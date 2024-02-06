@@ -1,5 +1,6 @@
 package unitTesting;
 
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import checking.CheckException;
+import gestionecarta.Carta;
 import gestioneordini.OrderDaoDataSource;
 import gestioneordini.Ordine;
 import gestioneordini.ProdottoOrdinato;
@@ -79,7 +81,13 @@ public class OrdineUnitDaoData {
 		prodotti.add(prod3);
 		
 		Ordine order  = new Ordine(prodotti, "useremail@gmail.com", "01/02/2024", "IN ELABORAZIONE", 1, 233.0, "Via Fontana, 95", "03/02/2024");
-		orderDaoData.doSave(order);
+		try {
+			orderDaoData.doSave(order);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
 		Double totalprice = orderDaoData.doSaveProdottiOrdinati(prodotti, order);
 		orderDaoData.updatePrezzo(totalprice, order.getIdOrdine());
 		
@@ -127,11 +135,41 @@ public class OrdineUnitDaoData {
 		order.setIdOrdine(1);
 		order.setStato("IN CONSEGNA");
 		
-		orderDaoData.changeOrderState(order);
+		try {
+			orderDaoData.changeOrderState(order);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (CheckException e) {
+			e.printStackTrace();
+		}
 		
 		Mockito.verify(preparedStatement, times(1)).setString(1, order.getStato());
 		Mockito.verify(preparedStatement, times(1)).setInt(2, order.getIdOrdine());
         Mockito.verify(preparedStatement, times(1)).executeUpdate();
+	}
+	
+	@Test
+	@DisplayName("TCU changeStateOrderTestNull")
+	public void changeStateOrderTestNull() throws SQLException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		orderDaoData = new OrderDaoDataSource(ds);
+		assertThrows( CheckException.class, ()->{ orderDaoData.doRetrieveById(null);} );
+	}
+	
+	@Test
+	@DisplayName("TCU changeStateOrderTestVuoto")
+	public void changeStateOrderTestVuoto() throws SQLException {
+		ds = Mockito.mock(DataSource.class);
+		connection = mock(Connection.class);
+		preparedStatement = mock(PreparedStatement.class);
+		Mockito.when(ds.getConnection()).thenReturn(connection);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		orderDaoData = new OrderDaoDataSource(ds);
+		assertThrows( CheckException.class, ()->{ orderDaoData.doRetrieveById(new Ordine());} );
 	}
 	
 	@Test
@@ -269,6 +307,32 @@ public class OrdineUnitDaoData {
         Mockito.verify(preparedStatement, times(1)).executeQuery();
         Mockito.verify(preparedStatement, times(1)).setInt(1, order.getIdOrdine());
         resultSet.close();
+	}
+	
+	@Test
+	@DisplayName("TCU doRetrieveByIdTestNonPresente")
+	public void doRetrieveByIdTestNull() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		orderDaoData = new OrderDaoDataSource(ds);
+		
+		assertThrows( CheckException.class, ()->{ orderDaoData.doRetrieveById(null);} );
+	}
+	
+	@Test
+	@DisplayName("TCU doRetrieveByIdTestVuoto")
+	public void doRetrieveByIdTestVuoto() throws SQLException, CheckException {
+		DataSource ds = Mockito.mock(DataSource.class);
+	    Connection connection = Mockito.mock(Connection.class);
+	    Mockito.when(ds.getConnection()).thenReturn(connection);
+        PreparedStatement preparedStatement = Mockito.mock(PreparedStatement.class);
+		Mockito.when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+		orderDaoData = new OrderDaoDataSource(ds);
+		
+		assertThrows( CheckException.class, ()->{ orderDaoData.doRetrieveById(new Ordine());} );
 	}
 	
 }
