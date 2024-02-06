@@ -108,7 +108,7 @@
 	          <div class="col-50">
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
-	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
+	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Mario Rossi" required pattern="[A-Za-zÀ-ÿ\s]+"
 	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
 	           
@@ -119,15 +119,15 @@
 	            <span id="errorAdr" class="error-text"></span>
 	            
 	            <label for="city"><i class="fa fa-institution"></i> Citta' </label>
-	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="^[\\p{L}\\s]+$"
+	            <input type="text" id="city" name="city" placeholder="Napoli" required pattern="^[\\p{L}\\s]+$"
 	            onkeyup="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
 			 	<span id="errorCity"> </span>
 				
 	            <div class="row">
 	              <div class="col-50">
 	                <label for="state">Stato</label>
-	                <input type="text" id="stato" name="stato" placeholder="JJ" required pattern="^[A-Za-z]+$"
-	           		 onkeyup="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
+	                <input type="text" id="stato" name="stato" placeholder="NA" required pattern="^[A-Za-z]+$"
+	           		 onchange="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
 			 		<span id="errorState"> </span>
 	              </div>
 	              <div class="col-50">
@@ -190,18 +190,18 @@
 	              		String anno = user.getCarta().getData_scadenza().substring(3, 7);
 		            %>
 	              		<input type="text" id="expyear" name="anno_scadenza" value="<%=anno%>" required pattern="\d{4}"
-	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), yearErrorMessage)">
 			 			<span id="errorEXPC"> </span>
 	              	<% } else { %>
 	                	<input type="text" id="expyear" name="anno_scadenza" placeholder="2024" required pattern="\d{4}"
-	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), yearErrorMessage)">
 			 			<span id="errorEXPC"> </span>
 			 		<% } %>
 	              </div>
 	              <div class="col-50">
 	                <label for="cvv">CVV</label>
 	                <input type="text" id="cvv" name="cvv" placeholder="352" required pattern="\d{3}"
-	                onChange="validateFormElem(this, document.getElementById('errorCVV'), formatErrorMessagge)">
+	                onChange="validateFormElem(this, document.getElementById('errorCVV'), formatErrorMessage)">
 			 		<span id="errorCVV"> </span>
 	              </div>
 	            </div>
@@ -242,7 +242,7 @@
 	              <div class="col-50">
 	                <label for="state">Stato</label>
 	                <input type="text" id="state" name="stato" placeholder="JJ" required pattern="^[A-Za-z]+$"
-	           		 onkeyup="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
+	           		 onChange="validateFormElem(this, document.getElementById('errorState'), nameOrLastnameErrorMessage)">
 			 		<span id="errorState"> </span>
 	              </div>
 	              <div class="col-50">
@@ -306,11 +306,11 @@
 	              		String anno = user.getCarta().getData_scadenza().substring(3, 7);
 		            %>
 	              		<input type="text" id="expyear" name="anno_scadenza" value="<%=anno%>" required pattern="\d{4}"
-	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), yearErrorMessage)">
 			 			<span id="errorEXPC"> </span>
 	              	<% } else { %>
 	                	<input type="text" id="expyear" name="anno_scadenza" placeholder="2024" required pattern="\d{4}"
-	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), formatErrorMessagge)">
+	                	onChange="validateFormElem(this, document.getElementById('errorEXPC'), yearErrorMessage)">
 			 			<span id="errorEXPC"> </span>
 			 		<% } 
 	              	 %>
@@ -318,7 +318,7 @@
 	              <div class="col-50">
 	                <label for="cvv">CVV</label>
 	                <input type="text" id="cvv" name="cvv" placeholder="352" required pattern="\d{3}"
-	                onChange="validateFormElem(this, document.getElementById('errorCVV'), formatErrorMessagge)">
+	                onChange="validateFormElem(this, document.getElementById('errorCVV'), formatErrorMessage)">
 			 		<span id="errorCVV"> </span>
 	              </div>
 	            </div>

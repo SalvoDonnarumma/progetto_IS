@@ -1,6 +1,7 @@
 let count = 1;
 const nameOrLastnameErrorMessage = "Questo campo deve avere solo lettere<br>";
-const formatErrorMessage = "Questo campo non &eacute; nel formato giusto<br>";
+const yearErrorMessage = "Questo campo deve avere solo cifre numeriche<br>";
+const formatErrorMessage = "Questo campo non &eacute; nel formato giusto";
 const emailErrorMessage = "L'email deve essere almeno del formato username@domain.ext<br>";
 const phoneErrorMessage = "Il numero telefonico deve essere nel formato ###-#######<br>";
 const emptyFieldErrorMessage = "Il campo non puo' essere vuoto<br>";
@@ -13,6 +14,24 @@ function validateFormElem(formElem, span, errorMessage) {
   const emptyFieldErrorMessage = "Campo obbligatorio";
   const passwordMinLengthErrorMessage = "La password deve essere lunga almeno 12 caratteri";
   console.log("Eseguito");
+  
+  
+  if( formElem.id === "expyear" ){
+	  if (!/^\d{4}$/.test(formElem.value)) {
+		span.style.color = "red";
+		span.innerHTML = yearErrorMessage;
+      	return false;
+    }
+  }
+  
+  if( formElem.id === "cvv" ){
+	  if (!/\d{3}/.test(formElem.value)) {
+		span.style.color = "red";
+		span.innerHTML = formatErrorMessage;
+      	return false;
+    }
+  }
+  	
   
   if (formElem.id === "cardNumber") {
     const cardNumberRegex = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
