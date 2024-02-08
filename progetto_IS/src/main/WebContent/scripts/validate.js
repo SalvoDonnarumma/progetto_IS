@@ -4,7 +4,7 @@ const yearErrorMessage = "Questo campo deve avere solo cifre numeriche<br>";
 const formatErrorMessage = "Questo campo non &eacute; nel formato giusto";
 const emailErrorMessage = "L'email deve essere almeno del formato username@domain.ext<br>";
 const phoneErrorMessage = "Il numero telefonico deve essere nel formato ###-#######<br>";
-const emptyFieldErrorMessage = "Il campo non puo' essere vuoto<br>";
+const emptyFieldErrorMessage = "<br>Il campo non puo' essere vuoto<br>";
 const wrongconfirmPassErrorMessage = "La password non cambacia con la precedente<br>";
 const lengthPassErrorMessage = "La password deve contenere almeno 12 caratteri!";
 const formatNumberCardErrorMessage = "<br>Il numero della carta non rispetta il formato richiesto!<br>";
@@ -14,8 +14,7 @@ function validateFormElem(formElem, span, errorMessage) {
   const emptyFieldErrorMessage = "Campo obbligatorio";
   const passwordMinLengthErrorMessage = "La password deve essere lunga almeno 12 caratteri";
   console.log("Eseguito");
-  
-  
+   
   if( formElem.id === "expyear" ){
 	  if (!/^\d{4}$/.test(formElem.value)) {
 		span.style.color = "red";
@@ -86,6 +85,99 @@ function validateFormElem(formElem, span, errorMessage) {
   return false;
 }
 
+function validateProdottiForm(formElem, span, errorMessage){
+	if(formElem.id === "nome"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else {
+			span.innerHTML = "";
+			return true;
+		}
+	}
+	
+	if(formElem.id === "price"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else if( formElem.value < 0){
+				span.innerHTML = "Formato campo non valido!";
+				span.style.color="red";
+				return false;
+			} else if( !/^\d+$/.test(formElem.value)){
+				span.innerHTML = "Formato campo non valido!";
+				span.style.color="red";
+				return false;
+			} else {
+				span.innerHTML = "";
+				return true;
+		}
+	}
+	
+	if(formElem.id === "tagliaM" || formElem.id === "tagliaL" || formElem.id === "tagliaXL" || formElem === "tagliaXXL"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else if( formElem.value < 0){
+				span.innerHTML = "Formato campo non valido!";
+				span.style.color="red";
+				return false;
+			} else {
+				span.innerHTML = "";
+				return true;
+		}
+	}
+	
+	if(formElem.id === "descrizione"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else {
+			span.innerHTML = "";
+			return true;
+		}
+	}
+	
+	if(formElem.id === "statistiche"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else {
+			span.innerHTML = "";
+			return true;
+		}
+	}
+}
+
+function validateLoginForm(formElem, span, errorMessage){
+	if( formElem.id === "email" ){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else {
+			span.innerHTML = "";
+			return true;
+		}
+	}
+	
+	if (formElem.id === "pass"){
+		if(formElem.validity.valueMissing){
+			span.innerHTML = emptyFieldErrorMessage;
+			span.style.color = "red";
+			return false;
+		} else {
+			span.innerHTML = "";
+			return true;
+		}
+	}
+		
+}
 
 function validateForm2Elem(formElem1, formElem2, span, errorMessage) {
 	if(formElem1.checkValidity()){

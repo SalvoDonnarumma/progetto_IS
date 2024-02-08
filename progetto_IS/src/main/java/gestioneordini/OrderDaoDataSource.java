@@ -317,7 +317,7 @@ public class OrderDaoDataSource implements IOrderDao{
 			throw new CheckException("Ordine non valido!");
 		if( ordine.getStato() == null)
 			throw new CheckException("stato non valido!");
-		if( !ordine.getStato().equals("IN CONSEGNA") && !ordine.getStato().equals("IN ELABORAZIONE") && !ordine.getStato().equals("CONSEGNATO"))
+		if( !ordine.getStato().equals("IN CONSEGNA") && !ordine.getStato().equals("IN ELABORAZIONE") && !ordine.getStato().equals("CONSEGNATO") && !ordine.getStato().equals("RIMOSSO"))
 			throw new CheckException("valore stato non valido!");
 		if( ordine.getIdOrdine() == null)
 			throw new CheckException("Id ordine non valido!");

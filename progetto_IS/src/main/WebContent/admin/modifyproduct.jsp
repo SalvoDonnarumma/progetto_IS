@@ -17,7 +17,7 @@
 <meta charset="ISO-8859-1">
 <title>Modifica prodotto</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/modifyproduct.css">
-
+<script src="scripts/validate.js"></script>
 <script>
 function addValuesToLink(){
 	var link = document.getElementById("link");	
@@ -62,7 +62,9 @@ function addValuesToLink(){
 				<input type="hidden" name="action" value="insert"> 
 				<h4>
 					<label> Nome prodotto: 
-						<input name="nome" type="text" maxlength="25" required placeholder="enter name" value=<%=bean.getNome()%>><br> 
+						<input name="nome" type="text" id="name" maxlength="25" required placeholder="enter name" value=<%=bean.getNome()%>
+						onChange="validateProdottiForm(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)"><br> 
+						<span id="errorName"></span>
 					</label>
 				</h4>	
 				<h4>
@@ -85,15 +87,19 @@ function addValuesToLink(){
 				<h4>
 					<label>
 						Descrizione: <br>
-						<textarea cols="100" name="descrizione" maxlength="1000" rows="10" required>
+						<textarea cols="100" id="descrizione" name="descrizione" maxlength="1000" rows="10" required
+						onChange="validateProdottiForm(this, document.getElementById('errorDescrizione'), nameOrLastnameErrorMessage)">
 						<%=bean.getDescrizione()%>
 						</textarea><br>
+						<span id="errorDescrizione"></span>
 					</label>
 				</h4>			
 				<h4>
 					<label>
 						Prezzo: 
-						<input style="width:8%;" name="price" type="number"  min="0" step="any" value=<%=bean.getPrice()%>  required>&euro;
+						<input style="width:8%;" id="price" name="price" type="number"  min="0" step="any" value=<%=bean.getPrice()%>  required
+						onChange="validateProdottiForm(this, document.getElementById('errorPrice'), nameOrLastnameErrorMessage)">&euro;
+						<span id="errorPrice"></span>
 					</label>
 				</h4>			
 				<br>
@@ -101,20 +107,27 @@ function addValuesToLink(){
 					<label>
 						Quantit&aacute;: <br>
 						<h5>
-						Taglia M: <input style="width:7%;" name="tagliaM" type="number" min="0" value=<%=bean.getTaglie().getQuantitaM()%> required ><br>
-						Taglia L: <input style="width:7%;" name="tagliaL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaL()%> required><br>
-						Taglia XL: <input style="width:7%;" name="tagliaXL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaXL()%> required><br>
-						Taglia XXL: <input style="width:7%;" name="tagliaXXL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaXXL()%> required><br>
+						Taglia M: <input style="width:7%;" name="tagliaM" type="number" min="0" value=<%=bean.getTaglie().getQuantitaM()%> required id="tagliaM" 
+						onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"><br>
+						Taglia L: <input style="width:7%;" name="tagliaL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaL()%> required id="tagliaL"
+						onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"><br>
+						Taglia XL: <input style="width:7%;" name="tagliaXL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaXL()%> required id="tagliaXL"
+						onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"><br>
+						Taglia XXL: <input style="width:7%;" name="tagliaXXL" type="number" min="0" value=<%=bean.getTaglie().getQuantitaXXL()%> required id="tagliaXXL"
+						onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"><br>
 						</h5>
 					</label>
+					<span id="errorTaglie"></span>
 				</h4>
 
 				<h4>
 					<label>
 						Statistiche: <br>
-						<textarea cols="100" name="stats" maxlength="1000" rows="10" required placeholder="enter description">
+						<textarea cols="100" name="stats" maxlength="1000" rows="10" id="statistiche" required placeholder="enter description"
+						onChange="validateProdottiForm(this, document.getElementById('errorStats'), nameOrLastnameErrorMessage)">
 						<%= bean.getStats() %>
 						</textarea><br>
+						<span id="errorStats"></span>
 					</label>
 					
                	 	<label for="upload-input">File: </label>

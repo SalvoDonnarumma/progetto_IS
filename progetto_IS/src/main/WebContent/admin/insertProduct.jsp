@@ -100,7 +100,7 @@
             }
         }
     </style>
-
+	<script src="../scripts/validate.js"></script>
     <title>Aggiunta prodotto</title>
     <jsp:include page="../header.jsp" flush="true"/>
 </head>
@@ -112,9 +112,11 @@
 
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input name="nome" type="text" maxlength="25">
+                <input name="nome" type="text" maxlength="25" id="nome"
+                onChange="validateProdottiForm(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
             </div>
-
+			<span id="errorName"> </span>
+			
             <div class="form-group">
                 <label for="categoria">Categoria:</label>
                 <select name="categoria" id="categoria-select" required>
@@ -130,26 +132,37 @@
 
             <div class="form-group">
                 <label for="price">Prezzo:</label>
-                <input name="price" style="width:20%;"  min="0" value="0" step="any" required>
+                <input name="price" style="width:20%;"  min="0" value="0" step="any" required id="price"
+                onChange="validateProdottiForm(this, document.getElementById('errorPrice'), nameOrLastnameErrorMessage)">
             </div>
-
+			<span id="errorPrice" style="align-items: center;"> </span>
+			
             <div class="form-group">
                 <label>Quantit&aacute;: </label><br> 
-                <label>Taglia M: <input style="width:30%;" name="tagliaM" type="number" min="0"></label>
-                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number"></label>
-                <label>Taglia XL: <input style="width:30%;" name="tagliaXL" type="number" min="0"></label>
-                <label>Taglia XXL: <input style="width:30%;" name="tagliaXXL" type="number" min="0"></label>
+                <label>Taglia M: <input style="width:30%;" name="tagliaM" type="number" min="0" id="tagliaM"
+                onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
+                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number"  id="tagliaL"
+                onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
+                <label>Taglia XL: <input style="width:30%;" name="tagliaXL" type="number" min="0" id="tagliaXL"
+                onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
+                <label>Taglia XXL: <input style="width:30%;" name="tagliaXXL" type="number" min="0" id="tagliaXXL"
+                onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
             </div>
-
+			<span id="errorTaglie"></span>
+			 
             <div class="form-group">
                 <label for="description">Descrizione:</label>
-                <textarea name="descrizione" maxlength="500" rows="10" required placeholder="Enter description"></textarea>
+                <textarea name="descrizione" maxlength="500" rows="10" required placeholder="Enter description" id="descrizione"
+                onChange="validateProdottiForm(this, document.getElementById('errorDescrizione'), nameOrLastnameErrorMessage)"></textarea>
             </div>
-
+			<span id="errorDescrizione"> </span>
+			
             <div class="form-group">
                 <label for="stats">Statistiche: </label>
-                <textarea name="stats" maxlength="500" rows="10" required placeholder="Enter description"></textarea>
+                <textarea name="stats" maxlength="500" rows="10" required placeholder="Enter description" id="statistiche"
+                onChange="validateProdottiForm(this, document.getElementById('errorStats'), nameOrLastnameErrorMessage)"></textarea>
             </div>
+            <span id="errorStats"> </span>
             
             <div class="form-group">
                 <label for="upload-input">File: </label>

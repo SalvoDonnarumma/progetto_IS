@@ -70,7 +70,9 @@ function disattivaErrore(){
 		</div>
 		
 		<div class="txt_field email-field"> 
- 			<input type= "password" onChange="checkPassLength()" name="password" id="password" required> <label>Password</label>
+ 			<input type= "password" onChange="checkPassLength()" name="password" id="password" required
+ 			onchange="validateFormElem(this, document.getElementById('errorEmail'), emailErrorMessage)"	id="email">
+ 			<span id="errorEmail"></span> <label>Password</label>
 		</div>
 		<span style="color:red;" id="errorPass"></span>
 		

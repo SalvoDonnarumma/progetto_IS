@@ -10,8 +10,12 @@
 <jsp:include page="header.jsp" flush="true"/>
 <script src="scripts/validate.js"></script>
 <script>
-function disattivaErrore(){
-	let error = document.getElementById("error");
+function disattivaErrore1(){
+	let error = document.getElementById("errorEmail");
+	error.style.display = "none";
+}
+function disattivaErrore2(){
+	let error = document.getElementById("errorPass");
 	error.style.display = "none";
 }
 </script>
@@ -21,14 +25,14 @@ function disattivaErrore(){
  <h1>OctoLogin</h1>
    <form action="Login" method="post">
      <div class="txt_field email-field">
-    <input type="email" name="email" onkeyup="disattivaErrore();"
-        onchange="validateFormElem(this, document.getElementById('errorEmail'), emptyFieldErrorMessage)" id="email">
+    <input type="email"name="email" required
+        onchange="validateLoginForm(this, document.getElementById('errorEmail'), emptyFieldErrorMessage)" id="email">
     <span id="errorEmail" class="error-text"></span>
     <label>Email</label>
 </div>
    <div class="txt_field email-field"> 
-       <input type="password" name="password"
-       onchange="validateFormElem(this, document.getElementById('errorPass'), emptyFieldErrorMessage)" id="pass"> <label>Password</label>
+       <input type="password" name="password" required
+       onchange="validateLoginForm(this, document.getElementById('errorPass'), emptyFieldErrorMessage)" id="pass"> <label>Password</label>
    	   <span id="errorPass" class="error-text"></span>
    </div>
    <input type="hidden" name="jspName" value="loginutenti">

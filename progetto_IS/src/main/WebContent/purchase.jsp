@@ -109,7 +109,7 @@
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
 	            <input type="text" id="nome_utente" name="nome_utente" placeholder="Mario Rossi" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
+	            onchange="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
 	           
     			
@@ -119,8 +119,8 @@
 	            <span id="errorAdr" class="error-text"></span>
 	            
 	            <label for="city"><i class="fa fa-institution"></i> Citta' </label>
-	            <input type="text" id="city" name="city" placeholder="Napoli" required pattern="^[\\p{L}\\s]+$"
-	            onkeyup="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
+	            <input type="text" id="city" name="city" placeholder="Napoli" required pattern="/^[a-zA-Z\s]+$/"
+	            onchange="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
 			 	<span id="errorCity"> </span>
 				
 	            <div class="row">
@@ -151,11 +151,11 @@
 	            
 	      		<% if( user.getCarta() != null ) { %>
 	      			<input type="text" id="cname" name="nome" value="<%=user.getCarta().getProprietario() %>" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+	            	onchange="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 		<span id="errorNameC"> </span>
 	    		<% } else {%>
 	            	<input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+	            	onchange="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 		<span id="errorNameC"> </span>
 			 	<% } %>
 			 	
@@ -225,7 +225,7 @@
 	            <h3>Dati Utente</h3>
 	            <label for="fname"><i class="fa fa-user"></i> Nome completo</label>
 	            <input type="text" id="firstname" name="nome_utente" placeholder="Jonathan Joestar" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            onkeyup="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
+	            onchange="validateFormElem(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
 			 	<span id="errorName"> </span>
     			
 	            <label for="adr"><i class="fa fa-address-card-o"></i> Indirizzo </label>
@@ -235,7 +235,7 @@
 	            
 	            <label for="city"><i class="fa fa-institution"></i> Citta' </label>
 	            <input type="text" id="city" name="city" placeholder="Morioh Cho" required pattern="^[\\p{L}\\s]+$"
-	            onkeyup="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
+	            onchange="validateFormElem(this, document.getElementById('errorCity'), nameOrLastnameErrorMessage)">
 			 	<span id="errorCity"> </span>
 				
 	            <div class="row">
@@ -267,11 +267,11 @@
 	            
 	      		<% if( user.getCarta() != null ) { %>
 	      			<input type="text" id="cname" name="nome" value="<%=user.getCarta().getProprietario() %>" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+	            	onchange="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 		<span id="errorNameC"> </span>
 	    		<% } else {%>
 	            	<input type="text" id="cname" name="nome" placeholder="Giorno Giovanna" required pattern="[A-Za-zÀ-ÿ\s]+"
-	            	onkeyup="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
+	            	onchange="validateFormElem(this, document.getElementById('errorNameC'), nameOrLastnameErrorMessage)">
 			 		<span id="errorNameC"> </span>
 			 	<% } %>
 			 	
