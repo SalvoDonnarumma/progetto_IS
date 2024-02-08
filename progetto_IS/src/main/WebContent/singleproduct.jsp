@@ -5,6 +5,8 @@
  	Prodotto bean = (Prodotto) request.getAttribute("product");
    	Taglie sizes = (Taglie) bean.getTaglie();
    	String isAdmin = (String) request.getSession().getAttribute("isAdmin");
+   	if( isAdmin == null )
+   		isAdmin = "ospite";
    	boolean nondisponibile = false;
  %>
 <!DOCTYPE html>
