@@ -125,6 +125,10 @@ function validateProdottiForm(formElem, span, errorMessage){
 				span.innerHTML = "Formato campo non valido!";
 				span.style.color="red";
 				return false;
+			} else if( !/^\d+$/.test(formElem.value)){
+				span.innerHTML = "Formato campo non valido!";
+				span.style.color="red";
+				return false;
 			} else {
 				span.innerHTML = "";
 				return true;

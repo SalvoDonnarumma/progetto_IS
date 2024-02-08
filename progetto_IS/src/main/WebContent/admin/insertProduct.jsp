@@ -139,13 +139,13 @@
 			
             <div class="form-group">
                 <label>Quantit&aacute;: </label><br> 
-                <label>Taglia M: <input style="width:30%;" name="tagliaM" type="number" min="0" id="tagliaM"
+                <label>Taglia M: <input style="width:30%;" name="tagliaM" type="number" min="0" id="tagliaM" value="0"
                 onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
-                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number"  id="tagliaL"
+                <label>Taglia L: <input style="width:30%;" name="tagliaL" type="number"  min="0" id="tagliaL" value="0"
                 onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
-                <label>Taglia XL: <input style="width:30%;" name="tagliaXL" type="number" min="0" id="tagliaXL"
+                <label>Taglia XL: <input style="width:30%;" name="tagliaXL" type="number" min="0" id="tagliaXL" value="0"
                 onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
-                <label>Taglia XXL: <input style="width:30%;" name="tagliaXXL" type="number" min="0" id="tagliaXXL"
+                <label>Taglia XXL: <input style="width:30%;" name="tagliaXXL" type="number" min="0" id="tagliaXXL" value="0"
                 onChange="validateProdottiForm(this, document.getElementById('errorTaglie'), nameOrLastnameErrorMessage)"></label>
             </div>
 			<span id="errorTaglie"></span>

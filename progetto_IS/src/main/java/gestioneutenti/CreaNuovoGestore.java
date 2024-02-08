@@ -24,25 +24,45 @@ public class CreaNuovoGestore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		IUserDao gestoreDao = null;
+		IUserDao userDao = null;
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		gestoreDao = new UserDaoDataSource(ds);
+		userDao = new UserDaoDataSource(ds);
 		
-		String email = request.getParameter("email");
+		String username = request.getParameter("email");
 		String password = request.getParameter("password");
 		String cognome = request.getParameter("cognome");
 		String telefono = request.getParameter("phone");
 		String ruolo = request.getParameter("ruolo");
 			
 		Utente bean = new Utente();
-		bean.setEmail(email);
+		bean.setEmail(username);
 		bean.setPassword(password);
 		bean.setCognome(cognome);
 		bean.setTelefono(telefono);
 		bean.setRuolo(ruolo);
-					
+			
+		List<String> errors = new ArrayList<>();
+		Boolean result = false;
+		
+        try {
+			List<String> emails = userDao.getAllEmails();
+			for( String email : emails) 
+				if(email.equals(username))
+					result = true;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+        
+        String registrazione = "admin/insertAmm.jsp";
+        if( result ) {
+        	errors.add("L'email che hai inserito non è disponibile!");
+        	request.setAttribute("errors", errors);
+        	RequestDispatcher dispatcherToLoginPage = request.getRequestDispatcher(registrazione);
+        	dispatcherToLoginPage.forward(request, response);
+			return;
+		}
 		try {
-			gestoreDao.doSaveGestore(bean);			
+			userDao.doSaveGestore(bean);			
 		} catch (SQLException | CheckException e) {
 			e.printStackTrace();
 		}

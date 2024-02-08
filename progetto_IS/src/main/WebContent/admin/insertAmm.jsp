@@ -272,8 +272,7 @@ function disattivaErrore(){
 			<%
 			}
 		}
-		%>
-	
+		%>	
 		<input type="submit" value="Add"><input type="reset" value="Reset">
 	</form>
 	
