@@ -108,7 +108,7 @@ public class PhotoDaoDataTest {
     
     @ParameterizedTest
     @MethodSource("doSaveTestProviderUpdate")
-    @DisplayName("TCU3_2_1 updatePhotoTestParamNullorVuoto")
+    @DisplayName("TCI updatePhotoTestParamNullorVuoto")
     //int code, String name, String descrizione, String categoria, Double price, String stats, Taglie taglie, String imagePath
     public void modificaPhotoTestParamNullorVuoto(Integer idprodotto, String imagepath) {
     	assertThrows(CheckException.class, () -> {

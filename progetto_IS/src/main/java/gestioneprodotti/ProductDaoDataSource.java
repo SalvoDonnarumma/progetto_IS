@@ -16,7 +16,8 @@ public class ProductDaoDataSource implements IProductDao {
 	
 	private static final String TABLE_NAME = "prodotto";
 	private DataSource ds = null;
-
+	Connection connection = null;
+	
 	public ProductDaoDataSource(DataSource ds) {
 		this.ds = ds;
 	}
@@ -245,43 +246,42 @@ public class ProductDaoDataSource implements IProductDao {
 	}
 	
 	@Override
-	public synchronized Taglie getSizesByKey(Prodotto product) throws SQLException, CheckException{
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Taglie taglie = new Taglie();
-		String selectSQL = "SELECT * FROM taglie WHERE idProdotto= ?";
-		
-		if( product == null )
-			throw new CheckException("codice prodotto non valido");
-		
-		if( product.getCode() == 0 || product.getCode() < 0)
-			throw new CheckException("codice prodotto non valido");
-		
-		Integer code = product.getCode();
-		
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) { 
-				taglie.setIdProdotto(rs.getInt("idProdotto"));
-				taglie.setQuantitaM(rs.getInt("tagliaM"));
-				taglie.setQuantitaL(rs.getInt("tagliaL"));
-				taglie.setQuantitaXL(rs.getInt("tagliaXL"));
-				taglie.setQuantitaXXL(rs.getInt("tagliaXXL"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}	
-		return taglie;
+	public synchronized Taglie getSizesByKey(Prodotto product) throws SQLException, CheckException {
+	    PreparedStatement preparedStatement = null;
+	    ResultSet rs = null;
+	    Taglie taglie = new Taglie();
+	    String selectSQL = "SELECT * FROM taglie WHERE idProdotto= ?";
+
+	    if (product == null)
+	        throw new CheckException("codice prodotto non valido");
+
+	    if (product.getCode() == 0 || product.getCode() < 0)
+	        throw new CheckException("codice prodotto non valido");
+
+	    Integer code = product.getCode();
+
+	    try (Connection connection = ds.getConnection()) {
+	        preparedStatement = connection.prepareStatement(selectSQL);
+	        preparedStatement.setInt(1, code);
+	        rs = preparedStatement.executeQuery();
+	        while (rs.next()) {
+	            taglie.setIdProdotto(rs.getInt("idProdotto"));
+	            taglie.setQuantitaM(rs.getInt("tagliaM"));
+	            taglie.setQuantitaL(rs.getInt("tagliaL"));
+	            taglie.setQuantitaXL(rs.getInt("tagliaXL"));
+	            taglie.setQuantitaXXL(rs.getInt("tagliaXXL"));
+	        }
+	    } finally {
+	        if (rs != null) {
+	            rs.close();
+	        }
+	        if (preparedStatement != null) {
+	            preparedStatement.close();
+	        }
+	    }
+	    return taglie;
 	}
+
 	
 	@Override
 	public synchronized void setSizesByKey(int code,Taglie sizes) throws SQLException, CheckException{
@@ -323,43 +323,36 @@ public class ProductDaoDataSource implements IProductDao {
 	
 	
 	@Override
-	public synchronized Prodotto doRetrieveByKey(Prodotto product) throws SQLException, CheckException{
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		if( product == null )
-			throw new CheckException("Prodotto non valido!");
-		if( product.getCode() < 0 )
-			throw new CheckException("Prodotto non valido!");
-		
-		Prodotto bean = new Prodotto();
-		
-		int code = product.getCode();
-		String query = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE idProdotto= ?";
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) { 
-				bean.setCode(rs.getInt("IDPRODOTTO"));
-				bean.setCategoria(rs.getString("CATEGORIA"));
-				bean.setNome(rs.getString("NOME"));
-				bean.setDescrizione(rs.getString("DESCRIZIONE"));
-				bean.setPrice(rs.getDouble("PRICE"));
-				bean.setStats(rs.getString("STATS"));
-				bean.setImagePath(rs.getString("IMAGE"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return bean;
+	public synchronized Prodotto doRetrieveByKey(Prodotto product) throws SQLException, CheckException {
+	    PreparedStatement preparedStatement = null;
+	    if (product == null)
+	        throw new CheckException("Prodotto non valido!");
+	    if (product.getCode() < 0)
+	        throw new CheckException("Prodotto non valido!");
+
+	    Prodotto bean = new Prodotto();
+
+	    int code = product.getCode();
+	    String query = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE idProdotto= ?";
+	    try (Connection connection = ds.getConnection()) {
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setInt(1, code);
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                bean.setCode(rs.getInt("IDPRODOTTO"));
+	                bean.setCategoria(rs.getString("CATEGORIA"));
+	                bean.setNome(rs.getString("NOME"));
+	                bean.setDescrizione(rs.getString("DESCRIZIONE"));
+	                bean.setPrice(rs.getDouble("PRICE"));
+	                bean.setStats(rs.getString("STATS"));
+	                bean.setImagePath(rs.getString("IMAGE"));
+	            }
+	        }
+	    }
+
+	    return bean;
 	}
+
 		
 	@Override
 	public int doRetrieveByName(Prodotto product) throws SQLException {
@@ -448,7 +441,7 @@ public class ProductDaoDataSource implements IProductDao {
 		if (order != null && order.equals("categoria")) {
 			selectSQL += " ORDER BY categoria";
 		} else if( order != null && order.equals("nome")) {
-			selectSQL += " ORDER BY nome";
+			selectSQL += " ORDER BY LOWER(nome)";
 		} else if( order != null && order.equals("") ){
 				;
 			}

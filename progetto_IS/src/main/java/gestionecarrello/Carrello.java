@@ -100,11 +100,17 @@ public class Carrello implements Serializable {
 		Carrello other = (Carrello) obj;
 		return Objects.equals(cart, other.cart) && Objects.equals(idcarrello, other.idcarrello);
 	}
-
-
+	
 	@Override
 	public String toString() {
-		return "Carrello [idcarrello=" + idcarrello + ", cart=" + cart + "]";
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("Carrello [idcarrello=").append(idcarrello).append(", cart=[");
+	    for (Prodotto prodotto : cart) {
+	        sb.append(prodotto.toString()).append(", ");
+	    }
+	    sb.append("]]");
+	    return sb.toString();
 	}
+
 
 }

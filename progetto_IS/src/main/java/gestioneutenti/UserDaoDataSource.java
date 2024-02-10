@@ -344,7 +344,6 @@ public class UserDaoDataSource implements IUserDao {
 	
 	@Override
 	public int doDeleteGestore(Utente admin) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		if(admin == null)
@@ -355,8 +354,6 @@ public class UserDaoDataSource implements IUserDao {
 		String insertSQL = "DELETE FROM Utente WHERE email = ?";
 		
 		try {
-			connection = ds.getConnection();
-			
 			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, admin.getEmail());
 			int res = preparedStatement.executeUpdate();

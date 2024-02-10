@@ -183,8 +183,8 @@ public class ProdottoDaoDataTest {
         listaProdotti.add(new Prodotto(105,"Supernova","La scarpetta di nuova concezione presenta vistose perforazioni (che impediscono il cosiddetto \"effetto paracadute\") e le articolazioni nel punto di giunzione con la pala, assorbono l'energia cinetica. La pala, con la sua lamella centrale estremamente larga, assicura un forte effetto di canalizzazione. Disponibili dalla taglia M alla XL.",
         	    "Pinne",159.0,"MATERIALE: Thermoplastic rubber\r\nMODELLO: Open Heel\r\nLUNGHEZZA LAMA: 38cm / 15in (size R)\r\nPESO SINGOLA PINNA: 0.9kg / 2lb (size R)\r\nKIT COLORE: false",
         	    new Taglie(), "./img_products/SeawingSupernova.jpg"));
-        Collections.sort(listaProdotti, Comparator.comparing(Prodotto::getNome));
-        
+        Collections.sort(listaProdotti, Comparator.comparing(p -> p.getNome().toLowerCase()));
+
         ArrayList<Prodotto> actual = null;
         
         try {

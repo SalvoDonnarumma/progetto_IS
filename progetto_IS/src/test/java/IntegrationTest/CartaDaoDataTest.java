@@ -87,13 +87,16 @@ class CartaDaoDataTest {
     @Test
 	@DisplayName("TCI salvaCartaTestPresente")
 	public void salvaCartaTestPresente() throws CheckException, DataSetException, SQLException{
-    	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2030");
+    	Carta carta = new Carta(2, "Giorno Giovanni", "1111-2222-3333-4444", "05/2031");
     	Utente utente = new Utente();
     	utente.setId(carta.getIdCarta());
-    	boolean flag = true;
+    	boolean flag = false;
     	try {
-			if( cartaDaoData.recuperaCarta(utente) != null )
+    		Carta actual = cartaDaoData.recuperaCarta(utente);
+			if( actual != null ) {
 				flag = true;
+				assertEquals("05/2030", actual.getData_scadenza());
+			}
 			else
 				flag = false;
 		} catch (SQLException e) {
@@ -102,15 +105,19 @@ class CartaDaoDataTest {
 			e.printStackTrace();
 		}
     	
+    	Mockito.when(ds.getConnection()).thenReturn(newConnection());
     	try {
-    		if(flag)
+    		if(flag) {
     			cartaDaoData.cancellaCarta(carta);
+    			System.out.println("Cancellata carta già presente");
+    		}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (CheckException e) {
 			e.printStackTrace();
 		}
     	
+    	Mockito.when(ds.getConnection()).thenReturn(newConnection());
     	try {
 			cartaDaoData.salvaCarta(carta);
 		} catch (SQLException e) {
@@ -126,7 +133,13 @@ class CartaDaoDataTest {
 		assertTrue(rs.next());
         assertEquals( "Giorno Giovanni" , rs.getString("proprietario"));
         assertEquals( "1111-2222-3333-4444" , rs.getString("numero_carta"));
-        assertEquals( "05/2030" , rs.getString("data_scadenza"));
+        assertEquals( "05/2031" , rs.getString("data_scadenza"));
+		c.close(); 
+		
+		String updateSQL = "UPDATE Carta SET data_scadenza = '05/2030' WHERE idcarta = 2;";
+		Connection c1 = newConnection();
+		PreparedStatement ps1 = c1.prepareStatement(updateSQL);
+		int rs1 = ps1.executeUpdate();
 		c.close(); 
 	}
     

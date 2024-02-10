@@ -47,7 +47,6 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    List<Prodotto> lista_prodotti = carrello.getAllProduct();
 	    Integer id_utente_sessione = carrello.getIdcarrello();
 	    PreparedStatement preparedStatement = null;
-	    int i = 0;
 	    try (Connection connection = ds.getConnection()) {
 	        for (Prodotto prodotto : lista_prodotti) {
 	            	preparedStatement = connection.prepareStatement(insertSQL);
@@ -93,9 +92,10 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    String selectSQL = "SELECT * FROM prodottocarrello WHERE idcarrello = ?";
 	    List<Prodotto> prodotticarrello = new ArrayList<>();
 
-	    try (Connection connection = ds.getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
+	    try (
+	        Connection connection = ds.getConnection();
+	        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)
+	    ) {
 	        preparedStatement.setInt(1, utente.getId());
 	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
 	            while (resultSet.next()) {
@@ -113,5 +113,4 @@ public class CarrelloDaoDataSource implements ICarrelloDao{
 	    prodotticarrello.forEach(carrello::addProduct);
 	    return carrello;
 	}
-
 }

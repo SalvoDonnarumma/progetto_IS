@@ -12,14 +12,14 @@ import gestioneutenti.Utente;
 public class CartaDaoDataSource implements ICartaDaoData{
 
 	private DataSource ds = null;
-
+	Connection connection = null;
+	
 	public CartaDaoDataSource(DataSource ds) {
 		this.ds = ds;
 	}
 	
 	@Override
 	public boolean salvaCarta(Carta carta) throws SQLException, CheckException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertSQL = "INSERT INTO carta (idcarta, proprietario, numero_carta, data_scadenza) VALUES (?,?,?,?)";
 		
@@ -84,7 +84,7 @@ public class CartaDaoDataSource implements ICartaDaoData{
 			preparedStatement.setInt(1, utente.getId());
 			ResultSet resultset = preparedStatement.executeQuery();
 			
-			if(resultset.next()) {		
+			if(resultset.next()) {	
 		            int idPCarta = resultset.getInt("idcarta");
 		            String proprietario = resultset.getString("proprietario");
 		            String scadenza = resultset.getString("data_scadenza");
@@ -93,6 +93,7 @@ public class CartaDaoDataSource implements ICartaDaoData{
 		            recuperata.setProprietario(proprietario);
 		            recuperata.setData_scadenza(scadenza);
 		            recuperata.setNumero_carta(numero_carta);
+		            System.out.println(recuperata);
 		            return recuperata;
 			} else 
 				return null; //Se non è stata trovata nessuna carta, restituisco null
@@ -113,7 +114,7 @@ public class CartaDaoDataSource implements ICartaDaoData{
 		PreparedStatement preparedStatement = null;
 		if(carta == null || carta.getIdCarta()==0)
 			throw new CheckException("carta non valida");
-		
+		System.out.println("Cancellata carta già presente");
 		String selectSQL = "DELETE from carta WHERE idcarta = ?";
 		try {
 			connection = ds.getConnection();

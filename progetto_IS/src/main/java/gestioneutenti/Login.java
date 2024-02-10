@@ -18,6 +18,8 @@ import gestionecarrello.ICarrelloDao;
 import gestionecarta.Carta;
 import gestionecarta.CartaDaoDataSource;
 import gestionecarta.ICartaDaoData;
+import gestioneprodotti.IProductDao;
+import gestioneprodotti.ProductDaoDataSource;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {

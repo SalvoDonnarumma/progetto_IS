@@ -41,19 +41,23 @@ public class CarrelloUnitDaoData {
 	public void salvaCarrelloTestCorretto() throws SQLException, CheckException {
 		Prodotto prod1 = Mockito.mock(Prodotto.class);
 		Prodotto prod2 = Mockito.mock(Prodotto.class);
-		Prodotto prod3 = Mockito.mock(Prodotto.class);
+		Prodotto prod3 = Mockito.mock(Prodotto.class);		
 		Carrello carrello = new Carrello();
+		
+		when(prod1.getCode()).thenReturn(1);
+		when(prod2.getCode()).thenReturn(2);
+		when(prod3.getCode()).thenReturn(3);
+		
 		carrello.addProduct(prod1);
 		carrello.addProduct(prod2);
 		carrello.addProduct(prod3);
 		carrello.setIdcarrello(1);
-		when(prod1.getCode()).thenReturn(1);
-		when(prod2.getCode()).thenReturn(2);
-		when(prod3.getCode()).thenReturn(3);
 		carrelloDaoData.salvaCarrello(carrello);
 
 		Mockito.verify(preparedStatement, times(3)).setInt(1, carrello.getIdcarrello());
-		Mockito.verify(preparedStatement, times(3)).setInt(2, prod1.getCode());
+		Mockito.verify(preparedStatement, times(1)).setInt(2, prod1.getCode());
+		Mockito.verify(preparedStatement, times(1)).setInt(2, prod2.getCode());
+		Mockito.verify(preparedStatement, times(1)).setInt(2, prod3.getCode());
 		Mockito.verify(preparedStatement, times(3)).executeUpdate();
 	}
 

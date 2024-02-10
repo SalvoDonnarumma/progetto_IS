@@ -99,26 +99,26 @@ public class OrdineUnitDaoData {
         
         //Inserisco il primo prodotto
         Mockito.verify(preparedStatement, times(1)).setString(1, order.getEmailUtente());
-        Mockito.verify(preparedStatement, times(1)).setInt(2, prod1.getCode());
-        Mockito.verify(preparedStatement, times(1)).setString(3, prod1.getNome());
-        Mockito.verify(preparedStatement, times(1)).setString(4, prod1.getCategoria());
-        Mockito.verify(preparedStatement, times(1)).setDouble(5, prod1.getPrice());
+        Mockito.verify(preparedStatement, times(3)).setInt(2, prod1.getCode());
+        Mockito.verify(preparedStatement, times(2)).setString(3, prod1.getNome());
+        Mockito.verify(preparedStatement, times(2)).setString(4, prod1.getCategoria());
+        Mockito.verify(preparedStatement, times(2)).setDouble(5, prod1.getPrice());
         
         //Inserisco il secondo prodotto
         Mockito.verify(preparedStatement, times(1)).setString(1, order.getEmailUtente());
         Mockito.verify(preparedStatement, times(1)).setInt(2, prod2.getCode());
         Mockito.verify(preparedStatement, times(1)).setString(3, prod2.getNome());
-        Mockito.verify(preparedStatement, times(1)).setString(4, prod2.getCategoria());
+        Mockito.verify(preparedStatement, times(2)).setString(4, prod2.getCategoria());
         Mockito.verify(preparedStatement, times(1)).setDouble(5, prod2.getPrice());
        
         //Inserisco il terzo prodotto
         Mockito.verify(preparedStatement, times(1)).setString(1, order.getEmailUtente());
         Mockito.verify(preparedStatement, times(1)).setInt(2, prod3.getCode());
         Mockito.verify(preparedStatement, times(1)).setString(3, prod3.getNome());
-        Mockito.verify(preparedStatement, times(1)).setString(4, prod3.getCategoria());
+        Mockito.verify(preparedStatement, times(2)).setString(4, prod3.getCategoria());
         Mockito.verify(preparedStatement, times(1)).setDouble(5, prod3.getPrice());
         
-        Mockito.verify(preparedStatement, times(4)).executeUpdate();
+        Mockito.verify(preparedStatement, times(7)).executeUpdate();
 	}
 	
 	@Test
