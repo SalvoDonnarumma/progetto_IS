@@ -187,7 +187,8 @@
 <%						}	else {
 	%>
 					<li class="item"><a href="<%=request.getContextPath()%>/admin/UserView.jsp"><i class='bx bx-library icon'></i></a></li>
-					<li class="item"><a href="<%=request.getContextPath()%>/admin/userprofile.jsp"><i class='bx bxs-user icon'></i></a> </li>
+					<li class="item"><a href="<%=request.getContextPath()%>/userprofile.jsp"><i class='bx bxs-user icon'></i></a> </li>
+					<li class="item"><a href="<%=request.getContextPath()%>/store.jsp"><i class='bx bx-home-heart icon'></i></a>	</li>
 					<li class="item"><a href="<%=request.getContextPath()%>/Logout"><i class='bx bx-log-out-circle icon'></i></a>	</li>
 <%							}
 					}
