@@ -62,7 +62,7 @@ function addValuesToLink(){
 				<input type="hidden" name="action" value="insert"> 
 				<h4>
 					<label> Nome prodotto: 
-						<input name="nome" type="text" id="name" maxlength="25" required placeholder="enter name" value=<%=bean.getNome()%>
+						<input name="nome" type="text" id="nome" maxlength="25" required placeholder="enter name" value=<%=bean.getNome()%>
 						onChange="validateProdottiForm(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)"><br> 
 						<span id="errorName"></span>
 					</label>

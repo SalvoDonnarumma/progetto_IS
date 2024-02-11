@@ -115,7 +115,7 @@
                 <input name="nome" type="text" maxlength="25" id="nome"
                 onChange="validateProdottiForm(this, document.getElementById('errorName'), nameOrLastnameErrorMessage)">
             </div>
-			<span id="errorName"> </span>
+            <span id="errorName"> </span>
 			
             <div class="form-group">
                 <label for="categoria">Categoria:</label>

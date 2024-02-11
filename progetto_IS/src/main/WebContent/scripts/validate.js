@@ -87,7 +87,9 @@ function validateFormElem(formElem, span, errorMessage) {
 
 function validateProdottiForm(formElem, span, errorMessage){
 	if(formElem.id === "nome"){
-		if(formElem.validity.valueMissing){
+		console.log(formElem.value)
+		if(formElem.validity.valueMissing || formElem.value === ""){
+			console.log("ESEGUITO");
 			span.innerHTML = emptyFieldErrorMessage;
 			span.style.color = "red";
 			return false;

@@ -133,7 +133,7 @@
 	              <div class="col-50">
 	                <label for="zip">CAP</label>
 	                <input type="text" id="cap" name="cap" placeholder="10001" required pattern="\d{5}"
-	                required onChange="checkCAPLength()" onkeyup="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)">
+	                required onChange="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)" onkeyup="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)">
 			 		<span id="errorCAP"> </span>
 	              </div>
 	            </div>
@@ -248,7 +248,7 @@
 	              <div class="col-50">
 	                <label for="zip">CAP</label>
 	                <input type="text" id="cap" name="cap" placeholder="10001" required pattern="\d{5}"
-	                required onChange="checkCAPLength()" onkeyup="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)">
+	                required onChange="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)" onkeyup="validateFormElem(this, document.getElementById('errorCAP'), formatErrorMessage)">
 			 		<span id="errorCAP"> </span>
 	              </div>
 	            </div>

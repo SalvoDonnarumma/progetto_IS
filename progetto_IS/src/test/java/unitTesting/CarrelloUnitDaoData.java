@@ -75,7 +75,7 @@ public class CarrelloUnitDaoData {
 	}
 
 	@Test
-	@DisplayName("TCU salvaCarrelloTestMinoreZero")
+	@DisplayName("TCU salvaCarrelloTestVuoto")
 	public void salvaCarrelloTestVuoto() throws SQLException, CheckException {
 		DataSource ds = Mockito.mock(DataSource.class);
 		Connection connection = Mockito.mock(Connection.class);
