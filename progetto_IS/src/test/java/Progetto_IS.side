@@ -2,7 +2,7 @@
   "id": "c5dd7dbd-e33b-4c30-95a1-ed721d0fa330",
   "version": "2.0",
   "name": "Progetto_IS",
-  "url": "http://localhost/progetto_IS/admin/insertProduct.jsp",
+  "url": "http://localhost/progetto_IS/",
   "tests": [{
     "id": "a793e420-fa53-4faa-bd94-2d2139f039e9",
     "name": "TC1_1LoginTestCorretto",
@@ -2492,7 +2492,7 @@
     }]
   }, {
     "id": "3a6efc92-126b-47ae-b4ba-acadef626537",
-    "name": "TGU1_3AggiuntaGestoreFallita_EmailNonValida",
+    "name": "TGU1_3AggiuntaGestoreFallitoEmail",
     "commands": [{
       "id": "8fe77b71-1c9e-4922-8743-8e38cb7b53ac",
       "comment": "",
@@ -2543,7 +2543,7 @@
     }]
   }, {
     "id": "d8e585af-f51b-4c3a-b704-159bef696d53",
-    "name": "TGU1_4AggiuntaGestoreFallito_CognomeNonValido",
+    "name": "TGU1_4AggiuntaGestoreFallitoCognome",
     "commands": [{
       "id": "3018fb01-2d09-4b0e-a6c1-e66c33faeeaf",
       "comment": "",
@@ -2620,7 +2620,7 @@
     }]
   }, {
     "id": "a21a8c09-5990-4473-927d-9461b1add059",
-    "name": "TGU1_5AggiuntaGestoreFallito_PasswordNonValido",
+    "name": "TGU1_5AggiuntaGestoreFallitoPassword",
     "commands": [{
       "id": "67939a8e-5921-46ef-b722-085ff5642212",
       "comment": "",
@@ -2721,159 +2721,8 @@
     }]
   }, {
     "id": "138a5fc5-e944-4870-9ca4-3b282d4c75fe",
-    "name": "TGU1_6AggiuntaGestoreFallito_TelefonoNonValido",
-    "commands": [{
-      "id": "dc13f711-f17b-4840-906f-3e1012d7fae9",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost/progetto_IS/admin/insertAmm.jsp",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "4ae4a4b8-cb17-499c-930e-1ee4d64c3594",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "794x816",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "64e9cc2b-60c5-4741-8ea7-5f2984160726",
-      "comment": "",
-      "command": "click",
-      "target": "id=email",
-      "targets": [
-        ["id=email", "id"],
-        ["name=email", "name"],
-        ["css=#email", "css:finder"],
-        ["xpath=//input[@id='email']", "xpath:attributes"],
-        ["xpath=//input[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "fc8dcfcd-5ce0-4a90-bebf-f8468e8c5709",
-      "comment": "",
-      "command": "type",
-      "target": "id=email",
-      "targets": [
-        ["id=email", "id"],
-        ["name=email", "name"],
-        ["css=#email", "css:finder"],
-        ["xpath=//input[@id='email']", "xpath:attributes"],
-        ["xpath=//input[2]", "xpath:position"]
-      ],
-      "value": "nuovoGestore@Ordini.com"
-    }, {
-      "id": "d0da2424-0eda-4394-9738-9744f390e0b3",
-      "comment": "",
-      "command": "click",
-      "target": "id=cognome",
-      "targets": [
-        ["id=cognome", "id"],
-        ["name=cognome", "name"],
-        ["css=#cognome", "css:finder"],
-        ["xpath=//input[@id='cognome']", "xpath:attributes"],
-        ["xpath=//input[3]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "aef8bad3-6cee-433b-9b20-c033e9ebd009",
-      "comment": "",
-      "command": "type",
-      "target": "id=cognome",
-      "targets": [
-        ["id=cognome", "id"],
-        ["name=cognome", "name"],
-        ["css=#cognome", "css:finder"],
-        ["xpath=//input[@id='cognome']", "xpath:attributes"],
-        ["xpath=//input[3]", "xpath:position"]
-      ],
-      "value": "Prova"
-    }, {
-      "id": "0c2b7ea8-079c-4b48-8ba6-694dd5a549ba",
-      "comment": "",
-      "command": "click",
-      "target": "name=password",
-      "targets": [
-        ["name=password", "name"],
-        ["css=.txt_field:nth-child(8) > input", "css:finder"],
-        ["xpath=//input[@name='password']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "2f7ea868-5933-46fc-add7-ed3ea1b50eb4",
-      "comment": "",
-      "command": "type",
-      "target": "name=password",
-      "targets": [
-        ["name=password", "name"],
-        ["css=.txt_field:nth-child(8) > input", "css:finder"],
-        ["xpath=//input[@name='password']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": "passwordTest"
-    }, {
-      "id": "6e702e83-516a-4620-bef9-a9c532e3bdd5",
-      "comment": "",
-      "command": "click",
-      "target": "id=phone0",
-      "targets": [
-        ["id=phone0", "id"],
-        ["name=phone", "name"],
-        ["css=#phone0", "css:finder"],
-        ["xpath=//input[@id='phone0']", "xpath:attributes"],
-        ["xpath=//div[@id='phones']/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "ef829492-f4d6-4783-adc0-27a3a8579699",
-      "comment": "",
-      "command": "type",
-      "target": "id=phone0",
-      "targets": [
-        ["id=phone0", "id"],
-        ["name=phone", "name"],
-        ["css=#phone0", "css:finder"],
-        ["xpath=//input[@id='phone0']", "xpath:attributes"],
-        ["xpath=//div[@id='phones']/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
-      ],
-      "value": "3201748510"
-    }, {
-      "id": "2fa6852f-a588-450d-8242-d2ee95908d30",
-      "comment": "",
-      "command": "click",
-      "target": "id=errorPhone0",
-      "targets": [
-        ["id=errorPhone0", "id"],
-        ["css=#errorPhone0", "css:finder"],
-        ["xpath=//span[@id='errorPhone0']", "xpath:attributes"],
-        ["xpath=//div[@id='phones']/span", "xpath:idRelative"],
-        ["xpath=//div[2]/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "e185a241-9ef8-413b-8a07-5b1f2df8dde6",
-      "comment": "",
-      "command": "assertText",
-      "target": "id=errorPhone0",
-      "targets": [
-        ["id=errorPhone0", "id"],
-        ["css=#errorPhone0", "css:finder"],
-        ["xpath=//span[@id='errorPhone0']", "xpath:attributes"],
-        ["xpath=//div[@id='phones']/span", "xpath:idRelative"],
-        ["xpath=//div[2]/span", "xpath:position"]
-      ],
-      "value": "Il numero telefonico deve essere nel formato ###-#######"
-    }, {
-      "id": "0b39aaff-b339-4da0-a680-99483beda285",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }]
+    "name": "TGU1_6AggiuntaGestoreFallitoNum",
+    "commands": []
   }, {
     "id": "1fafd03e-c841-4b1e-8a7f-3fa3cd02ae5f",
     "name": "TC6_4RicercaProdottoCategoriaNonPresente",
@@ -4037,21 +3886,21 @@
     "id": "5723b8c8-d358-4dd7-b1d5-a1c095e6fc68",
     "name": "TC2_6AcquistoProdottoFallito_CAPNonValido",
     "commands": [{
-      "id": "163538c3-f25a-491e-ac1a-312254dc896a",
+      "id": "18733001-1da9-4422-b860-655cb5890377",
       "comment": "",
       "command": "open",
       "target": "http://localhost/progetto_IS/",
       "targets": [],
       "value": ""
     }, {
-      "id": "16f2bb0b-f21a-466a-be25-6e7230fa2563",
+      "id": "f5ed90c3-db03-4a4f-90e9-4930f1567747",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1552x832",
+      "target": "1102x816",
       "targets": [],
       "value": ""
     }, {
-      "id": "ccac349c-3385-4419-8d8e-ae45c9e5c5bd",
+      "id": "ce2ad029-56fe-4627-97c1-f2b7e5fb2b9d",
       "comment": "",
       "command": "click",
       "target": "css=.box1:nth-child(1) img",
@@ -4062,7 +3911,7 @@
       ],
       "value": ""
     }, {
-      "id": "00b89e4e-76f4-4828-8181-cbdd59902c9e",
+      "id": "6ad23892-de34-485a-91d7-7b4f4d438396",
       "comment": "",
       "command": "click",
       "target": "id=link",
@@ -4078,7 +3927,7 @@
       ],
       "value": ""
     }, {
-      "id": "e308a616-254b-4590-9b44-ff88a58f51e8",
+      "id": "892ab925-882d-4065-aaad-c8148958873b",
       "comment": "",
       "command": "click",
       "target": "id=firstname",
@@ -4091,7 +3940,7 @@
       ],
       "value": ""
     }, {
-      "id": "c65bd062-44ae-45be-b9b8-880158d474bd",
+      "id": "f943818a-f508-476e-943e-1fcdb9ec72d4",
       "comment": "",
       "command": "type",
       "target": "id=firstname",
@@ -4104,7 +3953,7 @@
       ],
       "value": "User Uno"
     }, {
-      "id": "ea2be984-240f-439e-bd1f-55a86c438ceb",
+      "id": "4a5ddfcc-2f25-452d-81d9-2e10277ef1a1",
       "comment": "",
       "command": "click",
       "target": "id=adr",
@@ -4117,7 +3966,7 @@
       ],
       "value": ""
     }, {
-      "id": "131fa360-79f6-487f-abfb-ee7959f97ec2",
+      "id": "53a7bd53-2527-4ef2-b935-97cfc3ab2c65",
       "comment": "",
       "command": "type",
       "target": "id=adr",
@@ -4128,9 +3977,9 @@
         ["xpath=//input[@id='adr']", "xpath:attributes"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "Via User, 01"
+      "value": "Via Pioppi, 86"
     }, {
-      "id": "d72e84c9-569c-40bd-be3e-37ee2aa98086",
+      "id": "2489cb4d-9f16-40fb-9a46-ba461f3ea824",
       "comment": "",
       "command": "click",
       "target": "id=city",
@@ -4143,7 +3992,7 @@
       ],
       "value": ""
     }, {
-      "id": "7d3d0403-8702-4dc0-8fad-22be0126473a",
+      "id": "5cd161ae-16a4-486a-9087-021152ff4ec1",
       "comment": "",
       "command": "type",
       "target": "id=city",
@@ -4156,7 +4005,7 @@
       ],
       "value": "Napoli"
     }, {
-      "id": "84f9c4b1-0114-4459-8c75-5a7ff0f23b9d",
+      "id": "6536c748-1ca6-404b-afd0-ff60ca3e5b1a",
       "comment": "",
       "command": "click",
       "target": "id=state",
@@ -4169,7 +4018,7 @@
       ],
       "value": ""
     }, {
-      "id": "5ff74ba9-1652-40d1-8f83-0d33b7f4bd21",
+      "id": "d5a1f0e7-a7d2-4d69-9aaa-2f9564f900ec",
       "comment": "",
       "command": "type",
       "target": "id=state",
@@ -4180,9 +4029,9 @@
         ["xpath=//input[@id='state']", "xpath:attributes"],
         ["xpath=//div/div/div/input", "xpath:position"]
       ],
-      "value": "ITA"
+      "value": "NA"
     }, {
-      "id": "d0c9b851-f8d0-45f2-a63e-1ebe0e6a3eb5",
+      "id": "fef3c62f-53ef-46dc-9de9-8ac42d50b895",
       "comment": "",
       "command": "click",
       "target": "id=cap",
@@ -4195,7 +4044,7 @@
       ],
       "value": ""
     }, {
-      "id": "3b4d9187-5370-412b-a9e1-cf8e88a75af1",
+      "id": "4d96e6ed-d0ac-472d-b212-93bd12111417",
       "comment": "",
       "command": "type",
       "target": "id=cap",
@@ -4206,9 +4055,9 @@
         ["xpath=//input[@id='cap']", "xpath:attributes"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "8001u"
+      "value": "80299e"
     }, {
-      "id": "858ef5d2-410f-4886-99de-7e868ceb98ac",
+      "id": "e55d88b6-d40f-4e7f-b51c-8744f0ae5aea",
       "comment": "",
       "command": "click",
       "target": "id=cname",
@@ -4221,33 +4070,7 @@
       ],
       "value": ""
     }, {
-      "id": "c4c07c51-7b8f-4787-9687-3fb17e63a365",
-      "comment": "",
-      "command": "click",
-      "target": "id=errorCAP",
-      "targets": [
-        ["id=errorCAP", "id"],
-        ["css=#errorCAP", "css:finder"],
-        ["xpath=//span[@id='errorCAP']", "xpath:attributes"],
-        ["xpath=//div[2]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Questo campo non é nel formato giusto')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "d06a47c1-9d1d-4552-9108-6ecd75fbf235",
-      "comment": "",
-      "command": "assertText",
-      "target": "id=errorCAP",
-      "targets": [
-        ["id=errorCAP", "id"],
-        ["css=#errorCAP", "css:finder"],
-        ["xpath=//span[@id='errorCAP']", "xpath:attributes"],
-        ["xpath=//div[2]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Questo campo non é nel formato giusto')]", "xpath:innerText"]
-      ],
-      "value": "Questo campo non é nel formato giusto"
-    }, {
-      "id": "b843f963-5e40-407b-912e-38a8c04f990e",
+      "id": "ab1e15db-0b02-4974-b7e9-5c8588100143",
       "comment": "",
       "command": "close",
       "target": "",
@@ -6556,156 +6379,11 @@
     }]
   }, {
     "id": "e0a19b9e-8e24-493f-ba40-ff207598c954",
-    "name": "TGP1_3InserisciNuovoProdottoFallita_NomeNonValido",
-    "commands": [{
-      "id": "90dd39d4-9041-4155-9dfd-23bd06356d10",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost/progetto_IS/admin/insertProduct.jsp",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "43eec4eb-1b5f-49e6-a563-52ce20ca00c4",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1552x832",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "a59bda23-709c-4f49-a55c-63ab0faa522c",
-      "comment": "",
-      "command": "click",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "ade5aa14-620a-4e14-a6d7-c3a64abc6e21",
-      "comment": "",
-      "command": "type",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": "Mk"
-    }, {
-      "id": "179b3d0c-cd4d-4b4f-b64c-c70806ed4801",
-      "comment": "",
-      "command": "click",
-      "target": "id=categoria-select",
-      "targets": [
-        ["id=categoria-select", "id"],
-        ["name=categoria", "name"],
-        ["css=#categoria-select", "css:finder"],
-        ["xpath=//select[@id='categoria-select']", "xpath:attributes"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "21b2c6b7-c3dc-44ed-90c0-5ad0a09aba42",
-      "comment": "",
-      "command": "click",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "51d811e8-e05b-47e5-b324-12ef25b4587f",
-      "comment": "",
-      "command": "type",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6c11147d-5e12-4ef8-a651-6e3c2561b8ee",
-      "comment": "",
-      "command": "mouseDown",
-      "target": "id=descrizione",
-      "targets": [
-        ["id=descrizione", "id"],
-        ["name=descrizione", "name"],
-        ["css=#descrizione", "css:finder"],
-        ["xpath=//textarea[@id='descrizione']", "xpath:attributes"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "c44b8b4a-8ac5-422d-8fc7-9f6b6e7eee5e",
-      "comment": "",
-      "command": "mouseUp",
-      "target": "css=form",
-      "targets": [
-        ["css=form", "css:finder"],
-        ["xpath=//form[@action='/progetto_IS/creaProdotto']", "xpath:attributes"],
-        ["xpath=//form", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "758d419b-3571-4eb9-a4cc-10bb49476a99",
-      "comment": "",
-      "command": "click",
-      "target": "css=form",
-      "targets": [
-        ["css=form", "css:finder"],
-        ["xpath=//form[@action='/progetto_IS/creaProdotto']", "xpath:attributes"],
-        ["xpath=//form", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "11b20a4f-2819-4e7a-9d8c-9213fdf14b97",
-      "comment": "",
-      "command": "click",
-      "target": "id=errorName",
-      "targets": [
-        ["id=errorName", "id"],
-        ["css=#errorName", "css:finder"],
-        ["xpath=//span[@id='errorName']", "xpath:attributes"],
-        ["xpath=//form/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "9080e396-84fe-4827-b97a-d54605080fc4",
-      "comment": "",
-      "command": "assertText",
-      "target": "id=errorName",
-      "targets": [
-        ["id=errorName", "id"],
-        ["css=#errorName", "css:finder"],
-        ["xpath=//span[@id='errorName']", "xpath:attributes"],
-        ["xpath=//form/span", "xpath:position"]
-      ],
-      "value": "Il campo non puo' essere vuoto"
-    }, {
-      "id": "393b7a50-24a7-441b-8acb-6011494e9348",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }]
+    "name": "TGP1_3InserisciNuovoProdottoSbagliataNome",
+    "commands": []
   }, {
     "id": "ae7f4881-dba2-4bc0-99bf-5fc50c0e7b54",
-    "name": "TGP1_4InserisciNuovoProdottoFallito_PrezzoNonValido",
+    "name": "TGP1_4InserisciNuovoProdottoSbagliataPrezzo",
     "commands": [{
       "id": "24b32747-e9a2-4d72-b4cc-2c8c89ebb446",
       "comment": "",
@@ -6828,7 +6506,7 @@
     }]
   }, {
     "id": "95e19bbb-13f5-4158-8436-42510ad726e2",
-    "name": "TGP1_5InserisciNuovoProdottoFallita_DescrizioneNonValida",
+    "name": "TGP1_5InserisciNuovoProdottoSbagliataDescrizione",
     "commands": [{
       "id": "9aa9b254-efd6-4ab1-9329-4a41a2a1759d",
       "comment": "",
@@ -7537,135 +7215,11 @@
     }]
   }, {
     "id": "44067757-ce32-495a-b255-ad7790c25bb9",
-    "name": "TGP1_8ModificaProdottoFallita_NomeNonValido",
-    "commands": [{
-      "id": "b3b634a8-7b5f-4bf6-8b57-a40e42270e43",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost/progetto_IS/OrdinaProdotti",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "872dc549-40cb-41ac-a386-1f37e3b558db",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1552x832",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "08b0fbe2-6e58-48b1-afda-1396f5306f31",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Modifica",
-      "targets": [
-        ["linkText=Modifica", "linkText"],
-        ["css=tr:nth-child(2) .edit-link", "css:finder"],
-        ["xpath=//a[contains(text(),'Modifica')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'OttieniDettagliProdotto?to=modify&id=34')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Modifica')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "4575f778-458a-4f78-b856-716670b04d3b",
-      "comment": "",
-      "command": "click",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//label/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "981bd0eb-b5eb-491c-b9b2-92e35849f048",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "id=descrizione",
-      "targets": [
-        ["id=descrizione", "id"],
-        ["name=descrizione", "name"],
-        ["css=#descrizione", "css:finder"],
-        ["xpath=//textarea[@id='descrizione']", "xpath:attributes"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "facc3b64-9826-4baa-9591-0fb06c2457b7",
-      "comment": "",
-      "command": "type",
-      "target": "id=nome",
-      "targets": [
-        ["id=nome", "id"],
-        ["name=nome", "name"],
-        ["css=#nome", "css:finder"],
-        ["xpath=//input[@id='nome']", "xpath:attributes"],
-        ["xpath=//label/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "054bbfd4-7b61-416b-92d1-3539ad76e2cf",
-      "comment": "",
-      "command": "click",
-      "target": "id=descrizione",
-      "targets": [
-        ["id=descrizione", "id"],
-        ["name=descrizione", "name"],
-        ["css=#descrizione", "css:finder"],
-        ["xpath=//textarea[@id='descrizione']", "xpath:attributes"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "4883aeb8-d4fb-43a9-bbfa-c0f6696a47aa",
-      "comment": "",
-      "command": "mouseOut",
-      "target": "id=descrizione",
-      "targets": [
-        ["id=descrizione", "id"],
-        ["name=descrizione", "name"],
-        ["css=#descrizione", "css:finder"],
-        ["xpath=//textarea[@id='descrizione']", "xpath:attributes"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "2f5ae9ff-a1d7-48c1-97fb-cf5634fbf3ca",
-      "comment": "",
-      "command": "click",
-      "target": "id=errorName",
-      "targets": [
-        ["id=errorName", "id"],
-        ["css=#errorName", "css:finder"],
-        ["xpath=//span[@id='errorName']", "xpath:attributes"],
-        ["xpath=//label/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "39fdc22a-e756-4552-848b-77ee5dc34329",
-      "comment": "",
-      "command": "assertText",
-      "target": "id=errorName",
-      "targets": [
-        ["id=errorName", "id"],
-        ["css=#errorName", "css:finder"],
-        ["xpath=//span[@id='errorName']", "xpath:attributes"],
-        ["xpath=//label/span", "xpath:position"]
-      ],
-      "value": "Il campo non puo' essere vuoto"
-    }, {
-      "id": "009e1b2b-4ab1-4bfa-a9d4-22c4bdffdaf4",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }]
+    "name": "TGP1_8ModificaProdottoErrataNome",
+    "commands": []
   }, {
     "id": "9e53a431-df6f-4c89-a4c0-005b76e35e7c",
-    "name": "TGP1_9ModificaProdottoFallita_DescrizioneNonValida",
+    "name": "TGP1_9ModificaProdottoErrataDescrizione",
     "commands": [{
       "id": "cf3db72f-e4ad-4dfe-b395-1983ec05a107",
       "comment": "",
@@ -7800,7 +7354,7 @@
     }]
   }, {
     "id": "61f4bd21-6338-4a9d-b36f-3c93d0f80f06",
-    "name": "TGP1_11ModificaProdottoFallita_StatisticheNonValide",
+    "name": "TGP1_11ModificaProdottoErrataStatistiche",
     "commands": [{
       "id": "935f172c-8266-48c2-b2d2-1739a7509ff3",
       "comment": "",
@@ -7890,7 +7444,7 @@
     }]
   }, {
     "id": "34ff2111-4f73-4fe3-b12c-26f585be3054",
-    "name": "TGP1_9ModificaProdottoFallita_PrezzoNonValido",
+    "name": "TGP1_9ModificaProdottoErrataPrezzo",
     "commands": [{
       "id": "dac8a37c-a3e5-47d0-b553-56a22f90970f",
       "comment": "",
@@ -8025,7 +7579,7 @@
     }]
   }, {
     "id": "4349bd76-7c61-4a78-8c41-8ae0dbf2d909",
-    "name": "TGP1_4_2InserisciNuovoProdottoFallita_PrezzoNonValido",
+    "name": "TGP1_4_2InserisciNuovoProdottoSbagliataPrezzo",
     "commands": [{
       "id": "529fe0b4-1531-4b5a-8440-3e538a7fcad3",
       "comment": "",
@@ -8660,7 +8214,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["a793e420-fa53-4faa-bd94-2d2139f039e9", "d84c8ee0-f437-4017-a854-dcbbbba2f686", "fb8f0170-3480-4f42-96a9-d449c0dfc9c2", "51c1655d-c847-4fe8-a085-1adade855b0d", "8005c2d7-f46a-4506-87ba-be20831ffbc1", "0b1d7ae1-c292-4cec-8927-07d51e2a5e69", "cea0c13d-bfe8-438f-9d73-1d5cea251774", "5068a372-00c6-4974-bc07-5bbef087ab02", "471d2af3-2709-4c8a-944e-c751fe1ad68b", "5723b8c8-d358-4dd7-b1d5-a1c095e6fc68", "debf6c14-64ff-4dbc-883d-b39318f9c4c3", "1f76adfd-ab06-40f6-a4f4-20b9e80d22a9", "878d9d75-ca5a-47bb-9b26-ee44ac33db96", "4520789e-2186-4f06-91c4-dca2d6f52d77", "e205fd72-72d2-4683-afd0-70f212578a65", "03078b2c-f3a4-457c-a385-2f8609504987", "d2e9f280-3545-4214-8f37-c0d7da63a1e7", "17a65043-b82c-45b0-946d-853a7749e062", "8760e285-d4c5-4e33-8497-7e02727eb7a5", "5c58ec5d-6df8-46ce-858a-ee6a4e7d7d8d", "915927e2-6a81-4ca3-b3fe-89be2d7d8271", "db285d7b-9ee5-4abc-bb36-31e519aac3c6", "a4ffdb8b-3b3a-46c3-93d1-9ee8980cc2c5", "64584f1d-84a5-4c64-aca3-c560a9db0aab", "1de7b7df-ebd7-4961-ab37-eeaa902f4ed0", "4b79477a-e430-4f51-90f6-9bb5bbf134f0", "b6bdf8ff-8a53-4648-bf89-06e63b8b5000", "108294ed-bb92-4cef-8eaf-92e6c682722f", "3ba4d673-9601-4375-8c8e-8fc780cdf86a", "c485c871-9803-491b-85cb-2746eb24509e", "b016948d-dcaa-40d8-a0bc-fa12fc175a6e", "1fafd03e-c841-4b1e-8a7f-3fa3cd02ae5f", "1887f3e9-4f6f-4b9e-8bf3-0381b016035e", "a9a48253-1dd7-4367-9c4b-0ebb057f468d", "76a1447e-537f-49ea-a287-f1fc4afbb300", "c515d07d-3097-470f-988d-1b60ea7551ce"]
+    "tests": ["a793e420-fa53-4faa-bd94-2d2139f039e9", "51c1655d-c847-4fe8-a085-1adade855b0d", "0b1d7ae1-c292-4cec-8927-07d51e2a5e69", "cea0c13d-bfe8-438f-9d73-1d5cea251774", "5068a372-00c6-4974-bc07-5bbef087ab02", "471d2af3-2709-4c8a-944e-c751fe1ad68b", "5723b8c8-d358-4dd7-b1d5-a1c095e6fc68", "debf6c14-64ff-4dbc-883d-b39318f9c4c3", "1f76adfd-ab06-40f6-a4f4-20b9e80d22a9", "878d9d75-ca5a-47bb-9b26-ee44ac33db96", "4520789e-2186-4f06-91c4-dca2d6f52d77", "e205fd72-72d2-4683-afd0-70f212578a65", "d2e9f280-3545-4214-8f37-c0d7da63a1e7", "03078b2c-f3a4-457c-a385-2f8609504987", "17a65043-b82c-45b0-946d-853a7749e062", "8760e285-d4c5-4e33-8497-7e02727eb7a5", "5c58ec5d-6df8-46ce-858a-ee6a4e7d7d8d", "915927e2-6a81-4ca3-b3fe-89be2d7d8271", "db285d7b-9ee5-4abc-bb36-31e519aac3c6", "a4ffdb8b-3b3a-46c3-93d1-9ee8980cc2c5", "64584f1d-84a5-4c64-aca3-c560a9db0aab", "1de7b7df-ebd7-4961-ab37-eeaa902f4ed0", "4b79477a-e430-4f51-90f6-9bb5bbf134f0", "b6bdf8ff-8a53-4648-bf89-06e63b8b5000", "108294ed-bb92-4cef-8eaf-92e6c682722f", "3ba4d673-9601-4375-8c8e-8fc780cdf86a", "c485c871-9803-491b-85cb-2746eb24509e", "b016948d-dcaa-40d8-a0bc-fa12fc175a6e", "1fafd03e-c841-4b1e-8a7f-3fa3cd02ae5f", "1887f3e9-4f6f-4b9e-8bf3-0381b016035e", "a9a48253-1dd7-4367-9c4b-0ebb057f468d", "76a1447e-537f-49ea-a287-f1fc4afbb300", "c515d07d-3097-470f-988d-1b60ea7551ce"]
   }, {
     "id": "3be2ac7e-97f1-48e6-836c-707257c59909",
     "name": "Test Funzionalità Gestore Ordini",
