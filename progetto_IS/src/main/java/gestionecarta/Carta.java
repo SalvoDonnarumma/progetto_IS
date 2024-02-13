@@ -7,10 +7,10 @@ public class Carta implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3699971326056705511L;
-	int idCarta;
-	String proprietario;
-	String numero_carta;
-	String data_scadenza;
+	private int idCarta;
+	private String proprietario;
+	private String numero_carta;
+	private String data_scadenza;
 	
 	public Carta() {
 		idCarta = 0;

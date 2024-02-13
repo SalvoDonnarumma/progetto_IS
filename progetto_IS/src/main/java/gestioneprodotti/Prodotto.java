@@ -6,14 +6,14 @@ public class Prodotto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	Integer code;
-	String name;
-	String descrizione;
-	String categoria;
-	Double price;
-	String stats;
-	Taglie taglie;
-	String imagePath;
+	private Integer code;
+	private String name;
+	private String descrizione;
+	private String categoria;
+	private Double price;
+	private String stats;
+	private Taglie taglie;
+	private String imagePath;
 
 	public Prodotto() {
 		code = -1;

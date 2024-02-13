@@ -9,14 +9,14 @@ public class Utente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	Integer id;
-	String email;
-	String password;
-	String nome;
-	String cognome;
-	String telefono;
-	String ruolo;
-	Carta carta;
+	private Integer id;
+	private String email;
+	private String password;
+	private String nome;
+	private String cognome;
+	private String telefono;
+	private String ruolo;
+	private Carta carta;
 
 	public Utente() {
 		id=0;

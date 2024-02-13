@@ -14,7 +14,7 @@ public class Carrello implements Serializable {
 	 */
 	private Integer idcarrello;
 	private static final long serialVersionUID = 1L;
-	List<Prodotto> cart;
+	private List<Prodotto> cart;
 	
 	public Carrello() {
 		cart = new ArrayList<>();

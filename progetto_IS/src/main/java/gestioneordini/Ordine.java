@@ -36,14 +36,14 @@ public class Ordine implements Serializable{
 	}
 
 
-	List<ProdottoOrdinato> orders;
-	String idUtente;
-	String data;
-	String stato;
-	Integer idOrdine;
-	Double prezzototale;
-	String indirizzo;
-	String data_consegna;
+	private List<ProdottoOrdinato> orders;
+	private String idUtente;
+	private String data;
+	private String stato;
+	private Integer idOrdine;
+	private Double prezzototale;
+	private String indirizzo;
+	private String data_consegna;
 
 	public String getData_consegna() {
 		return data_consegna;
